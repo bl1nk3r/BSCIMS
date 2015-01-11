@@ -1,7 +1,9 @@
 /* --------------------------------------
    Layout
    -------------------------------------- */
-
+#financeDSODescription, #objDropDown, #quickActionsBtnGroup{
+   margin-bottom: 15px;
+}
 
 
 /* --------------------------------------
