@@ -198,8 +198,9 @@
 								</a>
 
 								<ul class="dropdown-menu">
-									<li class="divider"></li>
+									
 									<li class="dropdown-header">Specify</li>
+									<li class="divider"></li>
 									<li>
 										<a href="#">Individual</a>
 									</li>
@@ -258,7 +259,7 @@
 			</div--> <!--end div btn-group-vertical-->			
 			<!--div> <end container-->
 
-			<div class="btn-group" role="group">
+			<div id="quickActionsBtnGroup" class="btn-group" role="group">
 
   				<!--button type="button" class="btn btn-default">Create Objective</button-->
   				<a href="#createObjModal" role="button" class="btn btn-default" data-toggle="modal"> <span class="glyphicon glyphicon-plus"></span> Create an Objective</a> 
@@ -278,11 +279,76 @@
   								<div class="modal-body">
   										<h4> Select a perspective to work on...</h4>
 
+  										<hr>
+
+  										<div id="objDropDown" class="dropdown">
+
+											  <button class="btn btn-default dropdown-toggle" type="button" id="objDropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+											    Select Perspective
+											    <span class="caret"></span>
+											  </button>
+
+											  <ul class="dropdown-menu" role="menu" aria-labelledby="objDropdownMenu1">
+											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Finance</a></li>
+											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Customers & Stakeholders</a></li>
+											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Internal Business Process</a></li>
+											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Learning and Growth</a></li>
+											  </ul>
+										</div> <!-- end div objDropDown-->
+
+										<div id="FinancePersp">
+											<!--table style="width:90%">
+												
+											</table-->
+											<form id ="FinanceForm" class="form-horizontal">
+												<div id="financeObjDiv" class="form-group">
+													<label class="col-lg-2 control-label" for="financeObjDescription">
+														Objective
+													</label> <!-- end financeObjectiveDescriptionlabel-->
+
+													<div id="financeObjDivInput" class="col-lg-10">
+
+														<input class="form-control" id="financeObjDescription" placeholder="Enter the description of the objective..." type="text">
+
+													</div> <!-- end financeObjDivInput-->
+
+												</div> <!--end financeObjDiv-->
+
+												<div id="financeDSODiv" class="form-group">
+													<label class="col-lg-2 control-label" for="financeDSODescription">
+														Desire Standard Output
+													</label> <!-- end financeDSOlabel-->
+
+													<div id="financeDSODivInput" class="col-lg-10">
+
+														<textarea class="form-control" id="financeDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<button class="btn btn-success pull-right" type="submit"> Submit Objective</button>
+
+													</div> <!-- end financeObjDiv-->
+													
+												</div> <!--end financeObjDiv-->
+												
+											</form> <!-- end FinanceForm-->
+
+										</div> <!--end FinancePersp div-->
+
+										<div id="CustPersp">
+											
+										</div>
+
+										<div id="InternBusPersp">
+											
+										</div>
+
+										<div id="LearnGrowthPersp">
+											
+										</div>
+
   								</div> <!-- end createObjModal-body-->
 
   								<div class="modal-footer">
 
-  									<button class="btn btn-primary" type="button"> <span class="glyphicon glyphicon-ok"></span> Save Objective</button>
+  									<button class="btn btn-primary" type="button"> <span class="glyphicon glyphicon-ok"></span> Save Objectives</button>
   									<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
   									
   								</div> <!-- end moda-footer-->
@@ -313,13 +379,13 @@
 
   				</div> <!--end btn-group--> <br><br>
 
-  				<div id="listGroupDiv" class="list-group">
+  				<div id="panelListGroupDiv" class="list-group">
   					<a href="#" class="list-group-item"> <span class="badge"> 2 </span> Notifications</a>
   					<a href="#" class="list-group-item"> <span class="badge"> 0 </span> Emails</a>
   					<a href="#" class="list-group-item"> <span class="badge"> 5 </span> Pending</a>
  					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
   					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
-				</div>
+				</div> <!-- end panelListGroupDiv-->
 
 			</div> <!--end btn-group-->
 		</div> <!--end container-->
