@@ -6,6 +6,8 @@
 		<!-- Website Title & Description for Search Engine purposes -->
 		<title>SEC PMS</title>
 		<meta name="description" content="">
+
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 		
 		<!-- Mobile viewport optimized -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,6 +15,9 @@
 		<!-- Bootstrap CSS -->
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="includes/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+		<!--AngularJS script -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script>
 		
 		<!-- Custom CSS -->
 		<link href="includes/css/styles.css" rel="stylesheet">
@@ -152,9 +157,9 @@
 										<a href="#">Sectional</a>
 									</li>
 
-									<li class="divider"></li>
-
 									<li class="dropdown-header">Personal</li>
+
+									<li class="divider"></li>
 
 									<li>
 										<a href="#">Scorecard</a>
@@ -283,24 +288,31 @@
 
   										<div id="objDropDown" class="dropdown">
 
-											  <button class="btn btn-default dropdown-toggle" type="button" id="objDropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+											  <!--button class="btn btn-default dropdown-toggle" type="button" id="objDropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 											    Select Perspective
 											    <span class="caret"></span>
-											  </button>
+											  </button-->
 
-											  <ul class="dropdown-menu" role="menu" aria-labelledby="objDropdownMenu1">
-											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Finance</a></li>
-											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Customers & Stakeholders</a></li>
-											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Internal Business Process</a></li>
-											    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Learning and Growth</a></li>
-											  </ul>
+											  <!--ul id="objPerspDropDownMenu" class="dropdown-menu" role="menu" aria-labelledby="objDropdownMenu1">
+											    <li role="presentation"> <a id="financeMenuItem" role="menuitem" tabindex="-1" href="#" value="financeSelect" > Finance </a> </li>
+											    <li role="presentation"> <a id="customerMenuItem" role="menuitem" tabindex="-1" href="#"> Customers & Stakeholders </a> </li>
+											    <li role="presentation"> <a id="internBusMenuItem" role="menuitem" tabindex="-1" href="#"> Internal Business Process</a> </li>
+											    <li role="presentation"> <a id="learnGrowthMenuItem" role="menuitem" tabindex="-1" href="#"> Learning and Growth </a> </li>
+											  </ul> <!-- end objPerspDropDownMenu -->
+
+											  <select id="objPerspDropdownMenu" role="menu">
+											  	<option value="default">-Select a Perspective-</option>
+											  	<option value="financeSelect">Finance</option>
+											  	<option value="custSelect">Customer & Stakeholders</option>
+											  	<option value="internalSelect">Internal Business Process</option>
+											  	<option value="learnSelect">Learning & Growth</option>
+											  </select> <!-- end objPerspDropdownMenu-->
+											  
 										</div> <!-- end div objDropDown-->
 
-										<div id="FinancePersp">
-											<!--table style="width:90%">
-												
-											</table-->
-											<form id ="FinanceForm" class="form-horizontal">
+										<div id="financePerspDiv">
+
+											<form id ="financeForm" class="form-horizontal">
 												<div id="financeObjDiv" class="form-group">
 													<label class="col-lg-2 control-label" for="financeObjDescription">
 														Objective
@@ -319,12 +331,116 @@
 														Desire Standard Output
 													</label> <!-- end financeDSOlabel-->
 
+
 													<div id="financeDSODivInput" class="col-lg-10">
 
 														<textarea class="form-control" id="financeDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
-														<button class="btn btn-success pull-right" type="submit"> Submit Objective</button>
 
 													</div> <!-- end financeObjDiv-->
+
+													<div id="performanceRatingDiv" class="form-group">
+														<label id="performanceRatingLabel" class="col-lg-2">
+															Perfomace Rating
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Poor
+															<select id="poorPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+															</select>
+														</div>
+
+														<div id="poorPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+														</div> <!-- end poorPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Unsatisfactory
+															<select id="unsatPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+														</div> <!-- end unsatisfactoryPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Target Met
+															<select id="targetPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+															</select>
+
+														</div>
+
+														<div id="targetMetPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+														</div> <!-- end targetMetPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Exceeding
+															<select id="exceedPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="exceedingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+														</div> <!-- end exceedingPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Outstanding
+															<select id="outstandPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="outstandingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+														</div> <!-- end outstandingPerDiv-->
+
+													</div> <!--end performanceRatingDiv -->
+
+													<button id="submitObjButton" class="btn btn-success pull-right" >Submit Objective</button>
 													
 												</div> <!--end financeObjDiv-->
 												
@@ -381,7 +497,7 @@
 
   				<div id="panelListGroupDiv" class="list-group">
   					<a href="#" class="list-group-item"> <span class="badge"> 2 </span> Notifications</a>
-  					<a href="#" class="list-group-item"> <span class="badge"> 0 </span> Emails</a>
+  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails</a>
   					<a href="#" class="list-group-item"> <span class="badge"> 5 </span> Pending</a>
  					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
   					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
@@ -413,6 +529,8 @@
 	
 		<!-- If no online access, fallback to our hardcoded version of jQuery -->
 		<script>window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
+		<script type="text/javascript" src="js/effects.js"></script>
+		<script type="text/javascript" src="js/objData.js"></script>
 	
 		<!-- Bootstrap JS -->
 		<script src="bootstrap/js/bootstrap.min.js"></script>

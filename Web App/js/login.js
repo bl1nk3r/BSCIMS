@@ -3,6 +3,9 @@ $(document).ready(function(){
 		$(this).css('background-color', 'grey');
 	});
 
+	//$('#successAlert').hide();
+	$('#warningAlert').hide();
+
 	$(':password').focusin(function(){
 		$(this).css('background-color', 'grey');
 	});
@@ -18,7 +21,24 @@ $(document).ready(function(){
 		$(this).attr('value', 'Logging in...');
 	});
 
-	$('#').click(function(){
-		$('')
-	});
+	$('#loginButton').click(function(){
+    var login    = $('#loginName').val();
+		password = $('#loginPass').val();
+
+    /*the following code checks whether the entered userid and password are matching*/
+    /*if(form.firstname.value == (data.Login) && form.pwd.value == (data.Pass))*/
+    if((login == "admin") && (password == "admin"))
+    {
+       window.open('index.html') /*opens the target page while Id & password matches*/
+    }
+    else
+    {
+    //alert("Incorrect login!")/*displays error message*/
+    	//e.preventDefault();
+		$('#warningAlert').slideDown();
+		//$('#warningAlert').fade(1000);
+    }
+    //}
+
+  });
 });

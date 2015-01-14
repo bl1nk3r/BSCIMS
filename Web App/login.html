@@ -30,14 +30,24 @@
 			</a>
 			<div class="row">
 				<div class="span4" id="sidebar">
+				
+
 					<div class="well">
 						<form>
 							<fieldset>
+
 								<legend>
 									Login to PMS
 								</legend>
+
+								<div id="warningAlert" class="alert alert-danger alert-block fade in">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<h4>Login Invalid!</h4> <p> Tip: Use your Novell Credentials</p>
+								</div> <!-- end alert -->
+
 								<input type="text" class="input-block-level" placeholder="username" id="loginName"> <br>
 								<input type="password" class="input-block-level"placeholder="password" id="loginPass">
+								
 								<label class="checkbox">
 									<input type="checkbox">Remember Me
 								</label>

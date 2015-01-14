@@ -1,10 +1,26 @@
 /* --------------------------------------
    Layout
    -------------------------------------- */
-#financeDSODescription, #objDropDown, #quickActionsBtnGroup{
+#financeDSODescription, #quickActionsBtnGroup{
    margin-bottom: 15px;
 }
 
+.navbar-brand{
+   margin-top: 40px;
+}
+
+#submitObjButton{
+   margin-right: 17px;
+}
+
+#performanceRatingDiv{
+   margin-right: 3px; 
+   margin-left: 3px;
+}
+
+#objPerspDropdownMenu{
+   margin-bottom: 5px;
+}
 
 /* --------------------------------------
    Typography
@@ -85,10 +101,10 @@
 /* --------------------------------------
    Global Styles
    -------------------------------------- */
-/*.alert{
+.alert{
    margin-top: 20px;
    display: none;
-}*/
+}
 
 
 /* --------------------------------------
