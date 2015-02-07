@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		
+		<!-- Website Title & Description for Search Engine purposes -->
+		<title>SEC PMS</title>
+		<meta name="description" content="">
+
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+		
+		<!-- Mobile viewport optimized -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+		<!-- Bootstrap CSS -->
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/includes/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+		<!--AngularJS script -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script>
+		
+		<!-- Custom CSS -->
+		<link href="/includes/css/styles.css" rel="stylesheet">
+		
+		<!-- Include Modernizr in the head, before any other Javascript -->
+		<script src="/includes/js/modernizr-2.6.2.min.js"></script>
+		
+	</head>
+
+	<body> 
+	
+		<div class="container" width="900px" id="main">
+
+			<div class="navbar ">
+
+				<ul class="nav navbar-nav pull-right" id="myAccount">
+
+					<li class="dropdown">
+
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-user"></span> My Account<strong class="caret"></strong>
+						</a>
+
+							<ul class="dropdown-menu">
+
+								<li class="dropdown-header">User Details</li>
+
+								<li>
+									<a href="#"><span class="glyphicon glyphicon-user"></span> Roy Dlamini</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+								    <a href="#"><span class="glyphicon glyphicon-wrench"></span> Preferences</a>
+								</li>
+
+								<li>
+									<a href="#"><span class="glyphicon glyphicon-off"></span> Logout</a>
+								</li>
+
+							</ul>
+					</li>
+				</ul> <!--end ul myAccount-->
+
+				<a class="navbar-brand" href="/">
+					<img class=".img-responsive img-rounded" src="/images/SEC.png" alt="SEC Logo">
+				</a>
+
+				<div class="container">
+
+					<button class="navbar-toggle" data-target=".navbar-responsive-collapse" data-toggle="collapse" type="button">
+
+						<span class="icon-bar"></span>
+
+						<span class="icon-bar"></span>
+
+						<span class="icon-bar"></span>
+
+					</button>
+
+					<br><br><br><br><br>
+
+					<div class="nav-collapse collapse navbar-responsive-collapse">
+
+						<ul class="nav nav-pills pull-left">
+
+							<li class="active">
+								<a href="#">Home</a>
+							</li>
+
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Dashboard
+								</a>
+
+								<!--ul class="dropdown-menu">
+
+									<li>
+										<a href="#">Objectives</a>
+									</li>
+
+									<li>
+										<a href="#">Scores</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li class="dropdown-header">More Info</li>
+
+									<li>
+										<a href="#">Just a sec</a>
+									</li>
+
+								</ul> <!-- end Division dropdown-menu-->
+							</li> <!--end Division dropdown-->
+
+							<li class="dropdown">
+
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Objectives
+								</a>
+
+								<!--ul class="dropdown-menu">
+									<li>
+										<a href="#">Objectives</a>
+									</li>
+
+									<li>
+										<a href="#">Scores</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li class="dropdown-header">More Info</li>
+
+									<li>
+										<a href="#">Hold Up</a>
+									</li>
+								</ul> <!-- end Department dropdown-menu--> 
+							</li> <!--end Department dropdown-->
+
+							<li class="dropdown">
+
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Scorecard
+										<strong class="caret">
+										</strong>
+								</a>
+
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Departmental</a>
+									</li>
+
+									<li>
+										<a href="#">Sectional</a>
+									</li>
+
+									<li class="dropdown-header">Personal</li>
+
+									<li class="divider"></li>
+
+									<li>
+										<a href="#">Scorecard</a>
+									</li>
+
+								</ul> <!-- end Section dropdown-menu-->
+							</li> <!--end Section dropdown-->
+
+							<li class="dropdown">
+
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Projects
+								</a>
+
+								<!--ul class="dropdown-menu">
+									<li>
+										<a href="#">Objectives</a>
+									</li>
+
+									<li>
+										<a href="#">Scores</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li class="dropdown-header">More Info</li>
+
+									<li>
+										<a href="#">Wait for it</a>
+									</li>
+
+								</ul> <!-- end You dropdown-menu-->
+							</li> <!--end You dropdown-->
+
+							<li class="dropdown">
+
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Reports
+									<strong class="caret">
+									</strong>
+								</a>
+
+								<ul class="dropdown-menu">
+									
+									<li class="dropdown-header">Specify</li>
+									<li class="divider"></li>
+									<li>
+										<a href="#">Individual</a>
+									</li>
+
+									<li>
+										<a href="#">Departmental</a>
+									</li>
+
+									<li>
+										<a href="#">Divisional </a>
+									</li>
+
+								</ul> <!-- end Reports dropdown-menu-->
+							</li> <!--end Reports dropdown-->
+
+							<form class="navbar-form pull-right" id="searchForm">
+
+								<input type="text" class="form-control" placeholder="Search here..." id="searchInput">
+
+								<button type="submit" class="btn btn-default"> 
+									<span class="glyphicon glyphicon-search ">
+									</span>
+								</button> <!-- end search button-->
+
+							</form> <!--end form search-->
+
+						</ul> <!-- end nav-->
+
+					</div> <!-- end nav-collapse -->
+
+				</div> <!-- end container-->
+
+			</div> <!--end navbar-->
+
+			<!--div class="row" id="bigCallout">
+				<div class="alert alert-success alert-block fade in" id="successAlert">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<h4>Success!</h4>
+					<p>Click the 'x' in the corner to close...</p>
+				</div> <!end alert-->
+
+					<!--div class="well" pull-down>
+						<div class="page-header">
+							<h1>Performance Management System <small>Balanced Scorecard Prototype </small> </h1>
+						</div> <!end page-header>
+
+						<p class="lead">More content can fit in here</p>
+					</div--> <!-- end well>
+
+			</div--> <!-- end bigCallout-->
+
+			<!--div class="btn-group-vertical" role="group" aria-label="...">
+  				<button type="button" class="btn btn-default">Quick Action 1</button>
+  				<button type="button" class="btn btn-default">Quick Action 2</button>
+  				<button type="button" class="btn btn-default">Quick Action 3</button>
+			</div--> <!--end div btn-group-vertical-->			
+			<!--div> <end container-->
+
+			<div id="quickActionsBtnGroup" class="btn-group" role="group">
+
+  				<!--button type="button" class="btn btn-default">Create Objective</button-->
+  				<a href="#createObjModal" role="button" class="btn btn-default" data-toggle="modal"> <span class="glyphicon glyphicon-plus"></span> Create an Objective</a> 
+
+  					<div class="modal fade" id="createObjModal">
+
+  						<div class="modal-dialog">
+
+  							<div class="modal-content"> 
+
+  								<div class="modal-header">
+  							 		<button class="close" data-dismiss="modal">&times;</button>
+  									<h4 class="modal-title">Create an Objective!</h4>
+
+  								</div> <!-- end createObjModal-header-->
+
+  								<div class="modal-body">
+  										<h4> Select a perspective to work on...</h4>
+
+  										<hr>
+
+  										<div id="objDropDown" class="dropdown">
+
+											  <select id="objPerspDropdownMenu" role="menu">
+											  	<option value="default">-Select a Perspective-</option>
+											  	<option value="financeSelect">Finance</option>
+											  	<option value="customerSelect">Customer & Stakeholders</option>
+											  	<option value="internalSelect">Internal Business Process</option>
+											  	<option value="learnSelect">Learning & Growth</option>
+											  </select> <!-- end objPerspDropdownMenu-->
+											  
+										</div> <!-- end div objDropDown-->
+
+										<div id="financePerspDiv">
+
+											<form id ="financeForm" class="form-horizontal">
+												<div id="financeObjDiv" class="form-group">
+													<label class="col-lg-2 control-label" for="financeObjDescription">
+														Objective
+													</label> <!-- end financeObjectiveDescriptionlabel-->
+
+													<div id="financeObjDivInput" class="col-lg-10">
+
+														<input class="form-control" id="financeObjDescription" placeholder="Enter the description of the objective..." type="text">
+
+													</div> <!-- end financeObjDivInput-->
+
+												</div> <!--end financeObjDiv-->
+
+												<div id="financeDSODiv" class="form-group">
+													<label class="col-lg-2 control-label" for="financeDSODescription">
+														Desire Standard Output
+													</label> <!-- end financeDSOlabel-->
+
+
+													<div id="financeDSODivInput" class="col-lg-10">
+
+														<textarea class="form-control" id="financeDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+
+													</div> <!-- end financeObjDiv-->
+
+													<div id="performanceRatingDiv" class="form-group">
+														<label id="performanceRatingLabel" class="col-lg-2">
+															Perfomace Rating
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Poor
+															<select id="poorPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+															</select>
+														</div>
+
+														<div id="poorPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+														</div> <!-- end poorPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Unsatisfactory
+															<select id="unsatPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+														</div> <!-- end unsatisfactoryPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Target Met
+															<select id="targetPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+															</select>
+
+														</div>
+
+														<div id="targetMetPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+														</div> <!-- end targetMetPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Exceeding
+															<select id="exceedPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="exceedingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+														</div> <!-- end exceedingPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Outstanding
+															<select id="outstandPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="outstandingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+														</div> <!-- end outstandingPerDiv-->
+
+													</div> <!--end performanceRatingDiv -->
+
+													<button id="submitFinanceObjButton" class="btn btn-success pull-right" >Submit Objective</button>
+													
+												</div> <!--end financeObjDiv-->
+												
+												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+													<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<h4>Objective Successfully created!</h4>
+													<p>Click the 'x' in the corner to close...</p>
+												</div> <!--end alert-->
+
+											</form> <!-- end FinanceForm-->
+
+										</div> <!--end FinancePersp div-->
+
+										<div id="customerPerspDiv">
+
+											<form id ="customerForm" class="form-horizontal">
+												<div id="customerObjDiv" class="form-group">
+													<label class="col-lg-2 control-label" for="customerObjDescription">
+														Objective
+													</label> <!-- end customerObjectiveDescriptionlabel-->
+
+													<div id="customerObjDivInput" class="col-lg-10">
+
+														<input class="form-control" id="customerObjDescription" placeholder="Enter the description of the objective..." type="text">
+
+													</div> <!-- end customerObjDivInput-->
+
+												</div> <!--end customerObjDiv-->
+
+												<div id="customerDSODiv" class="form-group">
+													<label class="col-lg-2 control-label" for="customerDSODescription">
+														Desire Standard Output
+													</label> <!-- end customerDSOlabel-->
+
+
+													<div id="customerDSODivInput" class="col-lg-10">
+
+														<textarea class="form-control" id="customerDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+
+													</div> <!-- end customerObjDiv-->
+
+													<div id="performanceRatingDiv" class="form-group">
+														<label id="performanceRatingLabel" class="col-lg-2">
+															Perfomace Rating
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Poor
+															<select id="poorPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+															</select>
+														</div>
+
+														<div id="poorPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+														</div> <!-- end poorPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Unsatisfactory
+															<select id="unsatPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+														</div> <!-- end unsatisfactoryPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Target Met
+															<select id="targetPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+															</select>
+
+														</div>
+
+														<div id="targetMetPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+														</div> <!-- end targetMetPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Exceeding
+															<select id="exceedPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="exceedingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+														</div> <!-- end exceedingPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Outstanding
+															<select id="outstandPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="outstandingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+														</div> <!-- end outstandingPerDiv-->
+
+													</div> <!--end performanceRatingDiv -->
+
+													<button id="submitCustomerObjButton" class="btn btn-success pull-right" >Submit Objective</button>
+													
+												</div> <!--end customerObjDiv-->
+												
+												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+													<button type="button" class="close" data-dismiss="alert"> &times; </button>
+													<h4>Objective Successfully created!</h4>
+													<p>Click the 'x' in the corner to close...</p>
+												</div> <!--end alert div-->
+
+											</form> <!-- end customerForm-->
+
+										</div> <!--end customerPersp div-->
+
+										<div id="internalPersp">
+											<form id ="internalForm" class="form-horizontal">
+												<div id="internalObjDiv" class="form-group">
+													<label class="col-lg-2 control-label" for="internalObjDescription">
+														Objective
+													</label> <!-- end internalObjectiveDescriptionlabel-->
+
+													<div id="internalObjDivInput" class="col-lg-10">
+
+														<input class="form-control" id="internalObjDescription" placeholder="Enter the description of the objective..." type="text">
+
+													</div> <!-- end internalObjDivInput-->
+
+												</div> <!--end internalObjDiv-->
+
+												<div id="internalDSODiv" class="form-group">
+													<label class="col-lg-2 control-label" for="internalDSODescription">
+														Desire Standard Output
+													</label> <!-- end internalDSOlabel-->
+
+
+													<div id="internalDSODivInput" class="col-lg-10">
+
+														<textarea class="form-control" id="internalDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+
+													</div> <!-- end internalObjDiv-->
+
+													<div id="performanceRatingDiv" class="form-group">
+														<label id="performanceRatingLabel" class="col-lg-2">
+															Perfomace Rating
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Poor
+															<select id="poorPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+															</select>
+														</div>
+
+														<div id="poorPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+														</div> <!-- end poorPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Unsatisfactory
+															<select id="unsatPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+														</div> <!-- end unsatisfactoryPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Target Met
+															<select id="targetPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+															</select>
+
+														</div>
+
+														<div id="targetMetPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+														</div> <!-- end targetMetPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Exceeding
+															<select id="exceedPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="exceedingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+														</div> <!-- end exceedingPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Outstanding
+															<select id="outstandPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="outstandingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+														</div> <!-- end outstandingPerDiv-->
+
+													</div> <!--end performanceRatingDiv -->
+
+													<button id="submitInternalObjButton" class="btn btn-success pull-right" >Submit Objective</button>
+													
+												</div> <!--end internalObjDiv-->
+												
+												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+													<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<h4>Objective Successfully created!</h4>
+													<p>Click the 'x' in the corner to close...</p>
+												</div> <!--end alert-->
+
+											</form> <!-- end internalForm-->
+										</div> <!-- end the internalPersp div-->
+
+										<div id="learnPerspDiv">
+
+											<form id ="learnForm" class="form-horizontal">
+												<div id="learnObjDiv" class="form-group">
+													<label class="col-lg-2 control-label" for="learnObjDescription">
+														Objective
+													</label> <!-- end learnObjectiveDescriptionlabel-->
+
+													<div id="learnObjDivInput" class="col-lg-10">
+
+														<input class="form-control" id="learnObjDescription" placeholder="Enter the description of the objective..." type="text">
+
+													</div> <!-- end learnObjDivInput-->
+
+												</div> <!--end learnObjDiv-->
+
+												<div id="learnDSODiv" class="form-group">
+													<label class="col-lg-2 control-label" for="learnDSODescription">
+														Desire Standard Output
+													</label> <!-- end learnDSOlabel-->
+
+
+													<div id="learnDSODivInput" class="col-lg-10">
+
+														<textarea class="form-control" id="learnDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+
+													</div> <!-- end learnObjDiv-->
+
+													<div id="performanceRatingDiv" class="form-group">
+														<label id="performanceRatingLabel" class="col-lg-2">
+															Perfomace Rating
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Poor
+															<select id="poorPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+																<option value="">>15% budget variance</option>
+															</select>
+														</div>
+
+														<div id="poorPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+														</div> <!-- end poorPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Unsatisfactory
+															<select id="unsatPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+																<option value="">>10% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+														</div> <!-- end unsatisfactoryPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Target Met
+															<select id="targetPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+																<option value=""><b>10% budget variance</b></option>
+															</select>
+
+														</div>
+
+														<div id="targetMetPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+														</div> <!-- end targetMetPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Exceeding
+															<select id="exceedPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+																<option value=""><5% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="exceedingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+														</div> <!-- end exceedingPerDiv-->
+
+														<label id="performanceRatingLabel" class="col-lg-2">
+															<!--leaving this label blank for indentation purposes -->
+														</label> <!-- end performanceRatingLabel-->		
+
+														<div class="col-lg-4">
+															Outstanding
+															<select id="outstandPerfSelect">
+																<option value="default">-Select metric</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+																<option value="0% budget variance">0% budget variance</option>
+															</select>
+
+														</div>
+
+														<div id="outstandingPerfDiv" class="col-lg-6">
+															Define:
+															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+														</div> <!-- end outstandingPerDiv-->
+
+													</div> <!--end performanceRatingDiv -->
+
+													<button id="submitlearnObjButton" class="btn btn-success pull-right" >Submit Objective</button>
+													
+												</div> <!--end learnObjDiv-->
+												
+												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+													<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<h4>Objective Successfully created!</h4>
+													<p>Click the 'x' in the corner to close...</p>
+												</div> <!--end alert-->
+
+											</form> <!-- end learnForm-->
+
+										</div> <!--end learnPersp div-->
+
+  								</div> <!-- end createObjModal-body-->
+
+  								<div class="modal-footer">
+
+  									<button class="btn btn-primary" type="button"> <span class="glyphicon glyphicon-ok"></span> Save Objectives</button>
+  									<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
+  									
+  								</div> <!-- end moda-footer-->
+
+  							</div> <!-- end createObjModal-content-->
+
+  						</div> <!-- end createObjModal-dialog-->
+  						
+  					</div> <!-- end createObjModal-->
+
+  				<button type="button" class="btn btn-default">Submit Objectives</button>
+
+  				<div class="btn-group" role="group">
+
+    				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    					Dropdown 
+    			 			<span class="caret">
+    			 			</span> 
+    				</button>
+
+    				<ul class="dropdown-menu" role="menu">
+
+      					<li><a href="#">Dropdown link</a></li>
+
+      					<li><a href="#">Dropdown link</a></li>
+
+    				</ul>
+
+  				</div> <!--end btn-group--> <br><br>
+
+  				<div id="panelListGroupDiv" class="list-group">
+  					<a href="#" class="list-group-item"> <span class="badge"> 2 </span> Notifications</a>
+  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails</a>
+  					<a href="#" class="list-group-item"> <span class="badge"> 5 </span> Pending</a>
+ 					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
+  					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
+				</div> <!-- end panelListGroupDiv-->
+
+			</div> <!--end btn-group-->
+		</div> <!--end container-->
+
+		<footer id="foot">
+
+			<div class="container">
+
+				<div class="row">
+
+					<div class="col-sm-2">
+
+						<h6>Copyright &copy; 2015 Rego & Mzwa </h6>
+
+					</div> <!-- end col-sm-2-->
+					
+				</div> <!-- end row -->
+
+			</div> <!-- end container-->
+
+		</footer> <!-- end footer-->
+		
+		<!-- First try for the online version of jQuery-->
+		<script src="http://code.jquery.com/jquery.js"></script>
+	
+		<!-- If no online access, fallback to our hardcoded version of jQuery -->
+		<script> window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
+		<script type="text/javascript" src="/js/effects.js"></script>
+		<script type="text/javascript" src="/js/objData.js"></script>
+	
+		<!-- Bootstrap JS -->
+		<script src="/bootstrap/js/bootstrap.min.js"></script>
+	
+		<!-- Custom JS -->
+		<script src="/includes/js/script.js"></script>
+	</body>
+	
+</html>
