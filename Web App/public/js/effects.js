@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	$('#successObjAlert').hide();	//hide the successObjAlert for now
-
+//console.log("What the fuck");
 	//hide the financeForm when the page loads along with the perspectiveDiv
 	$('#financeForm').hide();
 	$('#financePerspDiv').hide();
@@ -59,7 +59,7 @@ $(document).ready(function(){
 			$('#internalPerspDiv').show(500);
 		}
 
-		else  {		
+		else if (value == 'learnSelect') {		
 			$('#financeForm').hide(500);	
 			$('#financePerspDiv').hide(500);
 			$('#customerForm').hide(500);	

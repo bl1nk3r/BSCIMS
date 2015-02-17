@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-	<head>
+	<head> 
 		
 		<!-- Website Title & Description for Search Engine purposes -->
 		<title>SEC PMS</title>
@@ -17,7 +17,9 @@
 		<link href="/includes/css/bootstrap-glyphicons.css" rel="stylesheet">
 
 		<!--AngularJS script -->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script>
+		<!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script-->
+		<script type="text/javascript" src="/js/angular.min.js"></script>
+		<script type="text/javascript" src="/js/features/controller.js"></script>
 		
 		<!-- Custom CSS -->
 		<link href="/includes/css/styles.css" rel="stylesheet">
@@ -27,11 +29,10 @@
 		
 	</head>
 
-	<body> 
+	<body ng-app="BSCIMS"> 
 	
-		<div class="container" width="900px" id="main">
-
-			<div class="navbar ">
+		<div class="container" width="900px">
+			<div class="navbar">
 
 				<ul class="nav navbar-nav pull-right" id="myAccount">
 
@@ -275,7 +276,7 @@
 
   							<div class="modal-content"> 
 
-  								<div class="modal-header">
+  								<div id="createObjModal" class="modal-header">
   							 		<button class="close" data-dismiss="modal">&times;</button>
   									<h4 class="modal-title">Create an Objective!</h4>
 
@@ -298,17 +299,17 @@
 											  
 										</div> <!-- end div objDropDown-->
 
-										<div id="financePerspDiv">
+										<div id="financePerspDiv" ng-controller="financePerspectiveController">
 
-											<form id ="financeForm" class="form-horizontal">
-												<div id="financeObjDiv" class="form-group">
+											<form class="form-horizontal">
+												<div class="form-group">
 													<label class="col-lg-2 control-label" for="financeObjDescription">
 														Objective
 													</label> <!-- end financeObjectiveDescriptionlabel-->
 
 													<div id="financeObjDivInput" class="col-lg-10">
 
-														<input class="form-control" id="financeObjDescription" placeholder="Enter the description of the objective..." type="text">
+														<input class="form-control" placeholder="Enter the description of the finance objective..." ng-model="financePerspectiveController.description">
 
 													</div> <!-- end financeObjDivInput-->
 
@@ -322,7 +323,7 @@
 
 													<div id="financeDSODivInput" class="col-lg-10">
 
-														<textarea class="form-control" id="financeDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea class="form-control" id="financeDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3" ng-model="financePerspectiveController.DSO"></textarea>
 
 													</div> <!-- end financeObjDiv-->
 
@@ -428,7 +429,7 @@
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitFinanceObjButton" class="btn btn-primary pull-right" >Submit Objective</button>
+													<button id="submitFinanceObjButton" class="btn btn-primary pull-right" ng-click="submitFinanceObjective()" >Submit Objective</button>
 													
 												</div> <!--end financeObjDiv-->
 												
@@ -442,17 +443,17 @@
 
 										</div> <!--end FinancePersp div-->
 
-										<div id="customerPerspDiv">
+										<div id="customerPerspDiv" ng-controller="customerPerspectiveController">
 
-											<form id ="customerForm" class="form-horizontal">
-												<div id="customerObjDiv" class="form-group">
+											<form class="form-horizontal">
+												<div class="form-group">
 													<label class="col-lg-2 control-label" for="customerObjDescription">
 														Objective
 													</label> <!-- end customerObjectiveDescriptionlabel-->
 
 													<div id="customerObjDivInput" class="col-lg-10">
 
-														<input class="form-control" id="customerObjDescription" placeholder="Enter the description of the objective..." type="text">
+														<input ng-model="customerPerspectiveController.description"                        id="customerObjDescription" class="form-control" placeholder="Enter the description of the customer objective..." type="text">
 
 													</div> <!-- end customerObjDivInput-->
 
@@ -466,7 +467,7 @@
 
 													<div id="customerDSODivInput" class="col-lg-10">
 
-														<textarea class="form-control" id="customerDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea ng-model="customerPerspectiveController.DSO" class="form-control"        id="customerDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
 
 													</div> <!-- end customerObjDiv-->
 
@@ -572,7 +573,7 @@
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitCustomerObjButton" class="btn btn-primary pull-right" >Submit Objective</button>
+													<button id="submitCustomerObjButton" class="btn btn-primary pull-right" ng-click="submitCustomerObjective()">Submit Objective</button>
 													
 												</div> <!--end customerObjDiv-->
 												
@@ -586,7 +587,7 @@
 
 										</div> <!--end customerPersp div-->
 
-										<div id="internalPersp">
+										<div id="internalPersp" ng-controller="internalPerspectiveController" >
 											<form id ="internalForm" class="form-horizontal">
 												<div id="internalObjDiv" class="form-group">
 													<label class="col-lg-2 control-label" for="internalObjDescription">
@@ -595,7 +596,7 @@
 
 													<div id="internalObjDivInput" class="col-lg-10">
 
-														<input class="form-control" id="internalObjDescription" placeholder="Enter the description of the objective..." type="text">
+														<input ng-model="internalPerspectiveController.description" class="form-control" id="internalObjDescription" placeholder="Enter the description of the internal objective..." type="text">
 
 													</div> <!-- end internalObjDivInput-->
 
@@ -609,7 +610,7 @@
 
 													<div id="internalDSODivInput" class="col-lg-10">
 
-														<textarea class="form-control" id="internalDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea ng-model="internalPerspectiveController.DSO" class="form-control" id="internalDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
 
 													</div> <!-- end internalObjDiv-->
 
@@ -715,7 +716,7 @@
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitInternalObjButton" class="btn btn-primary pull-right" >Submit Objective</button>
+													<button id="submitInternalObjButton" class="btn btn-primary pull-right" ng-click="submitInternalObjective()" >Submit Objective</button>
 													
 												</div> <!--end internalObjDiv-->
 												
@@ -728,7 +729,7 @@
 											</form> <!-- end internalForm-->
 										</div> <!-- end the internalPersp div-->
 
-										<div id="learnPerspDiv">
+										<div id="learnPerspDiv" ng-controller="learnPerspectiveController" >
 
 											<form id ="learnForm" class="form-horizontal">
 												<div id="learnObjDiv" class="form-group">
@@ -738,7 +739,7 @@
 
 													<div id="learnObjDivInput" class="col-lg-10">
 
-														<input class="form-control" id="learnObjDescription" placeholder="Enter the description of the objective..." type="text">
+														<input ng-model="learnPerspectiveController.description" class="form-control" id="learnObjDescription" placeholder="Enter the description of the learn objective..." type="text">
 
 													</div> <!-- end learnObjDivInput-->
 
@@ -752,7 +753,7 @@
 
 													<div id="learnDSODivInput" class="col-lg-10">
 
-														<textarea class="form-control" id="learnDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea ng-model="learnPerspectiveController.DSO" class="form-control" id="learnDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
 
 													</div> <!-- end learnObjDiv-->
 
@@ -858,7 +859,7 @@
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitlearnObjButton" onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-primary pull-right" >Submit Objective</button>
+													<button id="submitLearnObjButton" class="btn btn-primary pull-right" ng-click="submitLearnObjective()">Submit Objective</button>
 													
 												</div> <!--end learnObjDiv-->
 												
@@ -937,11 +938,12 @@
 		</footer> <!-- end footer-->
 		
 		<!-- First try for the online version of jQuery-->
-		<script src="http://code.jquery.com/jquery.js"></script>
+		<!--script src="http://code.jquery.com/jquery.js"></script-->
 	
 		<!-- If no online access, fallback to our hardcoded version of jQuery -->
 		<script> window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
 		<script type="text/javascript" src="/js/effects.js"></script>
+		
 		<script type="text/javascript" src="/js/objData.js"></script>
 	
 		<!-- Bootstrap JS -->

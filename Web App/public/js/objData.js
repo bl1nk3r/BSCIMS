@@ -10,7 +10,7 @@
 			perfOutstandDescr = $('#outstandPerfField').val(),
 			//objDuration = $().val(),
 			createdBy = "Roy Dlamini"
-			alert('Done');
+			//alert('Done');
 
 			
 			/*$('#poorPerfSelect').change(function(){
