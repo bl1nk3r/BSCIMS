@@ -4,10 +4,17 @@ var http  = require ('http') //built in module provides HTTP server and client f
    ,mime  = require ('mime') //add-on mime module provides ability to derive a MIME type based on a filename extension
    ,cache = {};				 //cache object is where the contents of cached files are stored
  
-var express = require('express'); //lightweight server framerwork
-var bodyParser = require('body-parser');  //middleware for parsing strings to JSON objects
-var under	= require('underscore');
+var express = require('express') 	//lightweight server framerwork
+   ,expressSession = require('express-session')	 //express session manager for handling logged in users
+   ,cookieParser = require('cookie-parser')	//module for parsing cookies
+   ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
+   ,favicon = require('serve-favicon')		//module for handling the application's favicon
+   ,under	= require('underscore');
+
+//instantiate the server application
 var app = express();
+
+
 //var dbConnect = require ('./public/js/connect.js'); //include the database connectivity from the connect module
 
 //Three helper functions used for serving static HTTP files
@@ -102,6 +109,16 @@ app.get("/financePerspective", function(req, res) {
 });
 
 app.post("/financePerspectiveController", function(req, res) {
+	var svc = req.body;
+	//res.send("Success");
+	db.Objectives.insert(req.body, function(err, doc) {
+		res.json(doc);
+	});
+
+	console.log(svc);
+});
+
+app.post("/financePerformanceRatingController", function(req, res) {
 	var svc = req.body;
 	//res.send("Success");
 	db.Objectives.insert(req.body, function(err, doc) {

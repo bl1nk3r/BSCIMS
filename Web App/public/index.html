@@ -47,17 +47,22 @@
 								<li class="dropdown-header">User Details</li>
 
 								<li>
-									<a href="#"><span class="glyphicon glyphicon-user"></span> Roy Dlamini</a>
+									<a href="#"><span class="glyphicon glyphicon-user"></span> Administrator </a>
 								</li>
 
+							
 								<li class="divider"></li>
+
+								<li class="dropdown-header">More</li>
+
+								<li>
 
 								<li>
 								    <a href="#"><span class="glyphicon glyphicon-wrench"></span> Preferences</a>
 								</li>
 
 								<li>
-									<a href="#"><span class="glyphicon glyphicon-off"></span> Logout</a>
+									<a href="login.html"><span class="glyphicon glyphicon-off"></span> Logout</a>
 								</li>
 
 							</ul>
@@ -119,7 +124,7 @@
 							<li class="dropdown">
 
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Objectives
+									Objectives (KPA)
 								</a>
 
 								<!--ul class="dropdown-menu">
@@ -268,7 +273,8 @@
 			<div id="quickActionsBtnGroup" class="btn-group" role="group">
 
   				<!--button type="button" class="btn btn-default">Create Objective</button-->
-  				<a data-backdrop="static" data-keyboard="false" href="#createObjModal" role="button" class="btn btn-default" data-toggle="modal"> <span class="glyphicon glyphicon-plus"></span> Create an Objective</a> 
+  				<a data-backdrop="static" data-keyboard="false" href="#createObjModal" role="button" class="btn btn-default" 
+  				data-toggle="modal"> <span class="glyphicon glyphicon-plus"></span> Create an Objective (KPA)</a> 
 
   					<div class="modal fade" id="createObjModal">
 
@@ -278,7 +284,7 @@
 
   								<div id="createObjModal" class="modal-header">
   							 		<button class="close" data-dismiss="modal">&times;</button>
-  									<h4 class="modal-title">Create an Objective!</h4>
+  									<h4 class="modal-title">Create a Key Performance Area!</h4>
 
   								</div> <!-- end createObjModal-header-->
 
@@ -309,7 +315,9 @@
 
 													<div id="financeObjDivInput" class="col-lg-10">
 
-														<input class="form-control" placeholder="Enter the description of the finance objective..." ng-model="financePerspectiveController.description">
+														<input class="form-control" 
+														placeholder="Enter the description of the finance objective..." 
+														ng-model="financePerspectiveController.description">
 
 													</div> <!-- end financeObjDivInput-->
 
@@ -323,28 +331,31 @@
 
 													<div id="financeDSODivInput" class="col-lg-10">
 
-														<textarea class="form-control" id="financeDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3" ng-model="financePerspectiveController.DSO"></textarea>
+														<textarea class="form-control" id="financeDSODescription" 
+														placeholder="Enter the Desired Standard Output..." type="text" rows="3" 
+														ng-model="financePerspectiveController.DSO"></textarea>
 
 													</div> <!-- end financeObjDiv-->
 
-													<div id="performanceRatingDiv" class="form-group">
+													<div id="performanceRatingDiv" class="form-group" >
 														<label id="performanceRatingLabel" class="col-lg-2">
-															Perfomace Rating
+															Performace Rating(KPI)
 														</label> <!-- end performanceRatingLabel-->		
 
 														<div class="col-lg-4">
-															Poor
-															<select id="poorPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
+															Poor &nbsp
+															<select id="poorPerfSelect" 
+															ng-init="financePerspectiveController.metricOne = poorOptions[0]" 
+															data-ng-model="financePerspectiveController.metricOne"   
+															data-ng-options="poor.label for poor in poorOptions">
 															</select>
 														</div>
 
 														<div id="poorPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+															<input class="form-control" id="poorPerfField" 
+															placeholder="Set the lowest achievement..." type="text"  
+															ng-model="financePerspectiveController.metricOneDef">
 														</div> <!-- end poorPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -353,18 +364,18 @@
 
 														<div class="col-lg-4">
 															Unsatisfactory
-															<select id="unsatPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
+															<select id="unsatPerfSelect" 
+															ng-init="financePerspectiveController.metricTwo = unsatOptions[0]"   data-ng-model="financePerspectiveController.metricTwo"
+															data-ng-options="unsat.label for unsat in unsatOptions">
 															</select>
 
 														</div>
 
 														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+															<input class="form-control" id="unsatPerfField" 
+															placeholder="Set the next lowest..." type="text" 
+															ng-model="financePerspectiveController.metricTwoDef">
 														</div> <!-- end unsatisfactoryPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -373,18 +384,17 @@
 
 														<div class="col-lg-4">
 															Target Met
-															<select id="targetPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
+															<select id="targetPerfSelect" 
+															ng-init="financePerspectiveController.metricThree = targetOptions[0]"data-ng-model="financePerspectiveController.metricThree"           data-ng-options="target.label for target in targetOptions">
 															</select>
 
 														</div>
 
 														<div id="targetMetPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+															<input class="form-control" id="targetPerfField" 
+															placeholder="Set the expected goal..." type="text" 
+															ng-model="financePerspectiveController.metricThreeDef">
 														</div> <!-- end targetMetPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -393,18 +403,17 @@
 
 														<div class="col-lg-4">
 															Exceeding
-															<select id="exceedPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
+															<select id="exceedPerfSelect" 
+															ng-init="financePerspectiveController.metricFour = exceedOptions[0]" data-ng-model="financePerspectiveController.metricFour"              data-ng-options="exceed.label for exceed in exceedOptions">
 															</select>
 
 														</div>
 
 														<div id="exceedingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+															<input class="form-control" id="exceedPerfField" 
+															placeholder="How far you can go..." type="text" 
+															ng-model="financePerspectiveController.metricFourDef">
 														</div> <!-- end exceedingPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -413,23 +422,23 @@
 
 														<div class="col-lg-4">
 															Outstanding
-															<select id="outstandPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
+															<select id="oustandPerfSelect" 
+															ng-init="financePerspectiveController.metricFive = outstandOptions[0]"data-ng-model="financePerspectiveController.metricFive"             data-ng-options="outstand.label for outstand in outstandOptions">
 															</select>
 
 														</div>
 
 														<div id="outstandingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+															<input class="form-control" id="outstandPerfField" 
+															placeholder="Reach for the stars..." type="text" 
+															ng-model="financePerspectiveController.metricFiveDef">
 														</div> <!-- end outstandingPerDiv-->
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitFinanceObjButton" class="btn btn-primary pull-right" ng-click="submitFinanceObjective()" >Submit Objective</button>
+													<button id="submitFinanceObjButton" class="btn btn-primary pull-right" 
+													ng-click="submitFinanceObjective()" >Submit Objective</button>
 													
 												</div> <!--end financeObjDiv-->
 												
@@ -453,7 +462,9 @@
 
 													<div id="customerObjDivInput" class="col-lg-10">
 
-														<input ng-model="customerPerspectiveController.description"                        id="customerObjDescription" class="form-control" placeholder="Enter the description of the customer objective..." type="text">
+														<input ng-model="customerPerspectiveController.description"              id="customerObjDescription" class="form-control" 
+														placeholder="Enter the description of the customer objective..." 
+														type="text">
 
 													</div> <!-- end customerObjDivInput-->
 
@@ -467,7 +478,9 @@
 
 													<div id="customerDSODivInput" class="col-lg-10">
 
-														<textarea ng-model="customerPerspectiveController.DSO" class="form-control"        id="customerDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea ng-model="customerPerspectiveController.DSO" 
+														class="form-control"        id="customerDSODescription" 
+														placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
 
 													</div> <!-- end customerObjDiv-->
 
@@ -478,17 +491,17 @@
 
 														<div class="col-lg-4">
 															Poor
-															<select id="poorPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
+															<select id="poorPerfSelect" 
+															ng-init="customerPerspectiveController.metricOne = poorOptions[0]" 
+															data-ng-model="customerPerspectiveController.metricOne"              
+															data-ng-options="poor.label for poor in poorOptions">
 															</select>
 														</div>
 
 														<div id="poorPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+															<input ng-model="customerPerspectiveController.metricOneDef" 
+															class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" >
 														</div> <!-- end poorPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -497,18 +510,19 @@
 
 														<div class="col-lg-4">
 															Unsatisfactory
-															<select id="unsatPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
+															<select id="unsatPerfSelect" 
+															ng-init="customerPerspectiveController.metricTwo = unsatOptions[0]" 
+															data-ng-model="customerPerspectiveController.metricTwo"            
+															data-ng-options="unsat.label for unsat in unsatOptions">
 															</select>
 
 														</div>
 
 														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+															<input ng-model="customerPerspectiveController.metricTwoDef" 
+															class="form-control" id="unsatPerfField" 
+															placeholder="Set the next lowest..." type="text">
 														</div> <!-- end unsatisfactoryPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -517,18 +531,18 @@
 
 														<div class="col-lg-4">
 															Target Met
-															<select id="targetPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
+															<select id="targetPerfSelect" 
+															ng-init="customerPerspectiveController.metricThree = targetOptions[0]"  data-ng-model="customerPerspectiveController.metricThree"          
+															data-ng-options="target.label for target in targetOptions">
 															</select>
 
 														</div>
 
 														<div id="targetMetPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+															<input ng-model="customerPerspectiveController.metricThreeDef" 
+															class="form-control" id="targetPerfField" 
+															placeholder="Set the expected goal..." type="text">
 														</div> <!-- end targetMetPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -537,18 +551,19 @@
 
 														<div class="col-lg-4">
 															Exceeding
-															<select id="exceedPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
+															<select id="exceedPerfSelect" 
+															ng-init="customerPerspectiveController.metricFour = exceedOptions[0]" 
+															data-ng-model="customerPerspectiveController.metricFour"          
+															data-ng-options="exceed.label for exceed in exceedOptions">
 															</select>
 
 														</div>
 
 														<div id="exceedingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+															<input ng-model="customerPerspectiveController.metricFourDef" 
+															class="form-control" id="exceedPerfField" 
+															placeholder="How far you can go..." type="text">
 														</div> <!-- end exceedingPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -557,23 +572,25 @@
 
 														<div class="col-lg-4">
 															Outstanding
-															<select id="outstandPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
+															<select id="outstandPerfSelect" 
+															ng-init="customerPerspectiveController.metricFive= outstandOptions[0]"
+												            data-ng-model="customerPerspectiveController.metricFive"       
+															data-ng-options="outstand.label for outstand in outstandOptions">
 															</select>
 
 														</div>
 
 														<div id="outstandingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+															<input ng-model="customerPerspectiveController.metricFiveDef" 
+															class="form-control" id="outstandPerfField" 
+															placeholder="Reach for the stars..." type="text">
 														</div> <!-- end outstandingPerDiv-->
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitCustomerObjButton" class="btn btn-primary pull-right" ng-click="submitCustomerObjective()">Submit Objective</button>
+													<button id="submitCustomerObjButton" class="btn btn-primary pull-right" 
+													ng-click="submitCustomerObjective()">Submit Objective</button>
 													
 												</div> <!--end customerObjDiv-->
 												
@@ -596,7 +613,10 @@
 
 													<div id="internalObjDivInput" class="col-lg-10">
 
-														<input ng-model="internalPerspectiveController.description" class="form-control" id="internalObjDescription" placeholder="Enter the description of the internal objective..." type="text">
+														<input ng-model="internalPerspectiveController.description" 
+														class="form-control" id="internalObjDescription" 
+														placeholder="Enter the description of the internal objective..." 
+														type="text">
 
 													</div> <!-- end internalObjDivInput-->
 
@@ -610,7 +630,10 @@
 
 													<div id="internalDSODivInput" class="col-lg-10">
 
-														<textarea ng-model="internalPerspectiveController.DSO" class="form-control" id="internalDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea ng-model="internalPerspectiveController.DSO" 
+														class="form-control" id="internalDSODescription" 
+														placeholder="Enter the Desired Standard Output..." 
+														type="text" rows="3"></textarea>
 
 													</div> <!-- end internalObjDiv-->
 
@@ -621,17 +644,18 @@
 
 														<div class="col-lg-4">
 															Poor
-															<select id="poorPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
+															<select id="poorPerfSelect" 
+															ng-init="internalPerspectiveController.metricOne = poorOptions[0]" 
+															data-ng-model="internalPerspectiveController.metricOne"              
+															data-ng-options="poor.label for poor in poorOptions">
 															</select>
 														</div>
 
 														<div id="poorPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+															<input ng-model="internalPerspectiveController.metricOneDef" 
+															class="form-control" id="poorPerfField" 
+															placeholder="Set the lowest achievement..." type="text">
 														</div> <!-- end poorPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -640,18 +664,19 @@
 
 														<div class="col-lg-4">
 															Unsatisfactory
-															<select id="unsatPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
+															<select id="unsatPerfSelect" 
+															ng-init="internalPerspectiveController.metricTwo = unsatOptions[0]" 
+															data-ng-model="internalPerspectiveController.metricTwo"            
+															data-ng-options="unsat.label for unsat in unsatOptions">
 															</select>
 
 														</div>
 
 														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+															<input ng-model="internalPerspectiveController.metricTwoDef" 
+															class="form-control" id="unsatPerfField" 
+															placeholder="Set the next lowest..." type="text">
 														</div> <!-- end unsatisfactoryPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -660,18 +685,19 @@
 
 														<div class="col-lg-4">
 															Target Met
-															<select id="targetPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
+															<select id="targetPerfSelect" 
+															ng-init="internalPerspectiveController.metricThree =targetOptions[0]" 
+															data-ng-model="internalPerspectiveController.metricThree"          
+															data-ng-options="target.label for target in targetOptions">
 															</select>
 
 														</div>
 
 														<div id="targetMetPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+															<input ng-model="internalPerspectiveController.metricThreeDef" 
+															class="form-control" id="targetPerfField" 
+															placeholder="Set the expected goal..." type="text">
 														</div> <!-- end targetMetPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -680,18 +706,18 @@
 
 														<div class="col-lg-4">
 															Exceeding
-															<select id="exceedPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
+															<select id="exceedPerfSelect" 
+															ng-init="internalPerspectiveController.metricFour = exceedOptions[0]" data-ng-model="internalPerspectiveController.metricFour"          
+															data-ng-options="exceed.label for exceed in exceedOptions">
 															</select>
 
 														</div>
 
 														<div id="exceedingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+															<input ng-model="internalPerspectiveController.metricFourDef" 
+															class="form-control" id="exceedPerfField" 
+															placeholder="How far you can go..." type="text">
 														</div> <!-- end exceedingPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -700,23 +726,25 @@
 
 														<div class="col-lg-4">
 															Outstanding
-															<select id="outstandPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
+															<select id="outstandPerfSelect" 
+															ng-init="internalPerspectiveController.metricFive =outstandOptions[0]"
+															data-ng-model="internalPerspectiveController.metricFive"
+															data-ng-options="outstand.label for outstand in outstandOptions">
 															</select>
 
 														</div>
 
 														<div id="outstandingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+															<input ng-model="internalPerspectiveController.metricFiveDef" 
+															class="form-control" id="outstandPerfField" 
+															placeholder="Reach for the stars..." type="text">
 														</div> <!-- end outstandingPerDiv-->
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitInternalObjButton" class="btn btn-primary pull-right" ng-click="submitInternalObjective()" >Submit Objective</button>
+													<button id="submitInternalObjButton" class="btn btn-primary pull-right" 
+													ng-click="submitInternalObjective()" >Submit Objective</button>
 													
 												</div> <!--end internalObjDiv-->
 												
@@ -739,7 +767,9 @@
 
 													<div id="learnObjDivInput" class="col-lg-10">
 
-														<input ng-model="learnPerspectiveController.description" class="form-control" id="learnObjDescription" placeholder="Enter the description of the learn objective..." type="text">
+														<input ng-model="learnPerspectiveController.description" 
+														class="form-control" id="learnObjDescription" 
+														placeholder="Enter the description of the learn objective..." type="text">
 
 													</div> <!-- end learnObjDivInput-->
 
@@ -753,7 +783,9 @@
 
 													<div id="learnDSODivInput" class="col-lg-10">
 
-														<textarea ng-model="learnPerspectiveController.DSO" class="form-control" id="learnDSODescription" placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+														<textarea ng-model="learnPerspectiveController.DSO" 
+														class="form-control" id="learnDSODescription" 
+														placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
 
 													</div> <!-- end learnObjDiv-->
 
@@ -764,17 +796,18 @@
 
 														<div class="col-lg-4">
 															Poor
-															<select id="poorPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
-																<option value="">>15% budget variance</option>
+															<select id="poorPerfSelect" 
+															ng-init="learnPerspectiveController.metricOne =poorOptions[0]" 
+															data-ng-model="learnPerspectiveController.metricOne"             
+															data-ng-options="poor.label for poor in poorOptions">
 															</select>
 														</div>
 
 														<div id="poorPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="poorPerfField" placeholder="Set the lowest achievement..." type="text" rows="1"></textarea>
+															<input ng-model="learnPerspectiveController.metricOneDef" 
+															class="form-control" id="poorPerfField" 
+															placeholder="Set the lowest achievement..." type="text">
 														</div> <!-- end poorPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -783,18 +816,19 @@
 
 														<div class="col-lg-4">
 															Unsatisfactory
-															<select id="unsatPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
-																<option value="">>10% budget variance</option>
+															<select id="unsatPerfSelect" 
+															ng-init="learnPerspectiveController.metricTwo = unsatOptions[0]" 
+															data-ng-model="learnPerspectiveController.metricTwo"            
+															data-ng-options="unsat.label for unsat in unsatOptions">
 															</select>
 
 														</div>
 
 														<div id="unsatisfactoryPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="unsatPerfField" placeholder="Set the next lowest..." type="text" rows="1"></textarea>
+															<input ng-model="learnPerspectiveController.metricTwoDef" 
+															class="form-control" id="unsatPerfField" 
+															placeholder="Set the next lowest..." type="text">
 														</div> <!-- end unsatisfactoryPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -803,18 +837,19 @@
 
 														<div class="col-lg-4">
 															Target Met
-															<select id="targetPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
-																<option value=""><b>10% budget variance</b></option>
+															<select id="targetPerfSelect" 
+															ng-init="learnPerspectiveController.metricThree = targetOptions[0]" 
+															data-ng-model="learnPerspectiveController.metricThree"          
+															data-ng-options="target.label for target in targetOptions">
 															</select>
 
 														</div>
 
 														<div id="targetMetPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="targetPerfField" placeholder="Set the expected goal..." type="text" rows="1"></textarea>
+															<input ng-model="learnPerspectiveController.metricThreeDef" 
+															class="form-control" id="targetPerfField" 
+															placeholder="Set the expected goal..." type="text">
 														</div> <!-- end targetMetPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -823,18 +858,19 @@
 
 														<div class="col-lg-4">
 															Exceeding
-															<select id="exceedPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
-																<option value=""><5% budget variance</option>
+															<select id="exceedPerfSelect" 
+															ng-init="learnPerspectiveController.metricFour = exceedOptions[0]" 
+															data-ng-model="learnPerspectiveController.metricFour"          
+															data-ng-options="exceed.label for exceed in exceedOptions">
 															</select>
 
 														</div>
 
 														<div id="exceedingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="exceedPerfField" placeholder="How far you can go..." type="text" rows="1"></textarea>
+															<input ng-model="learnPerspectiveController.metricFourDef" 
+															class="form-control" id="exceedPerfField" 
+															placeholder="How far you can go..." type="text">
 														</div> <!-- end exceedingPerDiv-->
 
 														<label id="performanceRatingLabel" class="col-lg-2">
@@ -843,27 +879,31 @@
 
 														<div class="col-lg-4">
 															Outstanding
-															<select id="outstandPerfSelect">
-																<option value="default">-Select metric</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
-																<option value="0% budget variance">0% budget variance</option>
+															<select id="outstandPerfSelect" 
+															ng-init="learnPerspectiveController.metricFive = outstandOptions[0]" 
+															data-ng-model="learnPerspectiveController.metricFive"       
+															data-ng-options="outstand.label for outstand in outstandOptions">
 															</select>
 
 														</div>
 
 														<div id="outstandingPerfDiv" class="col-lg-6">
 															Define:
-															<textarea class="form-control" id="outstandPerfField" placeholder="Reach for the stars..." type="text" rows="1"></textarea>
+															<input ng-model="learnPerspectiveController.metricFiveDef" 
+															class="form-control" id="outstandPerfField" 
+															placeholder="Reach for the stars..." type="text">
 														</div> <!-- end outstandingPerDiv-->
 
 													</div> <!--end performanceRatingDiv -->
 
-													<button id="submitLearnObjButton" class="btn btn-primary pull-right" ng-click="submitLearnObjective()">Submit Objective</button>
+													<button id="submitLearnObjButton" class="btn btn-primary pull-right" 
+													ng-click="submitLearnObjective()">Submit Objective</button>
 													
 												</div> <!--end learnObjDiv-->
 												
-												<div class="alert alert-success alert-block fade in" onclick="$('#createObjModal').modal({'backdrop': 'static'});" id="successLearnObjAlert">
+												<div class="alert alert-success alert-block fade in" 
+												onclick="$('#createObjModal').modal({'backdrop': 'static'});" 
+												id="successLearnObjAlert">
 													<button type="button" class="close" data-dismiss="alert">&times;</button>
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
