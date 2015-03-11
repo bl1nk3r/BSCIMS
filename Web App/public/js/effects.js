@@ -1,7 +1,9 @@
 $(document).ready(function(){
 
-	$('#successObjAlert').hide();	//hide the successObjAlert for now
-//console.log("What the fuck");
+	$('#successObjAlert1').hide();	//hide the successObjAlert for now
+	$('#successObjAlert2').hide();	//hide the successObjAlert for now
+	$('#successObjAlert3').hide();	//hide the successObjAlert for now
+	$('#successObjAlert4').hide();	//hide the successObjAlert for now
 	//hide the financeForm when the page loads along with the perspectiveDiv
 	$('#financeForm').hide();
 	$('#financePerspDiv').hide();
@@ -73,10 +75,3 @@ $(document).ready(function(){
 		}
 	});
 });
-
-/*$('#submitObjButton').click(function(){
-	//f.preventDefault();
-	$('#successObjAlert').slideDown();
-	$('#successObjAlert').fade(2000);
-
-});*/

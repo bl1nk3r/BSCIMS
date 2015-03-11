@@ -10,6 +10,7 @@ var express = require('express') 	//lightweight server framerwork
    ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')		//module for handling the application's favicon
    ,under	= require('underscore');
+   //,daemon = require('nodemon')
 
 //instantiate the server application
 var app = express();
@@ -221,4 +222,5 @@ app.delete("/learnPerspectiveController/:id", function(req, res) {
 console.log("Server initialized on port 3000...");
 
 //Wait for a connection on port '3000' (idle port in this case)
-app.listen(3000);
+//app.listen(3000);
+module.exports = app;

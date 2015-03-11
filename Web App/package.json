@@ -18,7 +18,13 @@
 		"serve-favicon": "latest",
 		"serve-favicon": "latest",
 		"mime": "latest",
-		"underscore": "latest"
+		"underscore": "latest",
+		"nodemon": "latest",
+		"debug": "latest"
+	},
+	"scripts":
+	{
+		"start": "nodemon ./bin/www"
 	},
 	"repository": 
 	 {
@@ -32,4 +38,3 @@
 	}
 
 }
- 

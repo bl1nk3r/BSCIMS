@@ -42,6 +42,7 @@ app.controller('financePerspectiveController', function($scope, $http) {
 	    	$http.post("/financePerspectiveController", $scope.financePerspectiveController)
 	    	.success(function(resp){
 	    		console.log(resp);
+	    		$('#successObjAlert1').slideDown();
 	    	});
 	    };	
 
@@ -106,6 +107,7 @@ app.controller('customerPerspectiveController', function($scope, $http) {
 	    	$http.post("/customerPerspectiveController", $scope.customerPerspectiveController)
 	    	.success(function(resp){
 	    		console.log(resp);
+	    		$('#successObjAlert2').slideDown();
 	    	});
 	    };	
 
@@ -169,6 +171,8 @@ app.controller('learnPerspectiveController', function($scope, $http) {
 	    	$http.post("/learnPerspectiveController", $scope.learnPerspectiveController)
 	    	.success(function(resp){
 	    		console.log(resp);
+	    		$('#successObjAlert4').slideDown();
+
 	    	});
 	    };	
 
@@ -231,6 +235,7 @@ app.controller('internalPerspectiveController', function($scope, $http) {
 	    	$http.post("/internalPerspectiveController", $scope.internalPerspectiveController)
 	    	.success(function(resp){
 	    		console.log(resp);
+	    		$('#successObjAlert3').slideDown();
 	    	});
 	    };	
 

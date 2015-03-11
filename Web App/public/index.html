@@ -4,7 +4,8 @@
 	<head> 
 		
 		<!-- Website Title & Description for Search Engine purposes -->
-		<title>SEC PMS</title>
+		<title>BSCIMS</title>
+		<base href="/"> 
 		<meta name="description" content="">
 
 		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
@@ -315,7 +316,7 @@
 
 													<div id="financeObjDivInput" class="col-lg-10">
 
-														<input class="form-control" 
+														<input id="financeObjDescr" class="form-control" 
 														placeholder="Enter the description of the finance objective..." 
 														ng-model="financePerspectiveController.description">
 
@@ -442,7 +443,7 @@
 													
 												</div> <!--end financeObjDiv-->
 												
-												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+												<div class="alert alert-success alert-block fade in" id="successObjAlert1">
 													<button type="button" class="close" data-dismiss="alert">&times;</button>
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
@@ -594,7 +595,7 @@
 													
 												</div> <!--end customerObjDiv-->
 												
-												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+												<div class="alert alert-success alert-block fade in" id="successObjAlert2">
 													<button type="button" class="close" data-dismiss="alert"> &times; </button>
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
@@ -748,7 +749,7 @@
 													
 												</div> <!--end internalObjDiv-->
 												
-												<div class="alert alert-success alert-block fade in" id="successObjAlert">
+												<div class="alert alert-success alert-block fade in" id="successObjAlert3">
 													<button type="button" class="close" data-dismiss="alert">&times;</button>
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
@@ -903,7 +904,7 @@
 												
 												<div class="alert alert-success alert-block fade in" 
 												onclick="$('#createObjModal').modal({'backdrop': 'static'});" 
-												id="successLearnObjAlert">
+												id="successObjAlert4">
 													<button type="button" class="close" data-dismiss="alert">&times;</button>
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
@@ -918,7 +919,8 @@
   								<div class="modal-footer">
 
   									<button onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-ok"></span> Save Objectives</button>
-  									<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
+  									<button class="btn btn-default" type="button" data-dismiss="modal"> <span 
+  									class="glyphicon glyphicon-remove"></span> Close</button>
   									
   								</div> <!-- end modal-footer-->
 
@@ -929,13 +931,12 @@
   					</div> <!-- end createObjModal-->
 
   				<button type="button" class="btn btn-default">Submit Objectives</button>
-
+  					<!-- Drop in another MODAL-->
   				<div class="btn-group" role="group">
 
-    				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-    					Dropdown 
-    			 			<span class="caret">
-    			 			</span> 
+    				<button type="button" class="btn btn-default "  aria-expanded="false">
+    					Compile Performance Contract 
+    					<!-- Drop in another MODAL--> 
     				</button>
 
     				<ul class="dropdown-menu" role="menu">
