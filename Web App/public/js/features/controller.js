@@ -1,10 +1,21 @@
  //using $scope to bind data models from the UI to the angular script (interchangeably)
-var app = angular.module('BSCIMS', []);
+var bsc = angular.module('BSCIMS', []);
+
+/**************************************************************************************
+		Global Services
+**************************************************************************************/
+ bsc.service('allObjectives', ['$http', '$q',function($http, $q){
+		this.objectives = null;
+
+		this.getObjectives = function () {
+			return $http.get('/getAllObjectives');
+		}
+	}]);
 
 /*********************************************************
 		Finance Perspective Angular Controller
 **********************************************************/
-app.controller('financePerspectiveController', function($scope, $http) {
+bsc.controller('financePerspectiveController', function($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -38,10 +49,11 @@ app.controller('financePerspectiveController', function($scope, $http) {
   					         ];
 
 		$scope.submitFinanceObjective = function() {
-			console.log($scope.financePerspectiveController);
 	    	$http.post("/financePerspectiveController", $scope.financePerspectiveController)
 	    	.success(function(resp){
-	    		console.log(resp);
+	    		//console.log(resp);
+	    		$scope.Objective = resp;
+	    		console.log($scope.Objective);
 	    		$('#successObjAlert1').slideDown();
 	    	});
 	    };	
@@ -50,10 +62,15 @@ app.controller('financePerspectiveController', function($scope, $http) {
 			$scope.financePerspective = response;
 		};
 
-		$scope.retrieve = function() {
-			$http.get("/financePerspective")
-			.success($scope.renderFinancePerspective);
+		$scope.retrieveFinanceObjectives = function() {
+			$http.get("/retrieveFinanceObjectives")
+			.success(function(res, err) {
+				if (err) {console.log(err);}
+				console.log(res);
+			});
+			//.success($scope.renderFinancePerspective);
 		};
+
 
 		$scope.removeFinanceObjective = function(id) {
 			$http.delete("/financePerspectiveController" + id)
@@ -68,7 +85,7 @@ app.controller('financePerspectiveController', function($scope, $http) {
 /*********************************************************
 		Customer Perspective Angular Controller
 **********************************************************/
-app.controller('customerPerspectiveController', function($scope, $http) {
+bsc.controller('customerPerspectiveController', function($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -106,7 +123,7 @@ app.controller('customerPerspectiveController', function($scope, $http) {
 			console.log($scope.customerPerspectiveController);
 	    	$http.post("/customerPerspectiveController", $scope.customerPerspectiveController)
 	    	.success(function(resp){
-	    		console.log(resp);
+	    		//console.log(resp);
 	    		$('#successObjAlert2').slideDown();
 	    	});
 	    };	
@@ -132,7 +149,7 @@ app.controller('customerPerspectiveController', function($scope, $http) {
 /*********************************************************
 	Learning & Growth Perspective Angular Controller
 **********************************************************/
-app.controller('learnPerspectiveController', function($scope, $http) {
+bsc.controller('learnPerspectiveController', function($scope, $http) {
 
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -170,7 +187,7 @@ app.controller('learnPerspectiveController', function($scope, $http) {
 			console.log($scope.learnPerspectiveController);
 	    	$http.post("/learnPerspectiveController", $scope.learnPerspectiveController)
 	    	.success(function(resp){
-	    		console.log(resp);
+	    		//console.log(resp);
 	    		$('#successObjAlert4').slideDown();
 
 	    	});
@@ -197,7 +214,7 @@ app.controller('learnPerspectiveController', function($scope, $http) {
 /*********************************************************
 	Internal Business Perspective Angular Controller
 **********************************************************/
-app.controller('internalPerspectiveController', function($scope, $http) {
+bsc.controller('internalPerspectiveController', function($scope, $http) {
 	
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -234,7 +251,7 @@ app.controller('internalPerspectiveController', function($scope, $http) {
 			console.log($scope.internalPerspectiveController);
 	    	$http.post("/internalPerspectiveController", $scope.internalPerspectiveController)
 	    	.success(function(resp){
-	    		console.log(resp);
+	    		//console.log(resp);
 	    		$('#successObjAlert3').slideDown();
 	    	});
 	    };	
@@ -256,3 +273,20 @@ app.controller('internalPerspectiveController', function($scope, $http) {
 			});
 		};
 });
+
+bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function(allObjectives,$scope, $rootScope,$http) {
+
+	$scope.retrieveObjectives = function() {
+			allObjectives.getObjectives()
+			.success(function(res) {
+				$scope.allObjectives = res;
+				console.log(res);
+			})
+			.error(function () {
+				console.log('There is an error');
+			});		
+	}
+
+	//$scope.test = "bristo";
+
+}]);

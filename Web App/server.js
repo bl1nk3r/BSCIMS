@@ -13,8 +13,8 @@ var express = require('express') 	//lightweight server framerwork
    //,daemon = require('nodemon')
 
 //instantiate the server application
-var app = express();
-
+var bsc = express();
+ 
 
 //var dbConnect = require ('./public/js/connect.js'); //include the database connectivity from the connect module
 
@@ -92,24 +92,56 @@ var port = "27017";
 var db = mongojs("BSCIMS", ["Objectives"]);
 
 //Direct the Express server to the 'public' folder containing static app files
-app.use(express.static(__dirname + '/public'));
+bsc.use(express.static(__dirname + '/public'));
 
 //Invoke all the extensions that Express will need to parse the app's body
-app.use(bodyParser.urlencoded({ extended: false}));
-app.use(bodyParser.json());
-app.use(bodyParser.text());
-app.use(bodyParser.raw());
+bsc.use(bodyParser.urlencoded({ extended: false}));
+bsc.use(bodyParser.json());
+bsc.use(bodyParser.text());
+bsc.use(bodyParser.raw());
 
 /**************************************************************************
 	Server operations for Finance Perspective Objectives
 **************************************************************************/
-app.get("/financePerspective", function(req, res) {
+/*bsc.get("/financePerspective", function(req, res) {
+	db.Objectives.find(function(err, docs) {
+		res.json(docs);
+	});
+});*/
+
+bsc.get("/retrieveFinanceObjectives", function(req, res) {
 	db.Objectives.find(function(err, docs) {
 		res.json(docs);
 	});
 });
 
-app.post("/financePerspectiveController", function(req, res) {
+bsc.get("/getAllObjectives", function(req, res) {
+	db.Objectives.find(function(err, docs) {
+		if (err) {
+			console.log("There is an error");
+		} else {
+			res.json(docs);
+			console.log("Results are : ");
+			console.log(docs);
+		}
+		
+	});
+});
+
+
+
+bsc.post("/financePerspectiveController", function(req, res) {
+	var svc = req.body;
+	//res.send("Success");
+	db.Objectives.insert(req.body, function(err, doc) {
+		res.json(doc);
+		console.log(doc);
+	});
+
+	console.log(svc);
+});
+
+bsc.post("/financePerformanceRatingController", function(req, res) {
 	var svc = req.body;
 	//res.send("Success");
 	db.Objectives.insert(req.body, function(err, doc) {
@@ -119,17 +151,7 @@ app.post("/financePerspectiveController", function(req, res) {
 	console.log(svc);
 });
 
-app.post("/financePerformanceRatingController", function(req, res) {
-	var svc = req.body;
-	//res.send("Success");
-	db.Objectives.insert(req.body, function(err, doc) {
-		res.json(doc);
-	});
-
-	console.log(svc);
-});
-
-app.delete("/financePerspectiveController/:id", function(req, res) {
+bsc.delete("/financePerspectiveController/:id", function(req, res) {
 	var id = req.params.id;
 	console.log(id);
 	db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
@@ -140,13 +162,13 @@ app.delete("/financePerspectiveController/:id", function(req, res) {
 /**************************************************************************
 	Server operations for Customer Perspective Objectives
 **************************************************************************/
-app.get("/customerPerspective", function(req, res) {
+bsc.get("/customerPerspective", function(req, res) {
 	db.Objectives.find(function(err, docs) {
 		res.json(docs);
 	});
 });
 
-app.post("/customerPerspectiveController", function(req, res) {
+bsc.post("/customerPerspectiveController", function(req, res) {
 	var svc = req.body;
 	//res.send("Success");
 	db.Objectives.insert(req.body, function(err, doc) {
@@ -156,7 +178,7 @@ app.post("/customerPerspectiveController", function(req, res) {
 	console.log(svc);
 });
 
-app.delete("/customerPerspectiveController/:id", function(req, res) {
+bsc.delete("/customerPerspectiveController/:id", function(req, res) {
 	var id = req.params.id;
 	console.log(id);
 	db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
@@ -167,13 +189,13 @@ app.delete("/customerPerspectiveController/:id", function(req, res) {
 /**************************************************************************
 	Server operations for Internal Business Perspective Objectives
 **************************************************************************/
-app.get("/internalPerspective", function(req, res) {
+bsc.get("/internalPerspective", function(req, res) {
 	db.Objectives.find(function(err, docs) {
 		res.json(docs);
 	});
 });
 
-app.post("/internalPerspectiveController", function(req, res) {
+bsc.post("/internalPerspectiveController", function(req, res) {
 	var svc = req.body;
 	//res.send("Success");
 	db.Objectives.insert(req.body, function(err, doc) {
@@ -183,7 +205,7 @@ app.post("/internalPerspectiveController", function(req, res) {
 	console.log(svc);
 });
 
-app.delete("/internalPerspectiveController/:id", function(req, res) {
+bsc.delete("/internalPerspectiveController/:id", function(req, res) {
 	var id = req.params.id;
 	console.log(id);
 	db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
@@ -194,13 +216,13 @@ app.delete("/internalPerspectiveController/:id", function(req, res) {
 /**************************************************************************
 	Server operations for Learn & Growth Perspective Objectives
 **************************************************************************/
-app.get("/learnPerspective", function(req, res) {
+bsc.get("/learnPerspective", function(req, res) {
 	db.Objectives.find(function(err, docs) {
 		res.json(docs);
 	});
 });
 
-app.post("/learnPerspectiveController", function(req, res) {
+bsc.post("/learnPerspectiveController", function(req, res) {
 	var svc = req.body;
 	//res.send("Success");
 	db.Objectives.insert(req.body, function(err, doc) {
@@ -210,7 +232,7 @@ app.post("/learnPerspectiveController", function(req, res) {
 	console.log(svc);
 });
 
-app.delete("/learnPerspectiveController/:id", function(req, res) {
+bsc.delete("/learnPerspectiveController/:id", function(req, res) {
 	var id = req.params.id;
 	console.log(id);
 	db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
@@ -219,8 +241,8 @@ app.delete("/learnPerspectiveController/:id", function(req, res) {
 });
 
 //Log on the console the 'init' of the server
-console.log("Server initialized on port 3000...");
+console.log("Server initialized on port 3002...");
 
 //Wait for a connection on port '3000' (idle port in this case)
-//app.listen(3000);
-module.exports = app;
+//bsc.listen(3000);
+module.exports = bsc;
