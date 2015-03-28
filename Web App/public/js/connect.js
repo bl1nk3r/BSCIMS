@@ -11,4 +11,3 @@ db.open(function(error){
 		console.log("We have the collection Division");
 	});
 });
-

@@ -10,7 +10,11 @@ var bsc = angular.module('BSCIMS', []);
 		this.getObjectives = function () {
 			return $http.get('/getAllObjectives');
 		}
-	}]);
+	}])
+
+ 	.controller('allObjectivesCtrl', ['allObjectives', '$scope', function(allObjectives, $scope){
+ 		$scope.allObjectives = allObjectives;
+ 	}]);
 
 /*********************************************************
 		Finance Perspective Angular Controller

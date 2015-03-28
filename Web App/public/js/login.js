@@ -29,7 +29,7 @@ $(document).ready(function(){
     /*if(form.firstname.value == (data.Login) && form.pwd.value == (data.Pass))*/
     if((login == "admin") && (password == "admin"))
     {
-       window.open('index.html'); /*opens the target page while Id & password matches*/
+       window.open('main.html'); /*opens the target page while Id & password matches*/
     }
     else
     {
