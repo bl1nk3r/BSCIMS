@@ -9,7 +9,7 @@ var http  = require ('http') //built in module provides HTTP server and client f
    ,cache = {};				 //cache object is where the contents of cached files are stored
  
 var express = require('express') 	//lightweight server framerwork
-   ,expressSession = require('express-session')	 //express session manager for handling logged in users
+   ,userSession = require('client-sessions')	 //client session manager for handling logged in users
    ,cookieParser = require('cookie-parser')	//module for parsing cookies
    ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')		//module for handling the application's favicon
@@ -24,7 +24,7 @@ var mongojs = require("mongojs")
 //init BSCIMS (database) and Objectives (collection)
     ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Transaction","Document"]);
 
-//instantiate the server application
+//instantiate the server application 
 var bsc = express()
 //Direct the Express server to the 'public' folder containing static app files
    .use(express.static(__dirname + '/public'))
@@ -35,6 +35,64 @@ var bsc = express()
    .use(bodyParser.text())
    .use(bodyParser.raw())
 
+//Session handler middleware with basic configurations
+   .use(userSession({
+   		cookieName: 'userSession',
+   		secret: 'qwertyasdfg',			//random, high-entropy string for cookie encryption
+   		duration: 30 * 60 * 1000,		//defines how long the session will live in milliseconds (after duration, cookie will be reset)
+   		activeDuration: 5 * 60 * 1000	//increase duration by interacting with site (5 minutes in our case)
+   }))
+
+//login route that checks database for user record and verifies password (nothing stored in cookie)
+	.post('/login', function(req, res) {
+		db.Employees.findOne({ EmpName: req.userName}, function(err, emp) {
+			if (!emp) {
+				//res.render('index.html',)
+				console.log('Invalid Login!!!');
+			}	else {
+				if (req.body.password === emp.password) {
+					res.redirect('/main');
+				}	else {
+					res.render ()
+					console.log('Your password is fucked up!!!');
+				}
+			}
+		})
+	})
+
+	.use(function(req, res, next) {
+		if (req.userSession && req.userSession.emp) {
+			Employees.findOne({ userName: req.userSession.emp.useName}, function(err, emp) {
+				if (emp) {
+					req.emp = emp;
+					delete req.emp.password; 		//delete the password from the session
+					req.userSession.emp = emp;
+					res.locals.emp = user;
+				}
+				//finishing processing the middleware and run the route
+				next();
+			});
+		}	else {
+			next();
+		}
+	})
+
+	.get('/logout', function(req, res) {
+		req.userSession.reser();
+		res.redirect('/');
+	});
+
+function requireLogin (req, res, next) {
+	if (!req.emp) {
+		res.redirect('index');
+	}	else {
+		next();
+	}
+};
+
+
+
+
 /**************************************************************************
 	Server operations for Finance Perspective Objectives
 **************************************************************************/
@@ -44,7 +102,7 @@ var bsc = express()
 	});
 });*/
 
-   .get("/retrieveFinanceObjectives", function(req, res) {
+   bsc.get("/retrieveFinanceObjectives", function(req, res) {
 		db.Objectives.find(function(err, docs) {
 			res.json(docs);
 		});
