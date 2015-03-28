@@ -1,40 +1,37 @@
 {
-	"name": "BSCIMS",
-	"version": "1.0.0",
-	"author": 
-	{
-		"name": "Jose Rego : 140226",
-		"email": "jay.rego.14@gmail.com"
-	},
-	"private": true,
-	"main": "server.js",
-	"config": { "port": "3000"},
-	"dependencies": 
-	{
-		"express": "latest",
-		"body-parser": "latest",
-		"express-session": "latest",
-		"cookie-parser": "latest",
-		"serve-favicon": "latest",
-		"serve-favicon": "latest",
-		"mime": "latest",
-		"underscore": "latest",
-		"nodemon": "latest",
-		"debug": "latest"
-	},
-	"scripts":
-	{
-		"start": "nodemon ./bin/www"
-	},
-	"repository": 
-	 {
-		"type": "git",
-		"url": "https://github.com/bl1nk3r/BSCIMS.git"		
-	 },
-	"engines": 
-		{ 
-		"node": "0.10.36", 
-		"npm": "1.4.28"
-	}
-
+  "name": "BSCIMS",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jose Rego : 140226",
+    "email": "jay.rego.14@gmail.com"
+  },
+  "private": true,
+  "main": "server.js",
+  "config": {
+    "port": "3000"
+  },
+  "dependencies": {
+    "annyang": "^1.0.1",
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "debug": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "mime": "latest",
+    "nodemon": "latest",
+    "sendgrid": "^1.6.0",
+    "serve-favicon": "latest",
+    "underscore": "latest"
+  },
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bl1nk3r/BSCIMS.git"
+  },
+  "engines": {
+    "node": "0.10.36",
+    "npm": "1.4.28"
+  }
 }

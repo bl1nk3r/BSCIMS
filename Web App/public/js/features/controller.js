@@ -294,6 +294,17 @@ var bsc = angular.module('BSCIMS', []);
 				$scope.retrieve();
 			});
 		};
+
+		//annyang environment (voice command functionality)
+		var commands = {
+			'create objective' : function() {
+				$scope.$apply();
+			}
+		}
+
+		annyang.addCommands(commands);
+		annyang.debug();
+		annyang.start();
 });
 
 
