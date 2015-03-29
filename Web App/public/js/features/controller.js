@@ -4,7 +4,7 @@ var bsc = angular.module('BSCIMS', []);
 /**************************************************************************************
 		Global Services
 **************************************************************************************/
- bsc.service('allObjectives', ['$http', '$q',function($http, $q){
+ bsc.service('allObjectives', ['$http', '$q',function ($http, $q){
 		this.objectives = null;
 
 		this.getObjectives = function () {
@@ -20,7 +20,7 @@ var bsc = angular.module('BSCIMS', []);
 /*************************************************************************************
 						Manage Employees
 **************************************************************************************/
-	.service('manageEmployeeData', ['$http', '$q', function($http, $q) {
+	.service('manageEmployeeData', ['$http', '$q', function ($http, $q) {
 		this.insertEmp = function(emp) {
 			return $http.post('/addEmp', emp);
 		}
@@ -31,7 +31,7 @@ var bsc = angular.module('BSCIMS', []);
 
 		this.getEmps = function() {
 			var deferred = $q.defer();
-			$http.post('/showAllEmps').success(function(res) {
+			$http.post('/showAllEmps').success(function (res) {
 				deferred.resolve(res);
 			}).error(function(res) {
 				deferred.reject(res);
@@ -51,7 +51,7 @@ var bsc = angular.module('BSCIMS', []);
 /*************************************************************************************
 						Employee Controller
 **************************************************************************************/
-	.controller('manageEmployees', ['$q', '$scope', '$rootScope', '$http', 'manageEmployeeData', function($q, $scope, $rootScope, $http, manageEmployeeData) {
+	.controller('manageEmployees', ['$q', '$scope', '$rootScope', '$http', 'manageEmployeeData', function ($q, $scope, $rootScope, $http, manageEmployeeData) {
 
 		$scope.loginStatus = true,
 		$scope.hasUserInfo = false,
@@ -132,7 +132,7 @@ var bsc = angular.module('BSCIMS', []);
 						}
 					} //end 'if' of 'else'
 
-				}).error(function(error){}); 
+				}).error(function (error){}); 
 		} //end of validate function
 
 		$scope.addEmp = function(){
@@ -225,13 +225,41 @@ var bsc = angular.module('BSCIMS', []);
 	    }
 	}//add employee function ends
 
+	$scope.showEmployees = function() {
+		manageEmployeeData.getEmps()
+			.then(function (data) {
+				$scope.emps = data;
+			});
+	}
+
+	$scope.clearNewEmp = function() {
+		$scope.empName = '',
+		$scope.employeePassword = '',
+		$scope.employeePassword2 = '',
+		$scope.firstname = '',
+		$scope.lastname = '',
+		$scope.supervisorRole = '',
+		$scope.employeeRole = '',
+		$scope.HRRole = '';
+	}
+
+	$scope.clearLogin = function() {
+		$scope.empName = '',
+		$scope.password = '',
+		$scope.supervisorRole = '',
+		$scope.employeeRole = '',
+		$scope.HRRole = '';
+	}
+
+	
+
 	}])
 
 
 /*************************************************************************************
 		Finance Perspective Angular Controller
 *************************************************************************************/
-   .controller('financePerspectiveController', function($scope, $http) {
+   .controller('financePerspectiveController', function ($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -264,23 +292,103 @@ var bsc = angular.module('BSCIMS', []);
     				          { label: '1% budget variance', value: 16 }
   					         ];
 
-		$scope.submitFinanceObjective = function() {
-	    	$http.post("/financePerspectiveController", $scope.financePerspectiveController)
-	    	.success(function(resp){
-	    		//console.log(resp);
-	    		$scope.Objective = resp;
-	    		console.log($scope.Objective);
-	    		$('#successObjAlert1').slideDown();
-	    	});
+		$scope.submitFinanceObjective = function() { 
+
+			$scope.createObjectiveErrorMsgs = [],
+			$scope.hasCreateObjErrors = false;
+			var generalErrorMsg = "Please ensure that all fields are filled!"
+				objDescriptionError = "This field cannot be left blank!",
+				objDSOError = "Please define the Key Performance Indicator!",
+				poorOptionsSelectError = "Select a minimum metric above!",
+				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
+				targetOptionsSelectError = "Verfiy the 'Target Met' metric above!",
+				exceedOptionsSelectError = "Select an exceed metric above!",
+				outstandOptionsSelectError = "Select an outstanding metric above!",
+				poorOptionsDefError = "Define the poor metric above!",
+				unsatOptionsDefError = "Define the unsatisfactory metric above!",
+				targetOptionsDefError = "Define the 'Target Met' metric above!",
+				exceedOptionsDefError = "Define the exceed metric above!",
+				outstandOptionsDefError = "Define the outstanding metric above!";
+
+			if ($scope.financePerspectiveController.description == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+			}
+			else if ($scope.financePerspectiveController.DSO == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDSOError);
+			}
+			else if ($scope.poorOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsSelectError);
+			}
+			else if ($scope.unsatOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsSelectError);
+			}
+			else if ($scope.targetOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsSelectError);
+			}
+			else if ($scope.exceedOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsSelectError);
+			}
+			else if ($scope.outstandOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsSelectError);
+			}
+			else if ($scope.financePerspectiveController.metricOneDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsDefError);
+			}
+			else if ($scope.financePerspectiveController.metricTwoDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsDefError);
+			}
+			else if ($scope.financePerspectiveController.metricThreeDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsDefError);
+			}
+			else if ($scope.financePerspectiveController.metricFourDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsDefError);
+			}
+			else if ($scope.financePerspectiveController.metricFiveDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsDefError);
+			}
+			else {
+
+		    	$http.post("/financePerspectiveController", $scope.financePerspectiveController)
+		    	.success(function (resp){
+		    		//console.log(resp);
+		    		$scope.Objective = resp;
+		    		console.log($scope.Objective);
+		    		$('#successObjAlert1').slideDown();
+		    	});
+		    }
 	    };	
 
-		$scope.renderFinancePerspective = function(response) {
+		$scope.renderFinancePerspective = function (response) {
 			$scope.financePerspective = response;
 		};
 
 		$scope.retrieveFinanceObjectives = function() {
 			$http.get("/retrieveFinanceObjectives")
-			.success(function(res, err) {
+			.success(function (res, err) {
 				if (err) {console.log(err);}
 				console.log(res);
 			});
@@ -288,9 +396,9 @@ var bsc = angular.module('BSCIMS', []);
 		};
 
 
-		$scope.removeFinanceObjective = function(id) {
+		$scope.removeFinanceObjective = function (id) {
 			$http.delete("/financePerspectiveController" + id)
-			.success(function(response) {
+			.success(function (response) {
 				$scope.retrieve();
 			});
 		};
@@ -312,7 +420,7 @@ var bsc = angular.module('BSCIMS', []);
 /*******************************************************************************
 		Customer Perspective Angular Controller
 *******************************************************************************/
-bsc.controller('customerPerspectiveController', function($scope, $http) {
+bsc.controller('customerPerspectiveController', function ($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -347,12 +455,91 @@ bsc.controller('customerPerspectiveController', function($scope, $http) {
 
 
 		$scope.submitCustomerObjective = function() {
-			console.log($scope.customerPerspectiveController);
-	    	$http.post("/customerPerspectiveController", $scope.customerPerspectiveController)
-	    	.success(function(resp){
-	    		//console.log(resp);
-	    		$('#successObjAlert2').slideDown();
-	    	});
+
+			$scope.createObjectiveErrorMsgs = [],
+			$scope.hasCreateObjErrors = false;
+			var objDescriptionError = "This field cannot be left blank!",
+				objDSOError = "Please define the Key Performance Indicator!",
+				poorOptionsSelectError = "Select a minimum metric above!",
+				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
+				targetOptionsSelectError = "Verfiy the 'Target Met' metric above!",
+				exceedOptionsSelectError = "Select an exceed metric above!",
+				outstandOptionsSelectError = "Select an outstanding metric above!",
+				poorOptionsDefError = "Define the poor metric above!",
+				unsatOptionsDefError = "Define the unsatisfactory metric above!",
+				targetOptionsDefError = "Define the 'Target Met' metric above!",
+				exceedOptionsDefError = "Define the exceed metric above!",
+				outstandOptionsDefError = "Define the outstanding metric above!";
+
+			if ($scope.customerPerspectiveController.description == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+			}
+			else if ($scope.customerPerspectiveController.DSO == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDSOError);
+			}
+			else if ($scope.poorOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsSelectError);
+			}
+			else if ($scope.unsatOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsSelectError);
+			}
+			else if ($scope.targetOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsSelectError);
+			}
+			else if ($scope.exceedOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsSelectError);
+			}
+			else if ($scope.outstandOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsSelectError);
+			}
+			else if ($scope.customerPerspectiveController.metricOneDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsDefError);
+			}
+			else if ($scope.customerPerspectiveController.metricTwoDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsDefError);
+			}
+			else if ($scope.customerPerspectiveController.metricThreeDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsDefError);
+			}
+			else if ($scope.customerPerspectiveController.metricFourDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsDefError);
+			}
+			else if ($scope.customerPerspectiveController.metricFiveDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(oustandOptionsDefError);
+			}
+			else {
+
+				console.log($scope.customerPerspectiveController);
+		    	$http.post("/customerPerspectiveController", $scope.customerPerspectiveController)
+		    	.success(function(resp){
+		    		//console.log(resp);
+		    		$('#successObjAlert2').slideDown();
+		    	});
+		    }
 	    };	
 
 		$scope.renderCustomerPerspective = function(response) {
@@ -367,7 +554,7 @@ bsc.controller('customerPerspectiveController', function($scope, $http) {
 		//hasn't been tested yet! <TODO>
 		$scope.removeCustomerObjective = function(id) {
 			$http.delete("/customerPerspectiveController" + id)
-			.success(function(response) {
+			.success(function (response) {
 				$scope.retrieve();
 			});
 		};
@@ -376,7 +563,7 @@ bsc.controller('customerPerspectiveController', function($scope, $http) {
 /*********************************************************
 	Learning & Growth Perspective Angular Controller
 **********************************************************/
-bsc.controller('learnPerspectiveController', function($scope, $http) {
+bsc.controller('learnPerspectiveController', function ($scope, $http) {
 
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -411,13 +598,91 @@ bsc.controller('learnPerspectiveController', function($scope, $http) {
 
 
 		$scope.submitLearnObjective = function() {
-			console.log($scope.learnPerspectiveController);
-	    	$http.post("/learnPerspectiveController", $scope.learnPerspectiveController)
-	    	.success(function(resp){
-	    		//console.log(resp);
-	    		$('#successObjAlert4').slideDown();
 
-	    	});
+			$scope.createObjectiveErrorMsgs = [],
+			$scope.hasCreateObjErrors = false;
+			var objDescriptionError = "This field cannot be left blank!",
+				objDSOError = "Please define the Key Performance Indicator!",
+				poorOptionsSelectError = "Select a minimum metric above!",
+				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
+				targetOptionsSelectError = "Verfiy the 'Target Met' metric above!",
+				exceedOptionsSelectError = "Select an exceed metric above!",
+				outstandOptionsSelectError = "Select an outstanding metric above!",
+				poorOptionsDefError = "Define the poor metric above!",
+				unsatOptionsDefError = "Define the unsatisfactory metric above!",
+				targetOptionsDefError = "Define the 'Target Met' metric above!",
+				exceedOptionsDefError = "Define the exceed metric above!",
+				outstandOptionsDefError = "Define the outstanding metric above!";
+
+			if ($scope.learnPerspectiveController.description == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+			}
+			else if ($scope.learnPerspectiveController.DSO == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDSOError);
+			}
+			else if ($scope.poorOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsSelectError);
+			}
+			else if ($scope.unsatOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsSelectError);
+			}
+			else if ($scope.targetOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsSelectError);
+			}
+			else if ($scope.exceedOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsSelectError);
+			}
+			else if ($scope.outstandOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsSelectError);
+			}
+			else if ($scope.learnPerspectiveController.metricOneDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsDefError);
+			}
+			else if ($scope.learnPerspectiveController.metricTwoDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsDefError);
+			}
+			else if ($scope.learnPerspectiveController.metricThreeDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsDefError);
+			}
+			else if ($scope.learnPerspectiveController.metricFourDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsDefError);
+			}
+			else if ($scope.learnPerspectiveController.metricFiveDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsDefError);
+			}
+			else {
+				console.log($scope.learnPerspectiveController);
+		    	$http.post("/learnPerspectiveController", $scope.learnPerspectiveController)
+		    	.success(function(resp){
+		    		//console.log(resp);
+		    		$('#successObjAlert4').slideDown();
+
+		    	});
+		    }
 	    };	
 
 		$scope.renderLearnPerspective = function(response) {
@@ -441,7 +706,7 @@ bsc.controller('learnPerspectiveController', function($scope, $http) {
 /*********************************************************
 	Internal Business Perspective Angular Controller
 **********************************************************/
-bsc.controller('internalPerspectiveController', function($scope, $http) {
+bsc.controller('internalPerspectiveController', function ($scope, $http) {
 	
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -475,12 +740,90 @@ bsc.controller('internalPerspectiveController', function($scope, $http) {
   					         ];
 
 		$scope.submitInternalObjective = function() {
-			console.log($scope.internalPerspectiveController);
-	    	$http.post("/internalPerspectiveController", $scope.internalPerspectiveController)
-	    	.success(function(resp){
-	    		//console.log(resp);
-	    		$('#successObjAlert3').slideDown();
-	    	});
+
+			$scope.createObjectiveErrorMsgs = [],
+			$scope.hasCreateObjErrors = false;
+			var objDescriptionError = "This field cannot be left blank!",
+				objDSOError = "Please define the Key Performance Indicator!",
+				poorOptionsSelectError = "Select a minimum metric above!",
+				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
+				targetOptionsSelectError = "Verfiy the 'Target Met' metric above!",
+				exceedOptionsSelectError = "Select an exceed metric above!",
+				outstandOptionsSelectError = "Select an outstanding metric above!",
+				poorOptionsDefError = "Define the poor metric above!",
+				unsatOptionsDefError = "Define the unsatisfactory metric above!",
+				targetOptionsDefError = "Define the 'Target Met' metric above!",
+				exceedOptionsDefError = "Define the exceed metric above!",
+				outstandOptionsDefError = "Define the outstanding metric above!";
+
+			if ($scope.internalPerspectiveController.description == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+			}
+			else if ($scope.internalPerspectiveController.DSO == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(objDSOError);
+			}
+			else if ($scope.poorOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsSelectError);
+			}
+			else if ($scope.unsatOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsSelectError);
+			}
+			else if ($scope.targetOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsSelectError);
+			}
+			else if ($scope.exceedOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsSelectError);
+			}
+			else if ($scope.outstandOptions.value == 0) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsSelectError);
+			}
+			else if ($scope.internalPerspectiveController.metricOneDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(poorOptionsDefError);
+			}
+			else if ($scope.internalPerspectiveController.metricTwoDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsDefError);
+			}
+			else if ($scope.internalPerspectiveController.metricThreeDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(targetOptionsDefError);
+			}
+			else if ($scope.internalPerspectiveController.metricFourDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(exceedOptionsDefError);
+			}
+			else if ($scope.internalPerspectiveController.metricFiveDef == null) {
+
+				$scope.hasCreateObjErrors = true,
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsDefError);
+			}
+			else {
+				console.log($scope.internalPerspectiveController);
+		    	$http.post("/internalPerspectiveController", $scope.internalPerspectiveController)
+		    	.success(function(resp){
+		    		//console.log(resp);
+		    		$('#successObjAlert3').slideDown();
+		    	});
+		    }
 	    };	
 
 		$scope.renderInternalPerspective = function(response) {
@@ -501,9 +844,9 @@ bsc.controller('internalPerspectiveController', function($scope, $http) {
 		};
 });
 
-bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function(allObjectives,$scope, $rootScope,$http) {
+bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope,$http) {
 
-	$scope.retrieveObjectives = function() {
+	$scope.retrieveObjectives = function () {
 			allObjectives.getObjectives()
 			.success(function(res) {
 				$scope.allObjectives = res;

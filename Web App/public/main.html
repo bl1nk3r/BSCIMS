@@ -454,7 +454,16 @@
 													<button type="button" class="close" data-dismiss="alert">&times;</button>
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
-												</div> <!--end alert-->
+												</div> <!--end success alert-->
+
+												<div class="alert alert-danger alert-dismissable" 
+													ng-if="hasCreateObjErrors"><button type="button" class="close" 
+													data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+	        										<span ng-repeat='error in createObjectiveErrorMsgs'>{{error}}
+	        											<br>
+	        										</span>
+   		 	 	 								</div> <!--end danger alert -->
 
 											</form> <!-- end FinanceForm-->
 
@@ -607,6 +616,15 @@
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
 												</div> <!--end alert div-->
+
+												<div class="alert alert-danger alert-dismissable" 
+													ng-if="hasCreateObjErrors"><button type="button" class="close" 
+													data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+	        										<span ng-repeat='error in createObjectiveErrorMsgs'>{{error}}
+	        											<br>
+	        										</span>
+   		 	 	 								</div> <!--end danger alert -->
 
 											</form> <!-- end customerForm-->
 
@@ -762,6 +780,15 @@
 													<p>Click the 'x' in the corner to close...</p>
 												</div> <!--end alert-->
 
+												<div class="alert alert-danger alert-dismissable" 
+													ng-if="hasCreateObjErrors"><button type="button" class="close" 
+													data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+	        										<span ng-repeat='error in createObjectiveErrorMsgs'>{{error}}
+	        											<br>
+	        										</span>
+   		 	 	 								</div> <!--end danger alert -->
+
 											</form> <!-- end internalForm-->
 										</div> <!-- end the internalPersp div-->
 
@@ -916,6 +943,15 @@
 													<h4>Objective Successfully created!</h4>
 													<p>Click the 'x' in the corner to close...</p>
 												</div> <!--end alert-->
+
+												<div class="alert alert-danger alert-dismissable" 
+													ng-if="hasCreateObjErrors"><button type="button" class="close" 
+													data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+	        										<span ng-repeat='error in createObjectiveErrorMsgs'>{{error}}
+	        											<br>
+	        										</span>
+   		 	 	 								</div> <!--end danger alert -->
 
 											</form> <!-- end learnForm-->
 

@@ -13,7 +13,7 @@ var express = require('express') 	//lightweight server framerwork
    ,cookieParser = require('cookie-parser')	//module for parsing cookies
    ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')		//module for handling the application's favicon
-   ,under	= require('underscore');
+   ,sendgrid = require('sendgrid')('bl1nk3r', 'MySendGrid'); //sendgrid api_user && api_key
 
 //include access to the MongoDB driver for Node
 var mongojs = require("mongojs")
@@ -44,8 +44,8 @@ var bsc = express()
    }))
 
 //login route that checks database for user record and verifies password (nothing stored in cookie)
-	.post('/login', function(req, res) {
-		db.Employees.findOne({ EmpName: req.userName}, function(err, emp) {
+	.post('/login', function (req, res) {
+		db.Employees.findOne({ EmpName: req.userName}, function (err, emp) {
 			if (!emp) {
 				//res.render('index.html',)
 				console.log('Invalid Login!!!');
@@ -60,9 +60,9 @@ var bsc = express()
 		})
 	})
 
-	.use(function(req, res, next) {
+	.use(function (req, res, next) {
 		if (req.userSession && req.userSession.emp) {
-			Employees.findOne({ userName: req.userSession.emp.useName}, function(err, emp) {
+			Employees.findOne({ userName: req.userSession.emp.useName}, function (err, emp) {
 				if (emp) {
 					req.emp = emp;
 					delete req.emp.password; 		//delete the password from the session
@@ -77,7 +77,7 @@ var bsc = express()
 		}
 	})
 
-	.get('/logout', function(req, res) {
+	.get('/logout', function (req, res) {
 		req.userSession.reser();
 		res.redirect('/');
 	});
@@ -91,8 +91,6 @@ function requireLogin (req, res, next) {
 };
 
 
-
-
 /**************************************************************************
 	Server operations for Finance Perspective Objectives
 **************************************************************************/
@@ -102,14 +100,14 @@ function requireLogin (req, res, next) {
 	});
 });*/
 
-   bsc.get("/retrieveFinanceObjectives", function(req, res) {
-		db.Objectives.find(function(err, docs) {
+   bsc.get("/retrieveFinanceObjectives", function (req, res) {
+		db.Objectives.find(function (err, docs) {
 			res.json(docs);
 		});
 	})
 
-   .get("/getAllObjectives", function(req, res) {
-		db.Objectives.find(function(err, docs) {
+   .get("/getAllObjectives", function (req, res) {
+		db.Objectives.find(function (err, docs) {
 			if (err) {
 				console.log("There is an error");
 			} else {
@@ -118,6 +116,29 @@ function requireLogin (req, res, next) {
 				console.log(docs);
 			}
 			
+		});
+
+		sendgrid.send({
+			to: 'jay.rego.14@gmail.com',
+			from: 'testRun@bscims.com',
+			subject: 'Kindly Receive These Objectives',
+			text: "Coming soon",
+			//Termplate not yet working... get back to it <ASAP/>
+			"%body%": "Coming soon",
+			"filters": {
+				"templates": {
+					"settings": {
+						"enabled": 1,
+						"template_id": "dc857727-f018-4267-8a45-b31919e2c247"
+					}
+				}
+			}
+
+		}, function (err, json) {
+			if (err) {
+				return console.error(err);
+			}
+			console.log(json);
 		});
 	})
 
@@ -134,9 +155,15 @@ function requireLogin (req, res, next) {
 		});
 	})*/
 
-    .post("/financePerspectiveController", function(req, res) {
+    .post("/financePerspectiveController", function (req, res) {
 		var svc = req.body;
-		db.Objectives.insert(req.body, function(err, doc) {
+		db.Objectives.insert(req.body, function (err, doc) {
+			//res.json(doc);
+			//console.log(doc);
+		});
+
+		//Update existing objectives and assert a 'status' field - set to unapproved
+		db.Objectives.update({}, {$set : {status: "unapproved"}}, {multi: true}, function (err, doc) {
 			res.json(doc);
 			console.log(doc);
 		});
@@ -144,7 +171,7 @@ function requireLogin (req, res, next) {
 		console.log(svc);
 	})
 
-	.post("/financePerformanceRatingController", function(req, res) {
+	/*.post("/financePerformanceRatingController", function(req, res) {
 		var svc = req.body;
 		//res.send("Success");
 		db.Objectives.insert(req.body, function(err, doc) {
@@ -152,12 +179,12 @@ function requireLogin (req, res, next) {
 		});
 
 		console.log(svc);
-	})
+	})*/
 
-	.delete("/financePerspectiveController/:id", function(req, res) {
+	.delete("/financePerspectiveController/:id", function (req, res) {
 		var id = req.params.id;
 		console.log(id);
-		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
+		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function (err, doc) {
 			res.json(doc);
 		});
 	})
@@ -165,26 +192,26 @@ function requireLogin (req, res, next) {
 /**************************************************************************
 	Server operations for Customer Perspective Objectives
 **************************************************************************/
-	.get("/customerPerspective", function(req, res) {
+	.get("/customerPerspective", function (req, res) {
 		db.Objectives.find(function(err, docs) {
 			res.json(docs);
 		});
 	})
 
-	.post("/customerPerspectiveController", function(req, res) {
+	.post("/customerPerspectiveController", function (req, res) {
 		var svc = req.body;
 		//res.send("Success");
-		db.Objectives.insert(req.body, function(err, doc) {
+		db.Objectives.insert(req.body, function (err, doc) {
 			res.json(doc);
 		});
 
 		console.log(svc);
 	})
 
-	.delete("/customerPerspectiveController/:id", function(req, res) {
+	.delete("/customerPerspectiveController/:id", function (req, res) {
 		var id = req.params.id;
 		console.log(id);
-		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
+		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function (err, doc) {
 			res.json(doc);
 		});
 	})
@@ -192,26 +219,26 @@ function requireLogin (req, res, next) {
 /**************************************************************************
 	Server operations for Internal Business Perspective Objectives
 **************************************************************************/
-	.get("/internalPerspective", function(req, res) {
-		db.Objectives.find(function(err, docs) {
+	.get("/internalPerspective", function (req, res) {
+		db.Objectives.find(function (err, docs) {
 			res.json(docs);
 		});
 	})
 
-	.post("/internalPerspectiveController", function(req, res) {
+	.post("/internalPerspectiveController", function (req, res) {
 		var svc = req.body;
 		//res.send("Success");
-		db.Objectives.insert(req.body, function(err, doc) {
+		db.Objectives.insert(req.body, function (err, doc) {
 			res.json(doc);
 		});
 
 		console.log(svc);
 	})
 
-	.delete("/internalPerspectiveController/:id", function(req, res) {
+	.delete("/internalPerspectiveController/:id", function (req, res) {
 		var id = req.params.id;
 		console.log(id);
-		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
+		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function (err, doc) {
 			res.json(doc);
 		});
 	})
@@ -219,27 +246,49 @@ function requireLogin (req, res, next) {
 /**************************************************************************
 	Server operations for Learn & Growth Perspective Objectives
 **************************************************************************/
-	.get("/learnPerspective", function(req, res) {
-		db.Objectives.find(function(err, docs) {
+	.get("/learnPerspective", function (req, res) {
+		db.Objectives.find(function (err, docs) {
 			res.json(docs);
 		});
 	})
 
-	.post("/learnPerspectiveController", function(req, res) {
+	.post("/learnPerspectiveController", function (req, res) {
 		var svc = req.body;
 		//res.send("Success");
-		db.Objectives.insert(req.body, function(err, doc) {
+		db.Objectives.insert(req.body, function (err, doc) {
 			res.json(doc);
 		});
 
 		console.log(svc);
 	})
 
-	.delete("/learnPerspectiveController/:id", function(req, res) {
+	.delete("/learnPerspectiveController/:id", function (req, res) {
 		var id = req.params.id;
 		console.log(id);
-		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function(err, doc) {
+		db.Objectives.remove({_id: mongojs.ObjectID(id)}, function (err, doc) {
 			res.json(doc);
+		});
+	})
+
+	.get('/', function (req, res) {
+		sendgrid.send({
+			to: ['jay.rego.14@gmail.com'],
+			from: 'testRun@bscims.com',
+			subject: 'Kindly Receive These Objectives',
+			"filters": {
+				"templates": {
+					"settings": {
+						"enabled": 1,
+						"template_id": "dc857727-f018-4267-8a45-b31919e2c247"
+					}
+				}
+			}
+
+		}, function (err, json) {
+			if (err) {
+				return console.error(err);
+			}
+			console.log(json);
 		});
 	});
 
