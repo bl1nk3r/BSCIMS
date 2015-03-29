@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
-<html>
-	<head>  
+<html> 
+	<head> 
 		
 		<!-- Website Title & Description for Search Engine purposes -->
 		<title>BSCIMS</title>
-		<base href="/"> 
 		<meta name="description" content="">
 
 		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
@@ -16,12 +15,10 @@
 		<!-- Bootstrap CSS -->
 		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/includes/css/bootstrap-glyphicons.css" rel="stylesheet">
- 
+
 		<!--AngularJS script -->
 		<!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script-->
 		<script type="text/javascript" src="/js/angular.min.js"></script>
-		<script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
-		<script type="text/javascript" src="/bower_components/annyang/annyang.js"></script>
 		<script type="text/javascript" src="/js/features/controller.js"></script>
 		
 		<!-- Custom CSS -->
@@ -103,6 +100,25 @@
 									Dashboard
 								</a>
 
+								<!--ul class="dropdown-menu">
+
+									<li>
+										<a href="#">Objectives</a>
+									</li>
+
+									<li>
+										<a href="#">Scores</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li class="dropdown-header">More Info</li>
+
+									<li>
+										<a href="#">Just a sec</a>
+									</li>
+
+								</ul> <!-- end Division dropdown-menu-->
 							</li> <!--end Division dropdown-->
 
 							<li class="dropdown">
@@ -111,6 +127,23 @@
 									Objectives (KPA)
 								</a>
 
+								<!--ul class="dropdown-menu">
+									<li>
+										<a href="#">Objectives</a>
+									</li>
+
+									<li>
+										<a href="#">Scores</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li class="dropdown-header">More Info</li>
+
+									<li>
+										<a href="#">Hold Up</a>
+									</li>
+								</ul> <!-- end Department dropdown-menu--> 
 							</li> <!--end Department dropdown-->
 
 							<li class="dropdown">
@@ -147,6 +180,24 @@
 									Projects
 								</a>
 
+								<!--ul class="dropdown-menu">
+									<li>
+										<a href="#">Objectives</a>
+									</li>
+
+									<li>
+										<a href="#">Scores</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li class="dropdown-header">More Info</li>
+
+									<li>
+										<a href="#">Wait for it</a>
+									</li>
+
+								</ul> <!-- end You dropdown-menu-->
 							</li> <!--end You dropdown-->
 
 							<li class="dropdown">
@@ -199,21 +250,17 @@
 			<div class="row">
     		<div class="col-md-6">
             <div class="panel with-nav-tabs panel-default">
-
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
-                            <li><a href="#supervisorTab" data-toggle="tab"> <span class = "glyphicon glyphicon-eye-open"></span> Supervisor</a></li>
-                            <li class="active"><a href="#employeeTab" data-toggle="tab"> <span class = "glyphicon glyphicon-user"></span> Employee</a></li>
-                            <li><a href="#HRTab" data-toggle="tab"> <span class = "glyphicon glyphicon-globe"></span> Human Resources</a></li>
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Supervisor</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">Employee</a></li>
+                            <li><a href="#tab3default" data-toggle="tab">Human Resources</a></li>
                          
                         </ul>
-                </div> <!--end panel-heading-->
-
+                </div>
                 <div class="panel-body">
-
                     <div class="tab-content">
-
-                    	<div class="tab-pane fade" id="supervisorTab">
+                        <div class="tab-pane fade in active" id="tab1default">
                         	
                         	
                         	<div class="panel panel-inverse">
@@ -314,14 +361,13 @@
 
 					          table displaying list on employees who submitted their KPA's , with statuses [Approved, Pending, Not Receeved, Overdue, Disapproved]
                         </div>
-
-                        <div class="tab-pane fade" id="HRTab">
-                    		HR functions and views go here
+                        <div class="tab-pane fade" id="tab3default">
+                    	HR functions and views go here
                     	</div>
 
-                        <div class="tab-pane fade" id="employeeTab">
+                        <div class="tab-pane fade" id="tab2default">
                         	
-		                    <div id="quickActionsBtnGroup" class="btn-group" role="group" ng-controller="submitObjController">
+		                        	 <div id="quickActionsBtnGroup" class="btn-group" role="group" ng-controller="submitObjController">
 
 			  				<!--button type="button" class="btn btn-default">Create Objective</button-->
 			  				<a data-backdrop="static" data-keyboard="false" href="#createObjModal" role="button" 
@@ -1030,18 +1076,18 @@
 
 			  				<div class="modal fade" id="submitObjModal">
 
-			  					<div id="submitObjModalDialog" class="modal-dialog">
+			  						<div id="submitObjModalDialog" class="modal-dialog">
 
-			  						<div id="submitObjModalContent" class="modal-content"> 
+			  							<div id="submitObjModalContent" class="modal-content"> 
 
-			  							<div id="submitObjModalHeader" class="modal-header">
-			  							 	<button class="close" data-dismiss="modal">&times;</button>
-			  								<h4 class="modal-title">Submit Objectives</h4>
+			  								<div id="submitObjModalHeader" class="modal-header">
+			  							 		<button class="close" data-dismiss="modal">&times;</button>
+			  									<h4 class="modal-title">Submit Objectives</h4>
 
-			  							</div> <!-- end createObjModal-header-->
+			  								</div> <!-- end createObjModal-header-->
 
 
-			  							<div id="submitObjModalBody" class="modal-body">
+			  								<div id="submitObjModalBody" class="modal-body">
 			  									<!--div ng-controller="allObjectivesCtrl"-->
 
 					  								<h4> Select a perspective to work on...</h4> 
@@ -1049,7 +1095,7 @@
 														<input type="text" class="form-control pull-right" placeholder="Search objectives..." id="searchInput" 
 														ng-model="search.$">
 													</form> <!--end form search-->
-														&nbsp;
+														&nbsp
 				  										<hr>
 
 				  										<div id="perspectiveDropDown" class="dropdown">
@@ -1064,7 +1110,7 @@
 															  
 														</div> <!-- end div objDropDown-->
 
-														&nbsp;
+														&nbsp
 
 					  									<table class="table table-hover" id="financeObjectivesTable" style="width:90%">
 					  										<caption><h5>Finance Objectives</h5></caption>
@@ -1077,7 +1123,7 @@
 
 						  									<tbody>
 						  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-						  											<td><input type="checkbox" ng-click="captureObj(objective)" ng-model="grabFinanceObj">
+						  											<td><input type="checkbox">
 						  												{{objective.description | uppercase}}
 						  											</td>
 						  											<td>{{objective.DSO}}</td>
@@ -1151,198 +1197,192 @@
 				  											class="form-control" placeholder="petros@uniswa.sz">
 				  										</div>
 					  						    <!--/div-->
-				  						</div> <!--end submitObjModalBody-->
+				  							</div> <!--end submitObjModalBody-->
 
-				  						<div class="modal-footer">
+				  								<div class="modal-footer">
 
-				  							<button onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-ok"></span> Send Objectives</button>
+				  									<button onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-ok"></span> Send Objectives</button>
 				  											  									
-				  							<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
+				  									<button class="btn btn-default" type="button" data-dismiss="modal"> <span 
+				  									class="glyphicon glyphicon-remove"></span> Close</button>
 				  									
-				  						</div> <!-- end modal-footer-->
+				  								</div> <!-- end modal-footer-->
 
-				  					</div> <!-- end submitObjModal-content-->
+				  						</div> <!-- end submitObjModal-content-->
 
-				  				</div> <!-- end submitObjModal-dialog-->
+				  					</div> <!-- end submitObjModal-dialog-->
 			  				</div> <!-- end submitObjModal-->
 			  		
 		  				
 
-			    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" role="button" 
-			    			class="btn btn-default" data-toggle="modal"><span class="glyphicon glyphicon-book"></span> Compile Scorecard </a>
+		    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" role="button" 
+		    			class="btn btn-default" data-toggle="modal"><span class="glyphicon glyphicon-book"></span> Compile Scorecard </a>
 
-			    			<div class="modal fade" id="compileSCModal" ng-controller="">
+		    			<div class="modal fade" id="compileSCModal" ng-controller="">
 
-				  				<div id="compileSCModalDialog" class="modal-dialog">
+			  						<div id="compileSCModalDialog" class="modal-dialog">
 
-				  					<div id="compileSCModalContent" class="modal-content"> 
+			  							<div id="compileSCModalContent" class="modal-content"> 
 
-				  						<div id="submitObjModalHeader" class="modal-header">
+			  								<div id="submitObjModalHeader" class="modal-header">
+			  							 		<button class="close" data-dismiss="modal">&times;</button>
+			  									<h4 class="modal-title">Compile Scorecard</h4>
 
-				  							 		<button class="close" data-dismiss="modal">&times;</button>
-				  									<h4 class="modal-title">Compile Scorecard</h4>
-
-				  						</div> <!-- end createObjModal-header-->
+			  								</div> <!-- end createObjModal-header-->
 
 
-				  						<div id="submitObjModalBody" class="modal-body">
-				  									<!--div ng-controller="allObjectivesCtrl"-->
+			  								<div id="submitObjModalBody" class="modal-body">
+			  									<!--div ng-controller="allObjectivesCtrl"-->
 
-						  							<h4> Select Approved Objectives...</h4>
-
-						  							<form id="searchObj">
-															<input type="text" class="form-control pull-right" placeholder="Search objectives..." id="searchInput" 
-															ng-model="search.$">
+					  								<h4> Select Approved Objectives...</h4> 
+					  								<form id="searchObj">
+														<input type="text" class="form-control pull-right" placeholder="Search objectives..." id="searchInput" 
+														ng-model="search.$">
 													</form> <!--end form search-->
+														&nbsp
+				  										<hr>
 
-														&nbsp;
-					  									<hr>
+				  										<div id="perspectiveDropDown" class="dropdown">
 
-					  									<div id="perspectiveDropDown" class="dropdown">
-
-																<select id="perspectiveDropDownMenu" role="menu">
-
-																	<option value="default">-Select a Perspective-</option>
-																  	<option value="financeSelect">Finance</option>
-																  	<option value="customerSelect">Customer & Stakeholders</option>
-																  	<option value="internalSelect">Internal Business Process</option>
-																  	<option value="learnSelect">Learning & Growth</option>
-
-																</select> <!-- end objPerspDropdownMenu-->
-																  
+															  <select id="perspectiveDropDownMenu" role="menu">
+															  	<option value="default">-Select a Perspective-</option>
+															  	<option value="financeSelect">Finance</option>
+															  	<option value="customerSelect">Customer & Stakeholders</option>
+															  	<option value="internalSelect">Internal Business Process</option>
+															  	<option value="learnSelect">Learning & Growth</option>
+															  </select> <!-- end objPerspDropdownMenu-->
+															  
 														</div> <!-- end div objDropDown-->
 
-														&nbsp;
+														&nbsp
 
-						  								<table class="table table-hover" id="financeObjectivesTable" style="width:90%">
+					  									<table class="table table-hover" id="financeObjectivesTable" style="width:90%">
+					  										<caption><h5>Finance Objectives</h5></caption>
+					  										<thead>
+						  										<tr>
+						  											<th>Key Performance Area</th>
+						  										    <th>Key Performance Indicator</th>
+						  										</tr>
+						  									</thead>
 
-						  										<caption><h5>Finance Objectives</h5></caption>
-						  										<thead>
-							  										<tr>
-							  											<th>Key Performance Area</th>
-							  										    <th>Key Performance Indicator</th>
-							  										</tr>
-							  									</thead>
+						  									<tbody>
+						  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
+						  											<td><input type="checkbox">
+						  												{{objective.description | uppercase}}
+						  											</td>
+						  											<td>{{objective.DSO}}</td>
+						  										</tr>
+					  										</tbody>
+					  										
+					  									</table>
 
-							  									<tbody>
-							  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  											<td><input type="checkbox">
-							  												{{objective.description | uppercase}}
-							  											</td>
-							  											<td>{{objective.DSO}}</td>
-							  										</tr>
-						  										</tbody>
-						  										
-						  								</table>
+					  									<table class="table table-hover" id="customerObjectivesTable">
+					  										<caption><h5>Customer Objectives</h5></caption>
+					  										<thead>
+						  										<tr>
+						  											<th>Key Performance Area</th>
+						  										    <th>Key Performance Indicator</th>
+						  										</tr>
+						  									</thead>
 
-						  								<table class="table table-hover" id="customerObjectivesTable">
-						  										<caption><h5>Customer Objectives</h5></caption>
-						  										<thead>
-							  										<tr>
-							  											<th>Key Performance Area</th>
-							  										    <th>Key Performance Indicator</th>
-							  										</tr>
-							  									</thead>
+						  									<tbody>
+						  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
+						  											<td><input type="checkbox">
+						  												{{objective.description | uppercase}}
+						  											</td>
+						  											<td>{{objective.DSO}}</td>
+						  										</tr>
+					  										</tbody>
+					  										
+					  									</table>
 
-							  									<tbody>
-							  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  											<td><input type="checkbox">
-							  												{{objective.description | uppercase}}
-							  											</td>
-							  											<td>{{objective.DSO}}</td>
-							  										</tr>
-						  										</tbody>
-						  										
-						  								</table>
+					  									<table class="table table-hover" id="internalObjectivesTable">
+					  										<caption><h5>Internal Business Objectives</h5></caption>
+					  										<thead>
+						  										<tr>
+						  											<th>Key Performance Area</th>
+						  										    <th>Key Performance Indicator</th>
+						  										</tr>
+						  									</thead>
 
-						  								<table class="table table-hover" id="internalObjectivesTable">
-						  										<caption><h5>Internal Business Objectives</h5></caption>
-						  										<thead>
-							  										<tr>
-							  											<th>Key Performance Area</th>
-							  										    <th>Key Performance Indicator</th>
-							  										</tr>
-							  									</thead>
+						  									<tbody>
+						  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
+						  											<td><input type="checkbox">
+						  												{{objective.description | uppercase}}
+						  											</td>
+						  											<td>{{objective.DSO}}</td>
+						  										</tr>
+					  										</tbody>
+					  										
+					  									</table>
 
-							  									<tbody>
-							  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  											<td><input type="checkbox">
-							  												{{objective.description | uppercase}}
-							  											</td>
-							  											<td>{{objective.DSO}}</td>
-							  										</tr>
-						  										</tbody>
-						  										
-						  								</table>
+					  									<table class="table table-hover" id="learningObjectivesTable">
+					  										<caption><h5>Learning & Growth Objectives</h5></caption>
+					  										<thead>
+						  										<tr>
+						  											<th>Key Performance Area</th>
+						  										    <th>Key Performance Indicator</th>
+						  										</tr>
+						  									</thead>
 
-						  								<table class="table table-hover" id="learningObjectivesTable">
-						  										<caption><h5>Learning & Growth Objectives</h5></caption>
-						  										<thead>
-							  										<tr>
-							  											<th>Key Performance Area</th>
-							  										    <th>Key Performance Indicator</th>
-							  										</tr>
-							  									</thead>
+						  									<tbody>
+						  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
+						  											<td><input type="checkbox">
+						  												{{objective.description | uppercase}}
+						  											</td>
+						  											<td>{{objective.DSO}}</td>
+						  										</tr>
+					  										</tbody>
+					  										
+					  									</table>
 
-							  									<tbody>
-							  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  											<td><input type="checkbox">
-							  												{{objective.description | uppercase}}
-							  											</td>
-							  											<td>{{objective.DSO}}</td>
-							  										</tr>
-						  										</tbody>
-						  										
-						  								</table>
+					  									<!--div>
+				  											<span>Confirm recipient's email:</span> <input type="email" 
+				  											class="form-control" placeholder="petros@uniswa.sz">
+				  										</div-->
+					  						    <div>
+				  								</div> <!--end submitObjModalBody-->
 
-						  									<!--div>
-					  											<span>Confirm recipient's email:</span> <input type="email" 
-					  											class="form-control" placeholder="petros@uniswa.sz">
-					  										</div-->
-						  						    <!--div-->
-					  					</div> <!--end submitObjModalBody-->
+				  								<div class="modal-footer">
 
-					  					<div class="modal-footer">
+				  									<button onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-ok"></span> Compile Scorecard</button>
+				  											  									
+				  									<button class="btn btn-default" type="button" data-dismiss="modal"> <span 
+				  									class="glyphicon glyphicon-remove"></span> Close</button>
+				  									
+				  								</div> <!-- end modal-footer-->
 
-					  						<button onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-ok"></span> Compile Scorecard</button>
-					  											  									
-					  						<button class="btn btn-default" type="button" data-dismiss="modal"> <span 
-					  						class="glyphicon glyphicon-remove"></span> Close</button>
-					  									
-					  					</div> <!-- end modal-footer-->
+				  						</div> <!-- end compileSCModal-content-->
 
-					  					</div> <!-- end compileSCModal-content-->
+				  					</div> <!-- end compileSCModal-dialog-->
+			  			</div> <!-- end submitObjModal-->
 
-					  			</div> <!-- end compileSCModal-dialog-->
+		    				<ul class="dropdown-menu" role="menu">
 
-				  			</div> <!-- end CompileSCModal-->
+		      					<li><a href="#">Dropdown link</a></li>
 
-			    				<ul class="dropdown-menu" role="menu">
+		      					<li><a href="#">Dropdown link</a></li>
 
-			      					<li><a href="#">Dropdown link</a></li>
+		    				</ul>
 
-			      					<li><a href="#">Dropdown link</a></li>
+		  				<br><br>
 
-			    				</ul>
+		  				<div id="panelListGroupDiv" class="list-group">
+		  					<a href="#" class="list-group-item"> <span class="badge"> 2 </span> Notifications</a>
+		  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails</a>
+		  					<a href="#" class="list-group-item"> <span class="badge"> 5 </span> Pending</a>
+		 					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
+		  					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
+						</div> <!-- end panelListGroupDiv-->
 
-			  				<br><br>
+					</div> <!--end btn-group-->
 
-			  				<div id="panelListGroupDiv" class="list-group">
-			  					<a href="#" class="list-group-item"> <span class="badge"> 2 </span> Notifications</a>
-			  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails</a>
-			  					<a href="#" class="list-group-item"> <span class="badge"> 5 </span> Pending</a>
-			 					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
-			  					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
-							</div> <!-- end panelListGroupDiv-->
-
-						</div> <!--end btn-group-->
-
-                   		</div><!-- end of employee tab -->
+                        </div><!-- end of employee tab -->
                         
                     </div><!-- end tab content  -->
                     
-                </div> <!--end panel-body-->
-            </div> <!--panel with-nav-tabs panel-default-->
+                </div>
+            </div>
         </div>
 
 

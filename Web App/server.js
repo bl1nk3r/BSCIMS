@@ -122,9 +122,9 @@ function requireLogin (req, res, next) {
 			to: 'jay.rego.14@gmail.com',
 			from: 'testRun@bscims.com',
 			subject: 'Kindly Receive These Objectives',
-			text: "Coming soon",
+			text: "Isn't this awesome :D ",
 			//Termplate not yet working... get back to it <ASAP/>
-			"%body%": "Coming soon",
+			//"%body%": "Coming soon",
 			"filters": {
 				"templates": {
 					"settings": {
@@ -159,14 +159,15 @@ function requireLogin (req, res, next) {
 		var svc = req.body;
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			//console.log(doc);
-		});
+			//console.log(doc.description);
+			//Update existing objectives and assert a 'status' field - set to unapproved
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance"}}, {multi: false}, function (err, doc) {
+				res.json(doc);
+				console.log(doc);
+			});
+		})
 
-		//Update existing objectives and assert a 'status' field - set to unapproved
-		db.Objectives.update({}, {$set : {status: "unapproved"}}, {multi: true}, function (err, doc) {
-			res.json(doc);
-			console.log(doc);
-		});
+		
 
 		console.log(svc);
 	})
@@ -202,7 +203,11 @@ function requireLogin (req, res, next) {
 		var svc = req.body;
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
-			res.json(doc);
+			//res.json(doc);
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer"}}, {multi: false}, function (err, doc) {
+				res.json(doc);
+				console.log(doc);
+			});
 		});
 
 		console.log(svc);
@@ -229,7 +234,11 @@ function requireLogin (req, res, next) {
 		var svc = req.body;
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
-			res.json(doc);
+			//res.json(doc);
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal"}}, {multi: false}, function (err, doc) {
+				res.json(doc);
+				console.log(doc);
+			});
 		});
 
 		console.log(svc);
@@ -244,7 +253,7 @@ function requireLogin (req, res, next) {
 	})
 
 /**************************************************************************
-	Server operations for Learn & Growth Perspective Objectives
+		Server operations for Learn & Growth Perspective Objectives
 **************************************************************************/
 	.get("/learnPerspective", function (req, res) {
 		db.Objectives.find(function (err, docs) {
@@ -256,7 +265,11 @@ function requireLogin (req, res, next) {
 		var svc = req.body;
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
-			res.json(doc);
+			//res.json(doc);
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn"}}, {multi: false}, function (err, doc) {
+				res.json(doc);
+				console.log(doc);
+			});
 		});
 
 		console.log(svc);

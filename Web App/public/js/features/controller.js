@@ -59,12 +59,13 @@ var bsc = angular.module('BSCIMS', []);
 		//Below are the login access roles : Supervisor, Employee and HR officer
 		$scope.supervisorRole = false,
 		$scope.isSupervisor = false,
-		$scope.employeeRole = false,
+		$scope.empRole = false,
 		$scope.isEmployee = false,
 		$scope.HRRole = false,
 		$scope.isHR = false,
 		$scope.loginError = "Enter Your ID!",
-		$scope.hasLoginError = false;
+		$scope.hasLoginError = false,
+		$scope.empRole.checked = true;
 
 		//validate user access role after capturing from login form and throw appropriate errors
 		$scope.validate = function() {
@@ -292,6 +293,10 @@ var bsc = angular.module('BSCIMS', []);
     				          { label: '1% budget variance', value: 16 }
   					         ];
 
+  	$scope.monitorChange = function() {
+  		console.log($scope.poorOptions);
+  	}
+
 		$scope.submitFinanceObjective = function() { 
 
 			$scope.createObjectiveErrorMsgs = [],
@@ -452,7 +457,8 @@ bsc.controller('customerPerspectiveController', function ($scope, $http) {
 						      { label: '0% budget variance', value: 00 },
     				          { label: '1% budget variance', value: 16 }
   					         ];
-
+  	$scope.perspective = "customer",
+  	$scope.status = "unapproved";
 
 		$scope.submitCustomerObjective = function() {
 
@@ -595,6 +601,8 @@ bsc.controller('learnPerspectiveController', function ($scope, $http) {
 						      { label: '0% budget variance', value: 00 },
     				          { label: '1% budget variance', value: 16 }
   					         ];
+  	$scope.perspective = "learn",
+  	$scope.status = "unapproved";
 
 
 		$scope.submitLearnObjective = function() {
@@ -738,6 +746,8 @@ bsc.controller('internalPerspectiveController', function ($scope, $http) {
 						      { label: '0% budget variance', value: 00 },
     				          { label: '1% budget variance', value: 16 }
   					         ];
+  	$scope.perspective = "internal",
+  	$scope.status = "unapproved";
 
 		$scope.submitInternalObjective = function() {
 
@@ -846,6 +856,8 @@ bsc.controller('internalPerspectiveController', function ($scope, $http) {
 
 bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope,$http) {
 
+	$scope.objArray = [];
+
 	$scope.retrieveObjectives = function () {
 			allObjectives.getObjectives()
 			.success(function(res) {
@@ -857,6 +869,16 @@ bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '
 			});		
 	}
 
-	//$scope.test = "bristo";
+	$scope.captureObj = function(obj) {
+		//console.log(obj);
+		$scope.objArray.push(obj);
+	
 
+		console.log("Content of array");
+		var index;
+
+		for (index = 0; index < $scope.objArray.length; index++){
+			console.log($scope.objArray[index]);
+		}
+	}
 }]);
