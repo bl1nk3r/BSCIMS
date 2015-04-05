@@ -58,9 +58,9 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.loginState = "Not logged in!",
 		//Below are the login access roles : Supervisor, Employee and HR officer
 		$scope.supervisorRole = false,
-		$scope.isSupervisor = false,
+		$scope.isSup = false,
 		$scope.empRole = false,
-		$scope.isEmployee = false,
+		$scope.isEmp = false,
 		$scope.HRRole = false,
 		$scope.isHR = false,
 		$scope.loginError = "Enter Your ID!",
@@ -856,7 +856,7 @@ bsc.controller('internalPerspectiveController', function ($scope, $http) {
 
 bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope,$http) {
 
-	$scope.objArray = [];
+	$scope.objIDArray = [];
 
 	$scope.retrieveObjectives = function () {
 			allObjectives.getObjectives()
@@ -869,16 +869,15 @@ bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '
 			});		
 	}
 
-	$scope.captureObj = function(obj) {
+	$scope.captureObj = function(objID) {
 		//console.log(obj);
-		$scope.objArray.push(obj);
+		$scope.objIDArray.push(objID);
 	
-
 		console.log("Content of array");
 		var index;
 
-		for (index = 0; index < $scope.objArray.length; index++){
-			console.log($scope.objArray[index]);
+		for (index = 0; index < $scope.objIDArray.length; index++){
+			console.log($scope.objIDArray[index]);
 		}
 	}
 }]);

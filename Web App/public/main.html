@@ -202,8 +202,8 @@
 
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
-                            <li><a href="#supervisorTab" data-toggle="tab"> <span class = "glyphicon glyphicon-eye-open"></span> Supervisor</a></li>
-                            <li class="active"><a href="#employeeTab" data-toggle="tab"> <span class = "glyphicon glyphicon-user"></span> Employee</a></li>
+                            <li><a href="#supervisorTab" data-toggle="tab" > <span class = "glyphicon glyphicon-eye-open"></span> Supervisor</a></li>
+                            <li class="active"><a href="#employeeTab" data-toggle="tab"  > <span class = "glyphicon glyphicon-user"></span> Employee</a></li>
                             <li><a href="#HRTab" data-toggle="tab"> <span class = "glyphicon glyphicon-globe"></span> Human Resources</a></li>
                          
                         </ul>
@@ -216,7 +216,7 @@
                     	<div class="tab-pane fade" id="supervisorTab">
                         	
                         	
-                        	<div class="panel panel-inverse">
+                        	<!--div class="panel panel-inverse">
 							    <div class="panel-heading">
 							        <h3 class="panel-title">List of employees under supervision</h3>
 							    </div>
@@ -309,7 +309,7 @@
 
 
 							    </div>
-							</div>
+							</div-->
                         		
 
 					          table displaying list on employees who submitted their KPA's , with statuses [Approved, Pending, Not Receeved, Overdue, Disapproved]
@@ -319,7 +319,7 @@
                     		HR functions and views go here
                     	</div>
 
-                        <div class="tab-pane fade" id="employeeTab">
+                        <div class="tab-pane fade in active" id="employeeTab">
                         	
 		                    <div id="quickActionsBtnGroup" class="btn-group" role="group" ng-controller="submitObjController">
 
@@ -1077,7 +1077,7 @@
 
 						  									<tbody>
 						  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-						  											<td><input type="checkbox" ng-click="captureObj(objective)" ng-model="grabFinanceObj">
+						  											<td><input type="checkbox" ng-click="captureObj(objective._id)" ng-model="grabFinanceObj">
 						  												{{objective.description | uppercase}}
 						  											</td>
 						  											<td>{{objective.DSO}}</td>
@@ -1171,7 +1171,7 @@
 			    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" role="button" 
 			    			class="btn btn-default" data-toggle="modal"><span class="glyphicon glyphicon-book"></span> Compile Scorecard </a>
 
-			    			<div class="modal fade" id="compileSCModal" ng-controller="">
+			    			<div class="modal fade" id="compileSCModal" >
 
 				  				<div id="compileSCModalDialog" class="modal-dialog">
 
@@ -1354,9 +1354,9 @@
 
 				<div class="row">
 
-					<div class="col-sm-2">
+					<div class="col-sm-6">
 
-						<h6>Copyright &copy; 2015 Rego & Mzwa </h6>
+						<h6>Copyright &copy; 2015 Rego (140226) & Mzwa (14356) </h6>
 
 					</div> <!-- end col-sm-2-->
 					

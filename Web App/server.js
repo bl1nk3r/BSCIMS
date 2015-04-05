@@ -13,7 +13,7 @@ var express = require('express') 	//lightweight server framerwork
    ,cookieParser = require('cookie-parser')	//module for parsing cookies
    ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')		//module for handling the application's favicon
-   ,sendgrid = require('sendgrid')('bl1nk3r', 'MySendGrid'); //sendgrid api_user && api_key
+   ,sendgrid = require('sendgrid')('api_user', 'api_key'); //sendgrid api_user && api_key
 
 //include access to the MongoDB driver for Node
 var mongojs = require("mongojs")
@@ -118,7 +118,7 @@ function requireLogin (req, res, next) {
 			
 		});
 
-		sendgrid.send({
+		/*sendgrid.send({
 			to: 'jay.rego.14@gmail.com',
 			from: 'testRun@bscims.com',
 			subject: 'Kindly Receive These Objectives',
@@ -139,21 +139,8 @@ function requireLogin (req, res, next) {
 				return console.error(err);
 			}
 			console.log(json);
-		});
+		});*/
 	})
-
-   /*.get("/getAllObjectives", function(req, res) {
-		db.Division.find(function(err, docs) {
-			if (err) {
-				console.log("There is an error");
-			} else {
-				res.json(docs);
-				console.log("Employees are: ");
-				console.log(docs);
-			}
-			
-		});
-	})*/
 
     .post("/financePerspectiveController", function (req, res) {
 		var svc = req.body;
