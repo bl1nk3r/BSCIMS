@@ -4,6 +4,8 @@ var bsc = angular.module('BSCIMS', []);
 /**************************************************************************************
 		Global Services
 **************************************************************************************/
+
+ //this service retrieves and globally stores all objectives (with a default status of "unapproved") to be used by any controller
  bsc.service('allObjectives', ['$http', '$q',function ($http, $q){
 		this.objectives = null;
 
@@ -11,6 +13,13 @@ var bsc = angular.module('BSCIMS', []);
 			return $http.get('/getAllObjectives');
 		}
 	}])
+
+//while this one does the same only for objectives that have been sent for processing or approval (with a status of  "sent_for_approval")
+ 	.service('pendingObjectives', ['$http', function ($http) {
+ 		this.getPending = function() {
+ 			return $http.get('/getPendingObjectives');
+ 		}
+ 	}])
 
  	/*.controller('allObjectivesCtrl', ['allObjectives', '$scope', function(allObjectives, $scope){
  		$scope.allObjectives = allObjectives;
@@ -32,6 +41,17 @@ var bsc = angular.module('BSCIMS', []);
 		this.getEmps = function() {
 			var deferred = $q.defer();
 			$http.post('/showAllEmps').success(function (res) {
+				deferred.resolve(res);
+			}).error(function(res) {
+				deferred.reject(res);
+			});
+
+			return deferred.promise;	
+		}
+
+		this.getDivs = function() {
+			var deferred = $q.defer();
+			$http.post('/showAllDivisions').success(function (res) {
 				deferred.resolve(res);
 			}).error(function(res) {
 				deferred.reject(res);
@@ -66,6 +86,28 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.loginError = "Enter Your ID!",
 		$scope.hasLoginError = false,
 		$scope.empRole.checked = true;
+
+		$scope.getLoggedUser = function () {
+			$http.post("/getLoggedInEmp").success(function(resp){
+				console.log("LoggedIn User : ");
+				console.log(resp);
+
+				for (var i=0; i<resp.chosenRoles.length; i++) {
+					if (resp.chosenRoles[i].isEmp) {
+						$scope.isEmp = true;
+					}
+					if (resp.chosenRoles[i].isSup) {
+						$scope.isSup = true;
+					}
+					if (resp.chosenRoles[i].isHr) {
+						$scope.isHr = true;
+					}
+				}
+				
+			});
+		}
+
+		$scope.getLoggedUser();
 
 		//validate user access role after capturing from login form and throw appropriate errors
 		$scope.validate = function() {
@@ -252,8 +294,54 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.HRRole = '';
 	}
 
-	
+	}])
 
+ .controller('hrRolesController',['$scope','$http','manageEmployeeData', function($scope, $http, manageEmployeeData){
+		$scope.getDivisions = function () {
+			manageEmployeeData.getDivs()
+				.then (function (data) {
+					$scope.division = data[0];
+					$scope.sections = $scope.division.Department[0].Section;
+					$scope.departments = $scope.division.Department;
+					$scope.employees = $scope.division.Department[0].Section[0].Employee;
+				});
+		}
+		$scope.getDivisions();
+
+		$scope.getSecEmployees = function (section,dept,div) {
+			$scope.section = section;
+			var deptIndex = null;
+			var secIndex = null;
+			var div = {divName : div};
+			$http.post('/getSecEmployees', div).success(function(resp) {
+				var secDiv = resp[0];
+				$scope.divDepartments = secDiv.Department;
+
+				for (var i=0; i < $scope.divDepartments.length; i++) {
+				  	if ($scope.divDepartments[i].DeptName == dept) {
+				  		deptIndex = i;
+				  		$scope.depSections = secDiv.Department[deptIndex].Section;
+
+					  	for (var n=0; n < $scope.depSections.length; n++) {
+					  		if ($scope.depSections[n].SecName == section) {
+					  			var secIndex = n;
+					  			$scope.secEmployees = $scope.depSections[secIndex].Employee;
+					  		}
+				  		}
+				  	}
+				}
+
+			});
+		}
+
+		$scope.getEmpObjectives = function (pfnum, name) {
+			$scope.empName = name;
+			var emp = {pfno:pfnum};
+			console.log(pfnum);
+			$http.post('/getEmpObjectives', emp).success(function(resp) {
+				console.log(resp);
+			});
+		}
 	}])
 
 
@@ -418,14 +506,14 @@ var bsc = angular.module('BSCIMS', []);
 		annyang.addCommands(commands);
 		annyang.debug();
 		annyang.start();
-});
+})
 
 
 
 /*******************************************************************************
 		Customer Perspective Angular Controller
 *******************************************************************************/
-bsc.controller('customerPerspectiveController', function ($scope, $http) {
+    .controller('customerPerspectiveController', function ($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -564,12 +652,12 @@ bsc.controller('customerPerspectiveController', function ($scope, $http) {
 				$scope.retrieve();
 			});
 		};
-});
+})
 
 /*********************************************************
 	Learning & Growth Perspective Angular Controller
 **********************************************************/
-bsc.controller('learnPerspectiveController', function ($scope, $http) {
+   .controller('learnPerspectiveController', function ($scope, $http) {
 
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -709,12 +797,12 @@ bsc.controller('learnPerspectiveController', function ($scope, $http) {
 				$scope.retrieve();
 			});
 		};
-});
+})
 
 /*********************************************************
 	Internal Business Perspective Angular Controller
 **********************************************************/
-bsc.controller('internalPerspectiveController', function ($scope, $http) {
+   .controller('internalPerspectiveController', function ($scope, $http) {
 	
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -829,7 +917,7 @@ bsc.controller('internalPerspectiveController', function ($scope, $http) {
 			else {
 				console.log($scope.internalPerspectiveController);
 		    	$http.post("/internalPerspectiveController", $scope.internalPerspectiveController)
-		    	.success(function(resp){
+		    	.success(function (resp){
 		    		//console.log(resp);
 		    		$('#successObjAlert3').slideDown();
 		    	});
@@ -848,21 +936,24 @@ bsc.controller('internalPerspectiveController', function ($scope, $http) {
 		//hasn't been tested yet! <TODO>
 		$scope.removeInternalObjective = function(id) {
 			$http.delete("/internalPerspectiveController" + id)
-			.success(function(response) {
+			.success(function (response) {
 				$scope.retrieve();
 			});
 		};
-});
+})
 
-bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope,$http) {
+/*********************************************************************************************************************************************
+				Submit Objective Controller
+*********************************************************************************************************************************************/
+   .controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope,$http) {
 
 	$scope.objIDArray = [];
 
 	$scope.retrieveObjectives = function () {
 			allObjectives.getObjectives()
-			.success(function(res) {
+			.success(function (res) {
 				$scope.allObjectives = res;
-				console.log(res);
+				//console.log(res);
 			})
 			.error(function () {
 				console.log('There is an error');
@@ -879,5 +970,50 @@ bsc.controller('submitObjController', ['allObjectives', '$scope','$rootScope', '
 		for (index = 0; index < $scope.objIDArray.length; index++){
 			console.log($scope.objIDArray[index]);
 		}
+
 	}
-}]);
+	
+	var IDs = $scope.objIDArray;
+
+	$scope.sendObjs = function() {
+		console.log($scope.objIDArray);
+
+		for (index = 0; index < $scope.objIDArray.length; index++){
+			$http.post("/objectivesSubmitted_status_changed" + $scope.objIDArray[index] , $scope.submitObjController)
+				.success(function (res) {
+					$('#successObjSubmit').slideDown();
+				})
+				.error(function (res) {
+					console.log(res);
+				});
+		}
+
+	}
+}])
+
+
+/*********************************************************************************************************************************************
+				Employee Panel Info Controller
+*********************************************************************************************************************************************/
+
+   .controller('empPanelInfoCtrl', ['allObjectives', 'pendingObjectives', '$scope', function (allObjectives, pendingObjectives, $scope) {
+
+	allObjectives.getObjectives()
+	.success(function (res) {
+		$scope.unapprovedVal = res.length;
+	});
+
+	pendingObjectives.getPending()
+	.success(function (res) {
+		$scope.pendingVal = res.length;
+	});
+
+}])
+
+
+/*********************************************************************************************************************************************
+				Supervisor Panel Info Controller
+*********************************************************************************************************************************************/
+   .controller('supPanelInfoCtrl', ['allObjectives', 'pendingObjectives', '$scope', function (allObjectives, pendingObjectives, $scope) {
+   		$scope.empKPAVal = 5;
+   }]);

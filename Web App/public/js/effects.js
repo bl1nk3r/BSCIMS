@@ -4,6 +4,8 @@ $(document).ready(function(){
 	$('#successObjAlert2').hide();	//hide the successObjAlert for now
 	$('#successObjAlert3').hide();	//hide the successObjAlert for now
 	$('#successObjAlert4').hide();	//hide the successObjAlert for now
+	$('#successObjSubmit').hide();	//hide the successObjAlert for now
+
 	//hide the financeForm when the page loads along with the perspectiveDiv
 	$('#financeForm').hide();
 	$('#financePerspDiv').hide();

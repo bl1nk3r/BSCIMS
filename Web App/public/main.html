@@ -201,11 +201,10 @@
             <div class="panel with-nav-tabs panel-default">
 
                 <div class="panel-heading">
-                        <ul class="nav nav-tabs">
+                        <ul class="nav nav-tabs">			<!--Remember me to do include "ng-show"s -->
                             <li><a href="#supervisorTab" data-toggle="tab" > <span class = "glyphicon glyphicon-eye-open"></span> Supervisor</a></li>
                             <li class="active"><a href="#employeeTab" data-toggle="tab"  > <span class = "glyphicon glyphicon-user"></span> Employee</a></li>
-                            <li><a href="#HRTab" data-toggle="tab"> <span class = "glyphicon glyphicon-globe"></span> Human Resources</a></li>
-                         
+                            <li ng-controller="hrRolesController"><a href="#HRTab" data-toggle="tab" ng-click="getDivisions()"> <span class = "glyphicon glyphicon-globe"></span> Human Resources</a></li>                     
                         </ul>
                 </div> <!--end panel-heading-->
 
@@ -213,111 +212,121 @@
 
                     <div class="tab-content">
 
-                    	<div class="tab-pane fade" id="supervisorTab">
+                    	<div class="tab-pane fade in col-sm-10" id="supervisorTab" >
                         	
-                        	
-                        	<!--div class="panel panel-inverse">
-							    <div class="panel-heading">
-							        <h3 class="panel-title">List of employees under supervision</h3>
-							    </div>
-							    <div class="panel-body">
-							    	
-							    	<table class="table">
-									<thead>
-										<tr>
-											<th>Employee Name</th>
-											<th>Designation</th>
-											<th>Status</th>
-											<th>Action</th>
-											<th>&nbsp;</th>
-										</tr>
-									</thead>
-									<form>
-									<tbody>
-										<tr>
-											<td><input class="form-control" ng-model="employee.name"></td>
-											<td><input class="form-control" type="email" ng-model="employee.email"></td>
-											<td><input class="form-control" ng-model="contact.employee"></td>
-											<td><button class="btn btn-primary" href="#addEmployeeOlive">Add New</button></td>
-													<div class="modal fade" id="addEmployeeOlive" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true">
-												    <div class="modal-dialog">
-												        <div class="modal-content">
-												            <div class="modal-header">
-												                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-												                <h3 class="modal-title" id="panelLabel">Add Employee</h3>
-												            </div>
-												            <div class="modal-body">
-												                <div class='container-fluid'>
-												                 	 <div class='row-fluid'>
-												                   		 <div class='col-lg-6'>
-												                     		 <div class="panel panel-primary">
-												                       			 <div class="panel-heading">
-												                         		 	<h3 class="panel-title">Department Employees<span class="glyphicon glyphicon-user"></span></h3>
-												                        		</div>
-												                       		    <div class="panel-body">
-												                       		    </div>
-												                   			 </div>
-												                         </div>
-												                     </div>
-												               </div>
-												            </div>
-												       </div>
-												    </div>
-										   	    </div>
-											<td><button class="btn btn-success" ng-click="update()">Save</button>&nbsp; &nbsp;
-											<button class="btn btn-danger" ng-click="deselect()">Clear</button>
-											</td>
-										</tr>
-										<tr ng-repeat="employee in employeeList">
-											<td>{{employee.name}}</td>
-											<td>{{employee.designation}}</td>
-											<td>{{employee.status}}</td>
-											<td><button class="btn btn-primary" ng-click="" href="#viewKPAOlive">View KPA</button></td>
-												<div class="modal fade" id="viewKPAOlive" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true">
-												    <div class="modal-dialog">
-												        <div class="modal-content">
-												            <div class="modal-header">
-												                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-												                <h3 class="modal-title" id="panelLabel">View KPA</h3>
-												            </div>
-												            <div class="modal-body">
-												                <div class='container-fluid'>
-												                 	 <div class='row-fluid'>
-												                   		 <div class='col-lg-6'>
-												                     		 <div class="panel panel-primary">
-												                       			 <div class="panel-heading">
-												                         		 	<h3 class="panel-title">Key Performance Area Objectives<span class="glyphicon glyphicon-user"></span></h3>
-												                        		</div>
-												                       		    <div class="panel-body">
-												                       		    </div>
-												                   			 </div>
-												                         </div>
-												                     </div>
-												               </div>
-												            </div>
-												       </div>
-												    </div>
-										   	    </div>
+                        	<div id="panelListGroupDiv" class="row list-group col-sm-6" style="margin-right: 200px;" ng-controller="supPanelInfoCtrl">
+			  					<a href="#" class="list-group-item"> <span class="badge" ng-model="empKPAVal"> {{empKPAVal}} </span> Employees KPAs in your tray </a>
+							</div> <!-- end panelListGroupDiv-->
 
-											<td><button class="btn btn-warning" ng-click="" >Modify</button></td>	
-											<td><button class="btn btn-danger" ng-click="">Delete</button></td>									
-										</tr>
-									</tbody>
-									</form>
-								</table>
-
-
-
-							    </div>
-							</div-->
-                        		
-
-					          table displaying list on employees who submitted their KPA's , with statuses [Approved, Pending, Not Receeved, Overdue, Disapproved]
                         </div>
 
-                        <div class="tab-pane fade" id="HRTab">
-                    		HR functions and views go here
-                    	</div>
+                        <!-- hr tab content -->
+                        <div class="tab-pane fade in" id="HRTab" ng-controller="hrRolesController">
+                    		<div class="panel panel-inverse">
+							    <div class="panel-heading">
+							        <h3 class="panel-title">SEC Departmental Objectives</h3>
+							    </div>
+							    <div class="panel-body">
+							    	<table class="table table-striped table-bordered">
+							        	<thead>
+											<tr>
+												<th>Division</th>
+												<th>GM</th>
+												<th>Departments</th>
+												<th colspan="3">Sections</th>
+											
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>{{division.DivName}}</td>
+												<td>{{division.GM}}</td>
+												<td ng-repeat='dept in departments'>{{dept.DepName}}</td>
+												<td ng-repeat='sec in sections'><a data-keyboard="false" data-backdrop="static" href="#showEmployeesModal" role="button" 
+			  									 data-toggle="modal" ng-click="getSecEmployees(sec.SecName,dept.DepName,division.DivName)">{{sec.SecName}}</a></td>
+											</tr>
+										</tbody>
+							        </table>
+
+							        	<div class="modal fade" id="showEmployeesModal" class="col-md-8">
+						  					<div id="showEmployeesModalDialog" class="modal-dialog">
+						  						<div id="showEmployeesModalContent" class="modal-content"> 
+						  							<div id="submitObjModalHeader" class="modal-header">
+						  							 	<button class="close" data-dismiss="modal">&times;</button>
+						  								<h4 class="modal-title">Sectional Employees - {{section}}</h4>
+						  							</div>
+
+						  							<div id="showEmployeesModalBody" class="modal-body">
+								  						<table class="table table-hover" id="employeesTable">
+								  							<thead>
+									  							<tr>
+									  								<th>Employee Name</th>
+									  								<th>PF Number</th>
+									  								<th>Gender</th>
+									  								<th>Position</th>
+									  								<th>View</th>
+									  							</tr>
+									  						</thead>
+									  						<tbody>
+									  							<tr ng-repeat="emp in secEmployees">
+									  								<td>{{emp.EmpName}}</td>
+									  								<td>{{emp.PFNum}}</td>
+									  								<td>{{emp.Gender}}</td>
+									  								<td>{{emp.Position}}</td>
+									  								<td><button type="button" class="btn btn-primary" id="empObjectives" data-dismiss="modal" ng-click="getEmpObjectives(emp.PFNum, emp.EmpName)" data-toggle="modal" data-target="#empObjsWarlock" data-backdrop="static">Objectives</button></td>
+									  							</tr>
+								  							</tbody>
+								  						</table>
+				  									</div> 
+
+				  									<div class="modal-footer">		  											  			
+				  										<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
+				  									</div> <!-- end modal-footer-->
+				  								</div> <!-- end submitObjModal-content-->
+				  							</div> <!-- end submitObjModal-dialog-->
+			  							</div> <!-- end submitObjModal-->
+
+
+			  							<div class="modal fade" id="empObjsWarlock">
+						  					<div id="empObjsWarlocklDialog" class="modal-dialog">
+						  						<div id="empObjsWarlockContent" class="modal-content"> 
+						  							<div id="empObjsWarlockHeader" class="modal-header">
+						  							 	<button class="close" data-dismiss="modal">&times;</button>
+						  								<h4 class="modal-title">Employee Objectives - {{empName}}</h4>
+						  							</div>
+
+						  							<div id="showEmployeesModalBody" class="modal-body">
+								  						<table class="table table-hover" id="employeesTable">
+								  							<thead>
+									  							<tr>
+									  								<th>Employee Name</th>
+									  								<th>PF Number</th>
+									  								<th>Gender</th>
+									  								<th>Position</th>
+									  								<th>Action</th>
+									  							</tr>
+									  						</thead>
+									  						<tbody>
+									  							<tr ng-repeat="emp in secEmployees">
+									  								<td>Test1</td>
+									  								<td>Test1</td>
+									  								<td>Test1</td>
+									  								<td>Test1</td>
+									  								<td><button type="button" class="btn btn-primary" id="addUser" data-dismiss="modal" data-toggle="modal" data-target="#empObjsWarlock" data-backdrop="static">View</button></td>
+									  							</tr>
+								  							</tbody>
+								  						</table>
+				  									</div> 
+
+				  									<div class="modal-footer">		  											  			
+				  										<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
+				  									</div> <!-- end modal-footer-->
+				  								</div> <!-- end submitObjModal-content-->
+				  							</div> <!-- end submitObjModal-dialog-->
+			  							</div> <!-- end submitObjModal-->
+							    </div>
+							</div>
+                    	</div> <!-- hr tab content ends -->
 
                         <div class="tab-pane fade in active" id="employeeTab">
                         	
@@ -1155,9 +1164,16 @@
 
 				  						<div class="modal-footer">
 
-				  							<button onclick="$('#createObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button"> <span class="glyphicon glyphicon-ok"></span> Send Objectives</button>
-				  											  									
+				  							<button onclick="$('#submitObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button" ng-click="sendObjs()" > <span class="glyphicon glyphicon-ok"></span> Send Objectives</button>
+							
 				  							<button class="btn btn-default" type="button" data-dismiss="modal"> <span class="glyphicon glyphicon-remove"></span> Close</button>
+
+				  							<div class="alert alert-success alert-block fade in" onclick="$('#submitObjModal').modal({'backdrop': 'static'});" id="successObjSubmit">
+												<button type="button" class="close" data-dismiss="alert">&times;</button>
+												<h4>Objective(s) Successfully Submitted!</h4>
+												<p>Click the 'x' in the corner to close...</p>
+											</div> <!--end alert-->
+				  											  		
 				  									
 				  						</div> <!-- end modal-footer-->
 
@@ -1327,11 +1343,12 @@
 
 			  				<br><br>
 
-			  				<div id="panelListGroupDiv" class="list-group">
+			  				<div id="panelListGroupDiv" class="list-group" ng-controller="empPanelInfoCtrl">
 			  					<a href="#" class="list-group-item"> <span class="badge"> 2 </span> Notifications</a>
 			  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails</a>
-			  					<a href="#" class="list-group-item"> <span class="badge"> 5 </span> Pending</a>
-			 					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
+			  					<a href="#" class="list-group-item"> <span class="badge" ng-model="unapprovedVal"> {{unapprovedVal}} </span> Unapproved</a>
+			  					<a href="#" class="list-group-item"> <span class="badge" ng-model="pendingVal"> {{pendingVal}} </span> Pending</a>
+			  					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
 			  					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
 							</div> <!-- end panelListGroupDiv-->
 
@@ -1348,7 +1365,7 @@
 
 		</div> <!--end container-->
 
-		<footer id="foot">
+		<footer id="foot" style="position: fixed; bottom:0; left:0; height: 40px; width: 100%" >
 
 			<div class="container">
 

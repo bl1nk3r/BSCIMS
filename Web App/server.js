@@ -9,7 +9,7 @@ var http  = require ('http') //built in module provides HTTP server and client f
    ,cache = {};				 //cache object is where the contents of cached files are stored
  
 var express = require('express') 	//lightweight server framerwork
-   ,userSession = require('client-sessions')	 //client session manager for handling logged in users
+   ,session = require('express-session')	 //client session manager for handling logged in users
    ,cookieParser = require('cookie-parser')	//module for parsing cookies
    ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')		//module for handling the application's favicon
@@ -34,61 +34,58 @@ var bsc = express()
    .use(bodyParser.json())
    .use(bodyParser.text())
    .use(bodyParser.raw())
+   .use(session({ secret: 'qwertyasdfg'}))
 
-//Session handler middleware with basic configurations
-   .use(userSession({
-   		cookieName: 'userSession',
-   		secret: 'qwertyasdfg',			//random, high-entropy string for cookie encryption
-   		duration: 30 * 60 * 1000,		//defines how long the session will live in milliseconds (after duration, cookie will be reset)
-   		activeDuration: 5 * 60 * 1000	//increase duration by interacting with site (5 minutes in our case)
-   }))
+   .get('/login', function (req, res){
+   		res.sendfile('public/login.html');
+   })
 
-//login route that checks database for user record and verifies password (nothing stored in cookie)
-	.post('/login', function (req, res) {
-		db.Employees.findOne({ EmpName: req.userName}, function (err, emp) {
-			if (!emp) {
-				//res.render('index.html',)
-				console.log('Invalid Login!!!');
-			}	else {
-				if (req.body.password === emp.password) {
-					res.redirect('/main');
-				}	else {
-					res.render ()
-					console.log('Your password is fucked up!!!');
-				}
-			}
-		})
-	})
+   .post('/login', function (req, res) {
+   		var user = {
+   			userName: req.body.username,
+   			password: req.body.password,
+   		};
 
-	.use(function (req, res, next) {
-		if (req.userSession && req.userSession.emp) {
-			Employees.findOne({ userName: req.userSession.emp.useName}, function (err, emp) {
-				if (emp) {
-					req.emp = emp;
-					delete req.emp.password; 		//delete the password from the session
-					req.userSession.emp = emp;
-					res.locals.emp = user;
-				}
-				//finishing processing the middleware and run the route
-				next();
-			});
-		}	else {
-			next();
-		}
-	})
+   		var userRoles = [];
+   		if (req.body.empRole == "on") {
+   			userRoles.push({isEmp:true});
+   		} else if (req.body.empRole == undefined) {
+   			userRoles.push({isEmp:true});
+   		}
+   		if (req.body.HRRole == "on") {
+   			userRoles.push({isHr:true});
+   		} else if (req.body.HRRole == undefined) {
+   			userRoles.push({isHr:false});
+   		}
+   		if (req.body.supervisorRole == "on") {
+   			userRoles.push({isSup:true});
+   		} else if ((req.body.supervisorRole == undefined)) {
+   			userRoles.push({isSup:false});
+   		}
+
+   		db.Employees.findOne(user, function (err, data) {
+   			if (data) {
+   				req.session.loggedUser = {userName:data.userName,empName:data.empName,PFNum:data.PFNum,roles:data.roles, chosenRoles:userRoles};
+   				res.redirect('/');
+   				console.log(req.session.loggedUser);
+   			} else {
+   				res.redirect('/login');
+   			}
+   		})
+   })
+
+	.get('*', function(req, res) {
+   		if (!req.session.loggedUser) {
+   			res.redirect('/login');
+   		} else {
+   			res.sendfile('public/main.html');
+   		}
+    })
 
 	.get('/logout', function (req, res) {
-		req.userSession.reser();
-		res.redirect('/');
+		req.session.resert();
+		res.redirect('/login');
 	});
-
-function requireLogin (req, res, next) {
-	if (!req.emp) {
-		res.redirect('index');
-	}	else {
-		next();
-	}
-};
 
 
 /**************************************************************************
@@ -107,13 +104,13 @@ function requireLogin (req, res, next) {
 	})
 
    .get("/getAllObjectives", function (req, res) {
-		db.Objectives.find(function (err, docs) {
+		db.Objectives.find({status: "unapproved"}, function (err, docs) {
 			if (err) {
 				console.log("There is an error");
 			} else {
 				res.json(docs);
-				console.log("Results are : ");
-				console.log(docs);
+				//console.log("Results are : ");
+				//console.log(docs);
 			}
 			
 		});
@@ -142,11 +139,59 @@ function requireLogin (req, res, next) {
 		});*/
 	})
 
+   .post("/showAllDivisions", function (req, res) {
+		db.Division.find(function (err, doc){
+			if ( err || !doc) {
+                res.send("No divisions found");
+            } else {
+                res.json(doc);
+            }
+		});
+	})
+
+	.post("/getSecEmployees", function (req, res) {
+		var div = req.body.divName;
+		db.Division.find({DivName: div},function (err, doc){
+			if ( err || !doc) {
+                res.send("No Employees found");
+            } else {
+                res.send(doc);
+            }
+		});
+	})
+	.post("/getLoggedInEmp", function (req, res) {
+		res.send(req.session.loggedUser);
+	})
+
+	.post("/getEmpObjectives", function (req, res) {
+		var pfnum = Number(req.body.pfno);
+		console.log(pfnum);
+		db.Objectives.find({createdBy:pfnum},function (err, doc){
+			if ( err || !doc) {
+                res.send("No objectives found");
+            } else {
+                res.send(doc);
+                console.log(doc);
+            }
+		});
+	})
+
+	.get("/getPendingObjectives", function (req, res) {
+		db.Objectives.find({status: "sent_for_approval"}, function (err, docs) {
+			if (err) {
+				console.log("There is an error");
+			} else {
+				res.json(docs);
+				//console.log("Results are : ");
+				//console.log(docs);
+			}
+			
+		});
+	})
+
     .post("/financePerspectiveController", function (req, res) {
 		var svc = req.body;
 		db.Objectives.insert(req.body, function (err, doc) {
-			//res.json(doc);
-			//console.log(doc.description);
 			//Update existing objectives and assert a 'status' field - set to unapproved
 			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance"}}, {multi: false}, function (err, doc) {
 				res.json(doc);
@@ -290,6 +335,32 @@ function requireLogin (req, res, next) {
 			}
 			console.log(json);
 		});
+	})
+
+
+
+/*******************************************************************************************************************************************************************
+			Submit Objective Controller (Changes Status of Objectives)
+*******************************************************************************************************************************************************************/
+
+	.post("/objectivesSubmitted_status_changed:id", function (req, res) {
+		var ID = req.params.id;
+		//res.send("Success");
+		console.log(ID);
+		
+		//Updating status of sent objectives to distinguish them from unsent in order for Supervisor to have access to them
+		db.Objectives.update({ _id: mongojs.ObjectId(ID)}, {$set : {status: "sent_for_approval"}}, {multi: false}, function (err, doc) {		//since the passed _id field of the objective via ID
+			if (err) {																															//is not recognized as an ObjectId, we process it using
+				console.log(err);																												//the "mongojs.ObjectId()" function which does the conversion
+			} 
+			else {
+				res.json(doc);
+				console.log(doc);
+			}
+		});
+		
+
+		//console.log(svc);
 	});
 
 //Log on the console the 'init' of the server

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">  
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -108,7 +108,7 @@
 						    color: #fff;
 						    background-color: #5bc0de;
 						}
-				</style>		
+		</style>		
 				<!-- Custom CSS -->
 				<link href="includes/css/styles.css" rel="stylesheet">
 				<!-- Include Modernizr in the head, before any other Javascript -->
@@ -133,10 +133,11 @@
 	                    </div>     
 	                    <div style="padding-top:10px" class="panel-body" >
 	                        <div id="login-alert" class="alert alert-info col-sm-12">Tip: Use your Novell credentials!</div>                            
-	                        <form class="form-horizontal" role="form" name = "loginForm">                                  
+	                        <form class="form-horizontal" role="form" name = "loginForm" action="/login" method="post">                                  
 	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.empName.$invalid && loginForm.empName.$dirty}">
 	                                	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-	                                	<input id="loginName" type="text" class="form-control" placeholder="username" required ng-pattern="/^sec[0-9]/" ng-maxlength=7 ng-model="empName">
+	                                	<input id="loginName" type="text" name="username" class="form-control" 
+	                                	placeholder="username" required ng-pattern="/^sec[0-9]/" ng-maxlength=7 ng-model="empName">
 
 	                                	<!-- ERRORS ASSOCIATED WITH USERNAME INPUT -->
 		                                <span class="help-block" ng-show="loginForm.empName.$error.required && loginForm.empName.$dirty">
@@ -153,7 +154,7 @@
 
 	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$dirty}">
 	                               		<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-	                                	<input id="loginPass" type="password" class="form-control" placeholder="password" ng-model="password" required>
+	                                	<input id="loginPass" type="password" name="password" class="form-control" placeholder="password" ng-model="password" required>
 
 	                                	<!-- ERRORS ASSOCIATED WITH PASSWORD INPUT -->
 		                                <span class="help-block" ng-show="loginForm.passkey.$error.required && loginForm.passkey.$dirty">
@@ -167,21 +168,21 @@
 	                           			<div class="form-group">
 	                            		  <label for="roleAdmin" class="col-sm-4 control-label">Employee <span class = "glyphicon glyphicon-user"></label>
 	                              			<div class="col-sm-2">
-	                                			<input type="checkbox" class="form-control" id="empLevel" ng-model="empRole" ng-init="empRole=true">
+	                                			<input type="checkbox" name="empRole" class="form-control" id="empRole" ng-model="empRole" ng-init="empRole=true">
 	                              			</div>
 	                            		</div>
 
 		                            	<div class="form-group">
 		                              		<label for="roleSup" class="col-sm-4 control-label">Supervisor <span class = "glyphicon glyphicon-eye-open"></span></label>
 		                              		<div class="col-sm-2">
-		                                		<input type="checkbox" class="form-control" id="supLevel" ng-model="supervisorRole">
+		                                		<input type="checkbox" name="supervisorRole" class="form-control" id="supervisorRole" ng-model="supervisorRole">
 		                              		</div>
 		                            	</div> 
 
 	                            		<div class="form-group">
 		                              		<label for="hrSup" class="col-sm-4 control-label">Human Resouces <span class = "glyphicon glyphicon-globe"></span></label>
 		                              		<div class="col-sm-2">
-		                                		<input type="checkbox" class="form-control" id="hrLevel" ng-model="HRRole">
+		                                		<input type="checkbox"  name="HRRole" class="form-control" id="HRRole" ng-model="HRRole">
 		                              		</div>
 	                            		</div> 
 						    		</div>
@@ -190,7 +191,7 @@
 	                           		<div style="margin-top:10px" class="form-group">
 	                                    <!-- Button -->
 	                                    <div class="col-sm-12 controls">                                 
-	                                    <a id="loginButton" style="float:right;" type="submit"  class="btn btn-lg btn-primary "> <span class=".glyphicon .glyphicon-log-in" ></span> Login</a>
+	                                    <button id="loginButton" style="float:right;" class="btn btn-lg btn-primary "> <span class=".glyphicon .glyphicon-log-in" ></span> Login</button>
 	                                    </div>
 	                           		</div>
 
@@ -210,10 +211,7 @@
 		<script src="http://code.jquery.com/jquery.js"></script>
 		
 		<!-- If no online access, fallback to our hardcoded version of jQuery -->
-		<script type="text/javascript" src="/js/login.js"></script>
 		<script type="text/javascript" src="/js/features/controller.js"></script>	
-		<!-- Custom JS -->
-		<script src="includes/js/script.js"></script>
 			
 	</body>
 </html>
