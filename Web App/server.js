@@ -27,7 +27,7 @@ var mongojs = require("mongojs")
 var bsc = express()
 //Direct the Express server to the 'public' folder containing static app files
    .use(express.static(__dirname + '/public'))
-
+ 
 //Invoke all the extensions that Express will need to parse the app's body
    .use(bodyParser.urlencoded({ extended: false}))
    .use(bodyParser.json())

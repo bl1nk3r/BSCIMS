@@ -1016,7 +1016,7 @@ var bsc = angular.module('BSCIMS', []);
 	});
 
 	pendingObjectives.getPending()
-	.success(function (res) {
+	.success(function (res) {       
 		$scope.pendingVal = res.length;
 	});
 
@@ -1027,7 +1027,83 @@ var bsc = angular.module('BSCIMS', []);
 *****************************************************SUPERVISORVISOR PANEL CONTROLLER*************************************************************
 ************************************************************************************************************************************************/
    .controller('supRoleController', ['pendingObjectives', '$scope', '$http', function (pendingObjectives, $scope, $http) {
-   		$scope.empKPAVal = 5;
+   		//Initial variables used in "Edit Objective" button for Finance Objective
+   		$scope.financeEditLabel = true;
+   		$scope.financeUnedittable = true;
+   		$scope.financeEditLabelText = "Edit Objective";
+		//Initial variables used in "Edit Objective" button for Customer Objective
+		$scope.customerEditLabel = true;
+   		$scope.customerUnedittable = true;
+   		$scope.customerEditLabelText = "Edit Objective";
+   		//Initial variables used in "Edit Objective" button for internal Objective
+		$scope.internalEditLabel = true;
+   		$scope.internalUnedittable = true;
+   		$scope.internalEditLabelText = "Edit Objective";
+		//Initial variables used in "Edit Objective" button for Learn Objective
+		$scope.learnEditLabel = true;
+   		$scope.learnUnedittable = true;
+   		$scope.learnEditLabelText = "Edit Objective";
+   		//Edit Finance Objective Button logic for toggling between states of "Edit" && "Lock"
+   		$scope.editFinanceObjective = function() {
+   			$scope.financeUnedittable = !$scope.financeUnedittable;
+   			$scope.financeEditLabel = !$scope.financeEditLabel;
+
+			 if ($scope.financeEditLabel === false) {
+	   			$scope.financeEditLabelText = "Lock Objective";
+	   		}
+	   		else if ($scope.financeEditLabel === true) {
+	   			$scope.financeEditLabelText = "Edit Objective";
+	   		}
+
+   			console.log($scope.financeEditLabelText);
+   		}
+   		//Edit Customer Objective Button logic for toggling between states of "Edit" && "Lock"
+   		$scope.editCustomerObjective = function() {
+   			$scope.customerUnedittable = !$scope.customerUnedittable;
+   			$scope.customerEditLabel = !$scope.customerEditLabel;
+
+			 if ($scope.customerEditLabel === false) {
+	   			$scope.customerEditLabelText = "Lock Objective";
+	   		}
+	   		else if ($scope.customerEditLabel === true) {
+	   			$scope.customerEditLabelText = "Edit Objective";
+	   		}
+
+   			console.log($scope.customerEditLabelText);
+   		}
+   		//Edit Internal Objective Button logic for toggling between states of "Edit" && "Lock"
+   		$scope.editInternalObjective = function() {
+   			$scope.internalUnedittable = !$scope.internalUnedittable;
+   			$scope.internalEditLabel = !$scope.internalEditLabel;
+
+			 if ($scope.internalEditLabel === false) {
+	   			$scope.internalEditLabelText = "Lock Objective";
+	   		}
+	   		else if ($scope.internalEditLabel === true) {
+	   			$scope.internalEditLabelText = "Edit Objective";
+	   		}
+
+   			console.log($scope.internalEditLabelText);
+   		}
+   		//Edit Learn Objective Button logic for toggling between states of "Edit" && "Lock"
+   		$scope.editLearnObjective = function() {
+   			$scope.learnUnedittable = !$scope.learnUnedittable;
+   			$scope.learnEditLabel = !$scope.learnEditLabel;
+
+			 if ($scope.learnEditLabel === false) {
+	   			$scope.learnEditLabelText = "Lock Objective";
+	   		}
+	   		else if ($scope.learnEditLabel === true) {
+	   			$scope.learnEditLabelText = "Edit Objective";
+	   		}
+
+   			console.log($scope.learnEditLabelText);
+   		}
+
+   		pendingObjectives.getPending()
+   		.success(function (res) {
+   			$scope.empKPAVal = res.length;
+   		});
 
    		//toggle display of Employee information with KPAs
    		$scope.empKPAs = false;
@@ -1038,7 +1114,7 @@ var bsc = angular.module('BSCIMS', []);
    		$scope.getEmps = function() {
    			//getSecEmployees.success(function (res) {
    				console.log(res);
-   			//});
+   			//});vvv
    		}
 
    		$scope.retrieveEmployees = function () {
@@ -1056,17 +1132,35 @@ var bsc = angular.module('BSCIMS', []);
 			//console.log(empPF);
 			pendingObjectives.getPending()
 			.success(function (res) {
-				//console.log(empPF);
-				//console.log(res);
-				//console.log("Pending objectives are as follows:")
+				console.log(empPF);
+				console.log(res);
+				console.log("Pending objectives are as follows:")
 				$scope.empObjArray = res;
 				for (var i = 0; i < $scope.empObjArray.length; i++){
 					if (empPF = $scope.empObjArray[i].PFNum) {
-						console.log("Found the shit!");
-						console.log($scope.empObjArray[i].description);
-						$scope.specificEmpObjs = $scope.empObjArray[i];
-						console.log("So now :");
-						console.log($scope.specificEmpObjs.description);
+						if ($scope.empObjArray[i].perspective = "finance"){
+							$scope.specificEmpFinObjs = $scope.empObjArray[i];
+							console.log("So now :");
+							console.log($scope.specificEmpFinObjs.description);
+						}
+						else if ($scope.empObjArray[i].perspective = "customer"){
+							$scope.specificEmpFinObjs = $scope.empObjArray[i];
+							console.log("So now :");
+							console.log($scope.specificEmpEmpObjs.description);
+						}
+						else if ($scope.empObjArray[i].perspective = "internal"){
+							$scope.specificEmpFinObjs = $scope.empObjArray[i];
+							console.log("So now :");
+							console.log($scope.specificEmpIntObjs.description);
+						}
+						else if ($scope.empObjArray[i].perspective = "learning"){
+							$scope.specificEmpFinObjs = $scope.empObjArray[i];
+							console.log("So now :");
+							console.log($scope.specificEmpLearnObjs.description);
+						}
+						else {
+							console.log("No other Objectives found!");
+						}
 					}
 				}
 			})
