@@ -38,7 +38,7 @@ var bsc = express()
 //server retrieval of login page
    .get('/login', function (req, res){
    		res.sendfile('public/login.html');
-   		console.log("No BUG_1");
+   		//console.log("No BUG_1");
    })
 
 //route to actual login
@@ -78,7 +78,7 @@ var bsc = express()
    				res.redirect('/login');
    			}
    		}) 
-   		console.log("No BUG_2");
+   		//console.log("No BUG_2");
    })
 
 	.get('*', function(req, res) {
@@ -87,7 +87,7 @@ var bsc = express()
    		} else {
    			res.sendfile('public/main.html');
    		} 
-   		console.log("No BUG_3");
+   		//console.log("No BUG_3");
     })
 
 	.get('/logout', function (req, res) {
@@ -109,10 +109,6 @@ var bsc = express()
 		});
 	})*/
 
-
-/***************************************************************
-			MAJOR BUG HERE!!!
-***************************************************************/
     .post("/getAllObjectives", function ( req, res) {
    		//console.log("Beginning of route");
 		db.Objectives.find({status: "unapproved"}, function (err, docs) {
@@ -120,10 +116,10 @@ var bsc = express()
 				console.log("There is an error");
 			} else { 
 				res.json(docs);
-				console.log(docs);
+				//console.log(docs);
 			}
-			console.log(res);
-			console.log("say!");		
+			//console.log(res);
+			//onsole.log("say!");		
 		});
 		
 
@@ -152,18 +148,32 @@ var bsc = express()
 	})
 
 	.post("/getPendingObjectives", function ( req, res) {
-	   		console.log("Beginning of route");
+	   		//console.log("Beginning of route");
 			db.Objectives.find({status: "sent_for_approval"}, function (err, docs) {
 				if (err) {
 					console.log("There is an error");
 				} else { 
 					res.json(docs);
-					console.log(docs);
+					//console.log(docs);
 				}
-				console.log(res);
-				console.log("say!");		
+				//onsole.log(res);
+				//console.log("say!");		
 			});
-		})
+	})
+
+	.post("/getApprovedObjectives", function ( req, res) {
+	   		//console.log("Beginning of route");
+			db.Objectives.find({status: "approved"}, function (err, docs) {
+				if (err) {
+					console.log("There is an error");
+				} else { 
+					res.json(docs);
+					//console.log(docs);
+				}
+				//onsole.log(res);
+				//console.log("say!");		
+			});
+	})
 
    .post("/showAllDivisions", function (req, res) {
 		db.Division.find(function (err, doc){
@@ -173,7 +183,7 @@ var bsc = express()
                 res.json(doc);
             }
 		});
-		console.log("No BUG_4");
+		//console.log("No BUG_4");
 	})
 
 	.post("/getSecEmployees", function (req, res) {
@@ -185,12 +195,12 @@ var bsc = express()
                 res.send(doc);
             }
 		});
-		console.log("No BUG_5");
+		//console.log("No BUG_5");
 	})
 
 	.post("/getLoggedInEmp", function (req, res) {
 		res.send(req.session.loggedUser);
-		console.log("No BUG_6");
+		//console.log("No BUG_6");
 	})
 
 	.post("/getEmpObjectives", function (req, res) {
@@ -201,10 +211,10 @@ var bsc = express()
                 res.send("No objectives found");
             } else {
                 res.send(doc);
-                console.log(doc);
+                //console.log(doc);
             }
 		});
-		console.log("No BUG_7");
+		//console.log("No BUG_7");
 	})
 
     .post("/financePerspectiveController", function (req, res) {
@@ -214,7 +224,7 @@ var bsc = express()
 			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance"}}, {multi: false}, 
 				function (err, doc) {
 					res.json(doc);
-					console.log(doc);
+					//console.log(doc);
 			});
 		})
 	})
@@ -244,7 +254,7 @@ var bsc = express()
 			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer"}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
-				console.log(doc);
+				//console.log(doc);
 			});
 		});
 	})
@@ -274,7 +284,7 @@ var bsc = express()
 			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal"}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
-				console.log(doc);
+				//console.log(doc);
 			});
 		});
 	})
@@ -304,7 +314,7 @@ var bsc = express()
 			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn"}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
-				console.log(doc);
+				//console.log(doc);
 			});
 		});
 	})
@@ -343,7 +353,7 @@ var bsc = express()
 ***********************************SUBMIT OBJECTIVE OPERATION (CHANGES STATUS OF OBJECTIVE)************************************************
 ******************************************************************************************************************************************/
 
-	.post("/objectivesSubmitted_status_changed:id", function (req, res) {
+	.post("/objectivesSubmitted_status_changed/:id", function (req, res) {
 		var ID = req.params.id;
 		console.log(ID);
 		
@@ -358,9 +368,8 @@ var bsc = express()
 			}
 		});
 	})
-
-
-
+ 
+ 
 	.post('/getEmpsPendingObjs', function (req, res) {
 		db.Employees.find( function (err, cur) {
 			if (err) {
@@ -368,10 +377,36 @@ var bsc = express()
 			}
 			else {
 				res.json(cur);
-				console.log(cur);
+				//console.log(cur);
 			}
 		})
-	});
+	})
+
+/******************************************************************************************************************************************
+***********************************APPROVE FINANCE OBJECTIVE OPERATION (CHANGES STATUS OF OBJECTIVE)***************************************
+******************************************************************************************************************************************/
+	.post('/approveFinanceObjective/:id', function (req, res) {
+		var ID = req.params.id
+			,persp = req.params.perspective
+			,finUpdate = req.body;
+
+		console.log("The expected ID is:")
+		console.log(ID);
+		db.Objectives.update({_id: mongojs.ObjectId(ID)}, {$set: {status: "approved", description: finUpdate.description, DSO: finUpdate.DSO, 
+													metricOneDef: finUpdate.oneDef, metricTwoDef: finUpdate.twoDef, metricThreeDef: finUpdate.threeDef,
+													metricFourDef: finUpdate.fourDef, metricFiveDef: finUpdate.fiveUpdate}}, {multi: false}, function (err, doc) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(doc);
+				console.log("Approved objectives:")
+				console.log(doc);
+			}
+		})
+		
+	})
+
 
 //Log on the console the 'init' of the server
 console.log("Server initialized on port 3002...");

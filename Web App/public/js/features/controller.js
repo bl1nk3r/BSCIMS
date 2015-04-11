@@ -19,6 +19,12 @@ var bsc = angular.module('BSCIMS', []);
  		}
  	}])
 
+ 	.service('approvedObjectives', ['$http', function ($http) {
+ 		this.getApproved = function() {
+ 			return $http.post('/getApprovedObjectives');
+ 		}
+ 	}])
+
  	/*.controller('allObjectivesCtrl', ['allObjectives', '$scope', function(allObjectives, $scope){
  		$scope.allObjectives = allObjectives;
  	}])*/
@@ -1006,7 +1012,7 @@ var bsc = angular.module('BSCIMS', []);
 *****************************************************EMPLOYEE PANEL CONTROLLER******************************************************************
 ************************************************************************************************************************************************/
 
-   .controller('empPanelInfoCtrl', ['allObjectives', 'pendingObjectives', '$scope', function (allObjectives, pendingObjectives, $scope) {
+   .controller('empPanelInfoCtrl', ['allObjectives', 'pendingObjectives', 'approvedObjectives', '$scope', function (allObjectives, pendingObjectives, approvedObjectives, $scope) {
 
 	allObjectives.getObjectives()
 	.success(function (res) {
@@ -1020,13 +1026,18 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.pendingVal = res.length;
 	});
 
+	approvedObjectives.getApproved()
+	.success(function (res) {       
+		$scope.approvedVal = res.length;
+	});
+
 }]) 
 
 
 /***********************************************************************************************************************************************
 *****************************************************SUPERVISORVISOR PANEL CONTROLLER*************************************************************
 ************************************************************************************************************************************************/
-   .controller('supRoleController', ['pendingObjectives', '$scope', '$http', function (pendingObjectives, $scope, $http) {
+   .controller('supRoleController', ['pendingObjectives', 'approvedObjectives', '$scope', '$http', function (pendingObjectives, approvedObjectives, $scope, $http) {
    		//Initial variables used in "Edit Objective" button for Finance Objective
    		$scope.financeEditLabel = true;
    		$scope.financeUnedittable = true;
@@ -1105,6 +1116,11 @@ var bsc = angular.module('BSCIMS', []);
    			$scope.empKPAVal = res.length;
    		});
 
+   		approvedObjectives.getApproved()
+   		.success(function (res) {
+   			$scope.empApprovedVal = res.length;
+   		});
+
    		//toggle display of Employee information with KPAs
    		$scope.empKPAs = false;
    			$scope.toggleEmpKPA = function() {
@@ -1124,6 +1140,49 @@ var bsc = angular.module('BSCIMS', []);
    			})
 		}
 
+		$scope.approveFinanceObjective = function (id, PFNum, finDescription, finDSO, finOneDef, finTwoDef, finThreeDef, finFourDef, finFiveDef) {
+			$scope.approveFinObj = {PF: PFNum, description: finDescription, DSO: finDSO, oneDef: finOneDef, twoDef: finTwoDef, threeDef: finThreeDef, fourDef: finFourDef, fiveDef: finFiveDef, perspective: "finance"}
+			$http.post('/approveFinanceObjective/' + id, $scope.approveFinObj)
+			.success(function () {
+				$('#successObjAlert12').show(500);
+			})
+			.error(function (err) {
+				console.log(err);
+			})
+		}
+
+		$scope.approveCustomerObjective = function (id, PFNum, custDescription, custDSO, custOneDef, custTwoDef, custThreeDef, custFourDef, custFiveDef) {
+			$scope.approveCustObj = {PF: PFNum, description: custDescription, DSO: custDSO, oneDef: custOneDef, twoDef: custTwoDef, threeDef: custThreeDef, fourDef: custFourDef, fiveDef: custFiveDef, perspective: "customer"}
+			$http.post('/approveCustomerObjective/' + id, $scope.approveCustObj)
+			.success(function () {
+				$('#successObjAlert22').show(500);
+			})
+			.error(function (err) {
+				console.log(err);
+			})
+		}
+
+		$scope.approveInternalObjective = function (id, PFNum, intDescription, intDSO, intOneDef, intTwoDef, intThreeDef, intFourDef, intFiveDef) {
+			$scope.approveIntObj = {PF: PFNum, description: intDescription, DSO: intDSO, oneDef: intOneDef, twoDef: intTwoDef, threeDef: intThreeDef, fourDef: intFourDef, fiveDef: intFiveDef, perspective: "internal"}
+			$http.post('/approveInternalObjective/' + id, $scope.approveIntObj)
+			.success(function () {
+				$('#successObjAlert32').show(500);
+			})
+			.error(function (err) {
+				console.log(err);
+			})
+		}
+
+		$scope.approveLearnObjective = function (id, PFNum, learnDescription, learnDSO, learnOneDef, learnTwoDef, learnThreeDef, learnFourDef, learnFiveDef) {
+			$scope.approveLearnObj = {PF: PFNum, description: learnDescription, DSO: learnDSO, oneDef: learnOneDef, twoDef: learnTwoDef, threeDef: learnThreeDef, fourDef: learnFourDef, fiveDef: learnFiveDef, perspective: "learn"}
+			$http.post('/approveLearnObjective/' + id, $scope.approveLearnObj)
+			.success(function () {
+				$('#successObjAlert42').show(500);
+			})
+			.error(function (err) {
+				console.log(err);
+			})
+		}
    }])
 
    .controller('supEmpObjsCtrl', ['pendingObjectives', '$scope', function (pendingObjectives, $scope) {
@@ -1141,7 +1200,7 @@ var bsc = angular.module('BSCIMS', []);
 						if ($scope.empObjArray[i].perspective = "finance"){
 							$scope.specificEmpFinObjs = $scope.empObjArray[i];
 							console.log("So now :");
-							console.log($scope.specificEmpFinObjs.description);
+							console.log($scope.specificEmpFinObjs.PFNum);
 						}
 						else if ($scope.empObjArray[i].perspective = "customer"){
 							$scope.specificEmpFinObjs = $scope.empObjArray[i];

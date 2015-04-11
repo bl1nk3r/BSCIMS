@@ -188,6 +188,11 @@
 			  					Employees KPAs in your tray 
 			  				</a>
 
+			  				<a href="#" class="list-group-item" ng-click="toggleApproved()"> 
+			  					<span class="badge" ng-model="empApprovedVal"> {{empApprovedVal}} </span> 
+			  					Objectives Approved 
+			  				</a>
+
 			  				&nbsp;
 
 							<div class="panel panel-inverse" ng-show="empKPAs" ng-controller="supEmpObjsCtrl" >
@@ -344,8 +349,10 @@
 
 																		</div> <!--end performanceRatingDiv -->
 																		
-																		<button id="submitFinanceObjButton2" class="btn btn-primary pull-right" 
-																			ng-click="submitFinanceObjective()"> <span class="glyphicon glyphicon-ok"></span>
+																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
+																			ng-click="approveFinanceObjective(specificEmpFinObjs._id,specificEmpFinObjs.PFNum,specificEmpFinObjs.description, specificEmpFinObjs.DSO
+																						,specificEmpFinObjs.metricOneDef,specificEmpFinObjs.metricTwoDef,specificEmpFinObjs.metricThreeDef
+																						,specificEmpFinObjs.metricFourDef,specificEmpFinObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
 																			Approve Objective
 																		</button> <!-- end Submit Objective button-->
 																		
@@ -381,7 +388,7 @@
 																		</label> <!-- end customerObjectiveDescriptionlabel-->
 
 																		<div id="customerObjDivInput2" class="col-lg-10">
-																			<input ng-model="customerPerspectiveController.description" 
+																			<input ng-model="specificEmpCustObjs.description" 
 																			id="customerObjDescription" class="form-control" 
 																			placeholder="Enter the description of the customer objective..." 
 																			type="text" ng-disabled="customerUnedittable">
@@ -396,7 +403,7 @@
 
 																		<div id="customerDSODivInput2" class="col-lg-10">
 
-																			<textarea ng-model="customerPerspectiveController.DSO" 
+																			<textarea ng-model="specificEmpCustObjs.DSO" 
 																			class="form-control" id="customerDSODescription2" placeholder="Enter the Desired Standard Output..." type="text" rows="3"
 																			ng-disabled="customerUnedittable">
 																			</textarea>
@@ -412,7 +419,7 @@
 
 																			<div id="poorPerfDiv2" class="col-lg-10">
 																				Poor Delivery (Score - 1):
-																				<input ng-model="customerPerspectiveController.metricOneDef" 
+																				<input ng-model="specificEmpCustObjs.metricOneDef" 
 																				class="form-control" id="poorPerfField2" placeholder="Set the lowest achievement..."
 																				type="text" ng-disabled="customerUnedittable">
 																			</div> <!-- end poorPerDiv-->
@@ -423,7 +430,7 @@
 
 																			<div id="unsatisfactoryPerfDiv2" class="col-lg-10">
 																				Unsatisfactory (Score - 2):
-																				<input ng-model="customerPerspectiveController.metricTwoDef" 
+																				<input ng-model="specificEmpCustObjs.metricTwoDef" 
 																				class="form-control" id="unsatPerfField2" 
 																				placeholder="Set the next lowest..." type="text" ng-disabled="customerUnedittable">
 																			</div> <!-- end unsatisfactoryPerDiv-->
@@ -434,7 +441,7 @@
 
 																			<div id="targetMetPerfDiv2" class="col-lg-10">
 																				Target Met (Score - 3):
-																				<input ng-model="customerPerspectiveController.metricThreeDef" 
+																				<input ng-model="specificEmpCustObjs.metricThreeDef" 
 																				class="form-control" id="targetPerfField2" 
 																				placeholder="Set the expected goal..." type="text" ng-disabled="customerUnedittable">
 																			</div> <!-- end targetMetPerDiv-->
@@ -445,7 +452,7 @@
 
 																			<div id="exceedingPerfDiv2" class="col-lg-10">
 																				Exceed Target (Score - 4):
-																				<input ng-model="customerPerspectiveController.metricFourDef" 
+																				<input ng-model="specificEmpCustObjs.metricFourDef" 
 																				class="form-control" id="exceedPerfField2" 
 																				placeholder="How far you can go..." type="text" ng-disabled="customerUnedittable">
 																			</div> <!-- end exceedingPerDiv-->
@@ -456,17 +463,19 @@
 
 																			<div id="outstandingPerfDiv2" class="col-lg-10">
 																				Oustanding Performance (Score - 5):
-																				<input ng-model="customerPerspectiveController.metricFiveDef" 
+																				<input ng-model="specificEmpCustObjs.metricFiveDef" 
 																				class="form-control" id="outstandPerfField2" 
 																				placeholder="Reach for the stars..." type="text" ng-disabled="customerUnedittable">
 																			</div> <!-- end outstandingPerDiv-->
 
 																		</div> <!--end performanceRatingDiv -->
 
-																		<button id="submitCustomerObjButton2" class="btn btn-primary pull-right" 
-																			ng-click="submitCustomerObjective()"><span class="glyphicon glyphicon-ok"></span> 
+																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
+																			ng-click="approveCustomerObjective(specificEmpCustObjs._id,specificEmpCustObjs.PFNum,specificEmpCustObjs.description, specificEmpCustObjs.DSO
+																						,specificEmpCustObjs.metricOneDef, specificEmpCustObjs.metricTwoDef, specificEmpCustObjs.metricThreeDef
+																						,specificEmpCustObjs.metricFourDef, specificEmpCustObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
 																			Approve Objective
-																		</button>
+																		</button> <!-- end Submit Objective button-->
 																		
 																	</div> <!--end customerObjDiv2-->
 																	
@@ -501,7 +510,7 @@
 																		</label> <!-- end internalObjectiveDescriptionlabel-->
 
 																		<div id="internalObjDivInput2" class="col-lg-10">
-																			<input ng-model="internalPerspectiveController.description" 
+																			<input ng-model="specificEmpIntObjs.description" 
 																			class="form-control" id="internalObjDescription2" 
 																			placeholder="Enter the description of the internal objective..." 
 																			type="text" ng-disabled="internalUnedittable">
@@ -516,7 +525,7 @@
 
 																		<div id="internalDSODivInput2" class="col-lg-10">
 
-																			<textarea ng-model="internalPerspectiveController.DSO" 
+																			<textarea ng-model="specificEmpIntObjs.DSO" 
 																			class="form-control" id="internalDSODescription2" 
 																			placeholder="Enter the Desired Standard Output..." 
 																			type="text" rows="3" ng-disabled="internalUnedittable">
@@ -533,7 +542,7 @@
 
 																			<div id="poorPerfDiv2" class="col-lg-10">
 																				Poor Delivery (Score - 1):
-																				<input ng-model="internalPerspectiveController.metricOneDef" 
+																				<input ng-model="specificEmpIntObjs.metricOneDef" 
 																				class="form-control" id="poorPerfField2" 
 																				placeholder="Set the lowest achievement..." type="text" ng-disabled="internalUnedittable">
 																			</div> <!-- end poorPerDiv-->
@@ -544,7 +553,7 @@
 
 																			<div id="unsatisfactoryPerfDiv2" class="col-lg-10">
 																				Unsatisfactory (Score - 2):
-																				<input ng-model="internalPerspectiveController.metricTwoDef" 
+																				<input ng-model="specificEmpIntObjs.metricTwoDef" 
 																				class="form-control" id="unsatPerfField2" 
 																				placeholder="Set the next lowest..." type="text" ng-disabled="internalUnedittable">
 																			</div> <!-- end unsatisfactoryPerDiv-->
@@ -555,7 +564,7 @@
 
 																			<div id="targetMetPerfDiv" class="col-lg-10">
 																				Target Met (Score - 3):
-																				<input ng-model="internalPerspectiveController.metricThreeDef" 
+																				<input ng-model="specificEmpIntObjs.metricThreeDef" 
 																				class="form-control" id="targetPerfField2" 
 																				placeholder="Set the expected goal..." type="text" ng-disabled="internalUnedittable">
 																			</div> <!-- end targetMetPerDiv-->
@@ -566,7 +575,7 @@
 
 																			<div id="exceedingPerfDiv2" class="col-lg-10">
 																				Exceed Target (Score - 4):
-																				<input ng-model="internalPerspectiveController.metricFourDef" 
+																				<input ng-model="specificEmpIntObjs.metricFourDef" 
 																				class="form-control" id="exceedPerfField2" 
 																				placeholder="How far you can go..." type="text" ng-disabled="internalUnedittable">
 																			</div> <!-- end exceedingPerDiv-->
@@ -577,17 +586,19 @@
 
 																			<div id="outstandingPerfDiv2" class="col-lg-10">
 																				Outstanding Performance (Score - 5):
-																				<input ng-model="internalPerspectiveController.metricFiveDef" 
+																				<input ng-model="specificEmpIntObjs.metricFiveDef" 
 																				class="form-control" id="outstandPerfField2" 
 																				placeholder="Reach for the stars..." type="text" ng-disabled="internalUnedittable">
 																			</div> <!-- end outstandingPerDiv-->
 
 																		</div> <!--end performanceRatingDiv -->
 
-																		<button id="submitInternalObjButton2" class="btn btn-primary pull-right" 
-																			ng-click="submitInternalObjective()"> <span class="glyphicon glyphicon-ok"></span> 
-																			Submit Objective
-																		</button>
+																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
+																			ng-click="approveFinanceObjective(specificEmpIntObjs._id,specificEmpIntObjs.PFNum,specificEmpIntObjs.description, specificEmpIntObjs.DSO
+																						,specificEmpIntObjs.metricOneDef, specificEmpIntObjs.metricTwoDef,specificEmpIntObjs.metricThreeDef
+																						,specificEmpIntObjs.metricFourDef, specificEmpIntObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
+																			Approve Objective
+																		</button> <!-- end Submit Objective button-->
 																		
 																	</div> <!--end internalObjDiv-->
 																	
@@ -621,7 +632,7 @@
 																		</label> <!-- end learnObjectiveDescriptionlabel-->
 
 																		<div id="learnObjDivInput2" class="col-lg-10">
-																			<input ng-model="learnPerspectiveController.description" 
+																			<input ng-model="specificEmpLearnObjs.description" 
 																			class="form-control" id="learnObjDescription2" 
 																			placeholder="Enter the description of the learn objective..." type="text" ng-disabled="learnUnedittable">
 																		</div> <!-- end learnObjDivInput-->
@@ -634,7 +645,7 @@
 																		</label> <!-- end learnDSOlabel-->
 
 																		<div id="learnDSODivInput2" class="col-lg-10">
-																			<textarea ng-model="learnPerspectiveController.DSO" 
+																			<textarea ng-model="specificEmpLearnObjs.DSO" 
 																			class="form-control" id="learnDSODescription2" 
 																			placeholder="Enter the Desired Standard Output..." type="text" rows="3" ng-disabled="learnUnedittable">
 																			</textarea>
@@ -649,7 +660,7 @@
 
 																			<div id="poorPerfDiv2" class="col-lg-10">
 																				Poor Delivery (Score - 1):
-																				<input ng-model="learnPerspectiveController.metricOneDef" 
+																				<input ng-model="specificEmpLearnObjs.metricOneDef" 
 																				class="form-control" id="poorPerfField2" 
 																				placeholder="Set the lowest achievement..." type="text" ng-disabled="learnUnedittable">
 																			</div> <!-- end poorPerDiv-->
@@ -660,7 +671,7 @@
 
 																			<div id="unsatisfactoryPerfDiv2" class="col-lg-10">
 																				Unsatisfactory (Score - 2):
-																				<input ng-model="learnPerspectiveController.metricTwoDef" 
+																				<input ng-model="specificEmpLearnObjs.metricTwoDef" 
 																				class="form-control" id="unsatPerfField2" 
 																				placeholder="Set the next lowest..." type="text" ng-disabled="learnUnedittable">
 																			</div> <!-- end unsatisfactoryPerDiv-->
@@ -671,7 +682,7 @@
 
 																			<div id="targetMetPerfDiv2" class="col-lg-10">
 																				Target Met (Score - 3):
-																				<input ng-model="learnPerspectiveController.metricThreeDef" 
+																				<input ng-model="specificEmpLearnObjs.metricThreeDef" 
 																				class="form-control" id="targetPerfField2" 
 																				placeholder="Set the expected goal..." type="text" ng-disabled="learnUnedittable">
 																			</div> <!-- end targetMetPerDiv-->
@@ -682,7 +693,7 @@
 
 																			<div id="exceedingPerfDiv2" class="col-lg-10">
 																				Exceeding (Score - 4):
-																				<input ng-model="learnPerspectiveController.metricFourDef" 
+																				<input ng-model="specificEmpLearnObjs.metricFourDef" 
 																				class="form-control" id="exceedPerfField2" 
 																				placeholder="How far you can go..." type="text" ng-disabled="learnUnedittable">
 																			</div> <!-- end exceedingPerDiv-->
@@ -693,17 +704,19 @@
 
 																			<div id="outstandingPerfDiv2" class="col-lg-10">
 																				Outstanding Performance (Score - 5):
-																				<input ng-model="learnPerspectiveController.metricFiveDef" 
+																				<input ng-model="specificEmpLearnObjs.metricFiveDef" 
 																				class="form-control" id="outstandPerfField2" 
 																				placeholder="Reach for the stars..." type="text" ng-disabled="learnUnedittable">
 																			</div> <!-- end outstandingPerDiv-->
 
 																		</div> <!--end performanceRatingDiv -->
 
-																		<button id="submitLearnObjButton2" class="btn btn-primary pull-right" 
-																			ng-click="submitLearnObjective()"> <span class = "glyphicon glyphicon-ok"></span>
+																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
+																			ng-click="approveFinanceObjective(specificEmpLearnObjs._id,specificEmpLearnObjs.PFNum,specificEmpLearnObjs.description, specificEmpLearnObjs.DSO
+																						,specificEmpLearnObjs.metricOneDef, specificEmpLearnObjs.metricTwoDef, specificEmpLearnObjs.metricThreeDef
+																						,specificEmpLearnObjs.metricFourDef,specificEmpLearnObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
 																			Approve Objective
-																		</button>
+																		</button> <!-- end Submit Objective button-->
 																		
 																	</div> <!--end learnObjDiv-->
 																	
@@ -1879,7 +1892,7 @@
 				  						Pending
 				  					</a>
 				  					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
-				  					<a href="#" class="list-group-item"> <span class="badge"> 7 </span> Approved</a>
+				  					<a href="#" class="list-group-item"> <span class="badge" ng-model="approvedVal"> {{approvedVal}} </span> Approved</a>
 								</div> <!-- end panelListGroupDiv-->
 
 							</div> <!--end btn-group-->
