@@ -1,19 +1,18 @@
-/*****************************************************************************************************************
-										NODE.JS Server Source-code
-*****************************************************************************************************************/
-
-var http  = require ('http') //built in module provides HTTP server and client functionality
-   ,fs    = require ('fs')   //built in fs module provides filesystem-related functionality
-   ,path  = require ('path') //built in path module provides filesystem path-related functionality
-   ,mime  = require ('mime') //add-on mime module provides ability to derive a MIME type based on a filename extension
-   ,cache = {};				 //cache object is where the contents of cached files are stored
+/**************************************************************************************************************************************
+*****************************************NODE.JS Server Source-code********************************************************************
+**************************************************************************************************************************************/
  
-var express = require('express') 	//lightweight server framerwork
-   ,session = require('express-session')	 //client session manager for handling logged in users
-   ,cookieParser = require('cookie-parser')	//module for parsing cookies
-   ,bodyParser = require('body-parser')  	//middleware for parsing strings to JSON objects
-   ,favicon = require('serve-favicon')		//module for handling the application's favicon
-   ,sendgrid = require('sendgrid')('api_user', 'api_key'); //sendgrid api_user && api_key
+var http  = require ('http') 									//built in module provides HTTP server and client functionality
+   ,fs    = require ('fs')   									//built in fs module provides filesystem-related functionality
+   ,path  = require ('path') 									//built in path module provides filesystem path-related functionality
+   ,cache = {};				 									//cache object is where the contents of cached files are stored
+ 
+var express = require('express') 								//lightweight server framerwork
+   ,session = require('express-session')	 					//client session manager for handling logged in users
+   ,cookieParser = require('cookie-parser')						//module for parsing cookies
+   ,bodyParser = require('body-parser')  						//middleware for parsing strings to JSON objects
+   ,favicon = require('serve-favicon')							//module for handling the application's favicon
+   ,sendgrid = require('sendgrid')('api_user', 'api_key'); 		//sendgrid api_user && api_key
 
 //include access to the MongoDB driver for Node
 var mongojs = require("mongojs")
@@ -22,7 +21,7 @@ var mongojs = require("mongojs")
 //use the default port for Mongo server/client connections			
     ,port = "27017"					
 //init BSCIMS (database) and Objectives (collection)
-    ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Transaction","Document"]);
+    ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Document","Employees"]);
 
 //instantiate the server application 
 var bsc = express()
@@ -36,21 +35,26 @@ var bsc = express()
    .use(bodyParser.raw())
    .use(session({ secret: 'qwertyasdfg'}))
 
+//server retrieval of login page
    .get('/login', function (req, res){
    		res.sendfile('public/login.html');
+   		console.log("No BUG_1");
    })
 
+//route to actual login
    .post('/login', function (req, res) {
    		var user = {
    			userName: req.body.username,
-   			password: req.body.password,
+   			password: req.body.password
    		};
 
    		var userRoles = [];
+
+   		//check for access role selections
    		if (req.body.empRole == "on") {
    			userRoles.push({isEmp:true});
    		} else if (req.body.empRole == undefined) {
-   			userRoles.push({isEmp:true});
+   			userRoles.push({isEmp:false});
    		}
    		if (req.body.HRRole == "on") {
    			userRoles.push({isHr:true});
@@ -63,15 +67,18 @@ var bsc = express()
    			userRoles.push({isSup:false});
    		}
 
+   		//find that one employee logging in using their login details and create a session
    		db.Employees.findOne(user, function (err, data) {
    			if (data) {
    				req.session.loggedUser = {userName:data.userName,empName:data.empName,PFNum:data.PFNum,roles:data.roles, chosenRoles:userRoles};
    				res.redirect('/');
-   				console.log(req.session.loggedUser);
+   				//console.log(req.session.loggedUser);
+
    			} else {
    				res.redirect('/login');
    			}
-   		})
+   		}) 
+   		console.log("No BUG_2");
    })
 
 	.get('*', function(req, res) {
@@ -79,41 +86,46 @@ var bsc = express()
    			res.redirect('/login');
    		} else {
    			res.sendfile('public/main.html');
-   		}
+   		} 
+   		console.log("No BUG_3");
     })
 
 	.get('/logout', function (req, res) {
 		req.session.resert();
 		res.redirect('/login');
-	});
-
-
-/**************************************************************************
-	Server operations for Finance Perspective Objectives
-**************************************************************************/
-/*bsc.get("/financePerspective", function(req, res) {
-	db.Objectives.find(function(err, docs) {
-		res.json(docs);
-	});
-});*/
-
-   bsc.get("/retrieveFinanceObjectives", function (req, res) {
-		db.Objectives.find(function (err, docs) {
-			res.json(docs);
-		});
 	})
 
-   .get("/getAllObjectives", function (req, res) {
+/**************************************************************************************************************************************
+******************************SERVER OPERATIONS FOR FINANCE PERSPECTIVES OBJECTIVES****************************************************
+**************************************************************************************************************************************/
+    /*.get("/retrieveFinanceObjectives", function (req, res) {
+		db.Objectives.find(function (err, docs) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(docs);
+			}
+		});
+	})*/
+
+
+/***************************************************************
+			MAJOR BUG HERE!!!
+***************************************************************/
+    .post("/getAllObjectives", function ( req, res) {
+   		//console.log("Beginning of route");
 		db.Objectives.find({status: "unapproved"}, function (err, docs) {
 			if (err) {
 				console.log("There is an error");
-			} else {
+			} else { 
 				res.json(docs);
-				//console.log("Results are : ");
-				//console.log(docs);
+				console.log(docs);
 			}
-			
+			console.log(res);
+			console.log("say!");		
 		});
+		
 
 		/*sendgrid.send({
 			to: 'jay.rego.14@gmail.com',
@@ -136,8 +148,22 @@ var bsc = express()
 				return console.error(err);
 			}
 			console.log(json);
-		});*/
+		})*/
 	})
+
+	.post("/getPendingObjectives", function ( req, res) {
+	   		console.log("Beginning of route");
+			db.Objectives.find({status: "sent_for_approval"}, function (err, docs) {
+				if (err) {
+					console.log("There is an error");
+				} else { 
+					res.json(docs);
+					console.log(docs);
+				}
+				console.log(res);
+				console.log("say!");		
+			});
+		})
 
    .post("/showAllDivisions", function (req, res) {
 		db.Division.find(function (err, doc){
@@ -147,6 +173,7 @@ var bsc = express()
                 res.json(doc);
             }
 		});
+		console.log("No BUG_4");
 	})
 
 	.post("/getSecEmployees", function (req, res) {
@@ -158,9 +185,12 @@ var bsc = express()
                 res.send(doc);
             }
 		});
+		console.log("No BUG_5");
 	})
+
 	.post("/getLoggedInEmp", function (req, res) {
 		res.send(req.session.loggedUser);
+		console.log("No BUG_6");
 	})
 
 	.post("/getEmpObjectives", function (req, res) {
@@ -174,45 +204,20 @@ var bsc = express()
                 console.log(doc);
             }
 		});
-	})
-
-	.get("/getPendingObjectives", function (req, res) {
-		db.Objectives.find({status: "sent_for_approval"}, function (err, docs) {
-			if (err) {
-				console.log("There is an error");
-			} else {
-				res.json(docs);
-				//console.log("Results are : ");
-				//console.log(docs);
-			}
-			
-		});
+		console.log("No BUG_7");
 	})
 
     .post("/financePerspectiveController", function (req, res) {
 		var svc = req.body;
 		db.Objectives.insert(req.body, function (err, doc) {
 			//Update existing objectives and assert a 'status' field - set to unapproved
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance"}}, {multi: false}, function (err, doc) {
-				res.json(doc);
-				console.log(doc);
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance"}}, {multi: false}, 
+				function (err, doc) {
+					res.json(doc);
+					console.log(doc);
 			});
 		})
-
-		
-
-		console.log(svc);
 	})
-
-	/*.post("/financePerformanceRatingController", function(req, res) {
-		var svc = req.body;
-		//res.send("Success");
-		db.Objectives.insert(req.body, function(err, doc) {
-			res.json(doc);
-		});
-
-		console.log(svc);
-	})*/
 
 	.delete("/financePerspectiveController/:id", function (req, res) {
 		var id = req.params.id;
@@ -222,9 +227,9 @@ var bsc = express()
 		});
 	})
 
-/**************************************************************************
-	Server operations for Customer Perspective Objectives
-**************************************************************************/
+/*****************************************************************************************************************************************
+**********************************SERVER OPERATIONS FOR CUSTOMER PERSPECTIVE OBJECTIVES***************************************************
+******************************************************************************************************************************************/
 	.get("/customerPerspective", function (req, res) {
 		db.Objectives.find(function(err, docs) {
 			res.json(docs);
@@ -236,13 +241,12 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer"}}, {multi: false}, function (err, doc) {
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer"}}, {multi: false}, 
+				function (err, doc) {
 				res.json(doc);
 				console.log(doc);
 			});
 		});
-
-		console.log(svc);
 	})
 
 	.delete("/customerPerspectiveController/:id", function (req, res) {
@@ -253,8 +257,8 @@ var bsc = express()
 		});
 	})
 
-/**************************************************************************
-	Server operations for Internal Business Perspective Objectives
+/*****************************************************************************************************************************************
+***************************SERVER OPERATIONS FOR INTERNAL PERSPECTIVE OBJECTIVES**********************************************************
 **************************************************************************/
 	.get("/internalPerspective", function (req, res) {
 		db.Objectives.find(function (err, docs) {
@@ -267,13 +271,12 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal"}}, {multi: false}, function (err, doc) {
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal"}}, {multi: false}, 
+				function (err, doc) {
 				res.json(doc);
 				console.log(doc);
 			});
 		});
-
-		console.log(svc);
 	})
 
 	.delete("/internalPerspectiveController/:id", function (req, res) {
@@ -284,9 +287,9 @@ var bsc = express()
 		});
 	})
 
-/**************************************************************************
-		Server operations for Learn & Growth Perspective Objectives
-**************************************************************************/
+/******************************************************************************************************************************************
+*********************************SERVER OPERATIONS FOR LEARN & GROWTH PERSPECTIVE OBJECTIVES***********************************************
+*******************************************************************************************************************************************/
 	.get("/learnPerspective", function (req, res) {
 		db.Objectives.find(function (err, docs) {
 			res.json(docs);
@@ -298,13 +301,12 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn"}}, {multi: false}, function (err, doc) {
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn"}}, {multi: false}, 
+				function (err, doc) {
 				res.json(doc);
 				console.log(doc);
 			});
 		});
-
-		console.log(svc);
 	})
 
 	.delete("/learnPerspectiveController/:id", function (req, res) {
@@ -337,35 +339,41 @@ var bsc = express()
 		});
 	})
 
-
-
-/*******************************************************************************************************************************************************************
-			Submit Objective Controller (Changes Status of Objectives)
-*******************************************************************************************************************************************************************/
+/******************************************************************************************************************************************
+***********************************SUBMIT OBJECTIVE OPERATION (CHANGES STATUS OF OBJECTIVE)************************************************
+******************************************************************************************************************************************/
 
 	.post("/objectivesSubmitted_status_changed:id", function (req, res) {
 		var ID = req.params.id;
-		//res.send("Success");
 		console.log(ID);
 		
 		//Updating status of sent objectives to distinguish them from unsent in order for Supervisor to have access to them
-		db.Objectives.update({ _id: mongojs.ObjectId(ID)}, {$set : {status: "sent_for_approval"}}, {multi: false}, function (err, doc) {		//since the passed _id field of the objective via ID
-			if (err) {																															//is not recognized as an ObjectId, we process it using
-				console.log(err);																												//the "mongojs.ObjectId()" function which does the conversion
+		db.Objectives.update({ _id: mongojs.ObjectId(ID)}, {$set : {status: "sent_for_approval"}}, {multi: false}, function (err, doc) {		
+			if (err) {																															
+				console.log(err);																												
 			} 
 			else {
 				res.json(doc);
 				console.log(doc);
 			}
 		});
-		
+	})
 
-		//console.log(svc);
+
+
+	.post('/getEmpsPendingObjs', function (req, res) {
+		db.Employees.find( function (err, cur) {
+			if (err) {
+				console.log(err.message);
+			}
+			else {
+				res.json(cur);
+				console.log(cur);
+			}
+		})
 	});
 
 //Log on the console the 'init' of the server
 console.log("Server initialized on port 3002...");
 
-//Wait for a connection on port '3000' (idle port in this case)
-//bsc.listen(3000);
 module.exports = bsc;

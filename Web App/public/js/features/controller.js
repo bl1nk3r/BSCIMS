@@ -1,23 +1,21 @@
  //using $scope to bind data models from the UI to the angular script (interchangeably)
 var bsc = angular.module('BSCIMS', []);
 
-/**************************************************************************************
-		Global Services
-**************************************************************************************/
+/***********************************************************************************************************************************************
+***********************************************GLOBAL SERVICES**********************************************************************************
+***********************************************************************************************************************************************/
 
  //this service retrieves and globally stores all objectives (with a default status of "unapproved") to be used by any controller
- bsc.service('allObjectives', ['$http', '$q',function ($http, $q){
-		this.objectives = null;
-
+ bsc.service('allObjectives', ['$http', function ($http){
 		this.getObjectives = function () {
-			return $http.get('/getAllObjectives');
+			return $http.post("/getAllObjectives");
 		}
 	}])
 
 //while this one does the same only for objectives that have been sent for processing or approval (with a status of  "sent_for_approval")
  	.service('pendingObjectives', ['$http', function ($http) {
  		this.getPending = function() {
- 			return $http.get('/getPendingObjectives');
+ 			return $http.post('/getPendingObjectives');
  		}
  	}])
 
@@ -26,9 +24,9 @@ var bsc = angular.module('BSCIMS', []);
  	}])*/
 
 
-/*************************************************************************************
-						Manage Employees
-**************************************************************************************/
+/***********************************************************************************************************************************************
+*********************************************************MANAGE EMPLOYEES***********************************************************************
+***********************************************************************************************************************************************/
 	.service('manageEmployeeData', ['$http', '$q', function ($http, $q) {
 		this.insertEmp = function(emp) {
 			return $http.post('/addEmp', emp);
@@ -42,7 +40,8 @@ var bsc = angular.module('BSCIMS', []);
 			var deferred = $q.defer();
 			$http.post('/showAllEmps').success(function (res) {
 				deferred.resolve(res);
-			}).error(function(res) {
+				console.log(res);
+			}).error(function (res) {
 				deferred.reject(res);
 			});
 
@@ -53,7 +52,9 @@ var bsc = angular.module('BSCIMS', []);
 			var deferred = $q.defer();
 			$http.post('/showAllDivisions').success(function (res) {
 				deferred.resolve(res);
-			}).error(function(res) {
+
+				//console.log(res);
+			}).error(function (res) {
 				deferred.reject(res);
 			});
 
@@ -68,10 +69,11 @@ var bsc = angular.module('BSCIMS', []);
 
 	}])
 
-/*************************************************************************************
-						Employee Controller
-**************************************************************************************/
-	.controller('manageEmployees', ['$q', '$scope', '$rootScope', '$http', 'manageEmployeeData', function ($q, $scope, $rootScope, $http, manageEmployeeData) {
+/***********************************************************************************************************************************************
+***********************************************EMPLOYEE CONTROLLER******************************************************************************
+***********************************************************************************************************************************************/
+	.controller('manageEmployees', ['$q', '$scope', '$rootScope', '$http', 'manageEmployeeData', 
+		function ($q, $scope, $rootScope, $http, manageEmployeeData) {
 
 		$scope.loginStatus = true,
 		$scope.hasUserInfo = false,
@@ -89,7 +91,7 @@ var bsc = angular.module('BSCIMS', []);
 
 		$scope.getLoggedUser = function () {
 			$http.post("/getLoggedInEmp").success(function(resp){
-				console.log("LoggedIn User : ");
+				console.log("Logged In User : ");
 				console.log(resp);
 
 				for (var i=0; i<resp.chosenRoles.length; i++) {
@@ -272,6 +274,8 @@ var bsc = angular.module('BSCIMS', []);
 		manageEmployeeData.getEmps()
 			.then(function (data) {
 				$scope.emps = data;
+
+				console.log(data);
 			});
 	}
 
@@ -300,12 +304,17 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.getDivisions = function () {
 			manageEmployeeData.getDivs()
 				.then (function (data) {
-					$scope.division = data[0];
-					$scope.sections = $scope.division.Department[0].Section;
-					$scope.departments = $scope.division.Department;
-					$scope.employees = $scope.division.Department[0].Section[0].Employee;
+
+					var arr = data;
+					for( var i = 0; i < arr.length; i++){
+						$scope.division = data[i];
+						$scope.sections = $scope.division.Department[i].Section;
+						$scope.departments = $scope.division.Department;
+						$scope.employees = $scope.division.Department[i].Section[i].Employee;
+					}
 				});
 		}
+
 		$scope.getDivisions();
 
 		$scope.getSecEmployees = function (section,dept,div) {
@@ -342,12 +351,12 @@ var bsc = angular.module('BSCIMS', []);
 				console.log(resp);
 			});
 		}
-	}])
+ }])
 
 
-/*************************************************************************************
-		Finance Perspective Angular Controller
-*************************************************************************************/
+/***********************************************************************************************************************************************
+*****************************************************FINANCE PERSPECTIVE CONTROLLER*************************************************************
+************************************************************************************************************************************************/
    .controller('financePerspectiveController', function ($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
@@ -510,9 +519,9 @@ var bsc = angular.module('BSCIMS', []);
 
 
 
-/*******************************************************************************
-		Customer Perspective Angular Controller
-*******************************************************************************/
+/***********************************************************************************************************************************************
+*****************************************************CUSTOMER PERSPECTIVE CONTROLLER*************************************************************
+************************************************************************************************************************************************/
     .controller('customerPerspectiveController', function ($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
@@ -654,9 +663,9 @@ var bsc = angular.module('BSCIMS', []);
 		};
 })
 
-/*********************************************************
-	Learning & Growth Perspective Angular Controller
-**********************************************************/
+/***********************************************************************************************************************************************
+*****************************************************LEARN PERSPECTIVE CONTROLLER***************************************************************
+************************************************************************************************************************************************/
    .controller('learnPerspectiveController', function ($scope, $http) {
 
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
@@ -799,9 +808,9 @@ var bsc = angular.module('BSCIMS', []);
 		};
 })
 
-/*********************************************************
-	Internal Business Perspective Angular Controller
-**********************************************************/
+/***********************************************************************************************************************************************
+*****************************************************INTERNAL PERSPECTIVE CONTROLLER*************************************************************
+************************************************************************************************************************************************/
    .controller('internalPerspectiveController', function ($scope, $http) {
 	
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
@@ -942,10 +951,10 @@ var bsc = angular.module('BSCIMS', []);
 		};
 })
 
-/*********************************************************************************************************************************************
-				Submit Objective Controller
-*********************************************************************************************************************************************/
-   .controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope,$http) {
+/***********************************************************************************************************************************************
+*****************************************************SUBMIT OBJECTIVE CONTROLLER*************************************************************
+************************************************************************************************************************************************/
+   .controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope, $http) {
 
 	$scope.objIDArray = [];
 
@@ -953,7 +962,7 @@ var bsc = angular.module('BSCIMS', []);
 			allObjectives.getObjectives()
 			.success(function (res) {
 				$scope.allObjectives = res;
-				//console.log(res);
+				console.log(res);
 			})
 			.error(function () {
 				console.log('There is an error');
@@ -965,6 +974,7 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.objIDArray.push(objID);
 	
 		console.log("Content of array");
+		console.log(objID);
 		var index;
 
 		for (index = 0; index < $scope.objIDArray.length; index++){
@@ -992,15 +1002,17 @@ var bsc = angular.module('BSCIMS', []);
 }])
 
 
-/*********************************************************************************************************************************************
-				Employee Panel Info Controller
-*********************************************************************************************************************************************/
+/***********************************************************************************************************************************************
+*****************************************************EMPLOYEE PANEL CONTROLLER******************************************************************
+************************************************************************************************************************************************/
 
    .controller('empPanelInfoCtrl', ['allObjectives', 'pendingObjectives', '$scope', function (allObjectives, pendingObjectives, $scope) {
 
 	allObjectives.getObjectives()
 	.success(function (res) {
 		$scope.unapprovedVal = res.length;
+		//console.log("Response is:");
+		//console.log(res);
 	});
 
 	pendingObjectives.getPending()
@@ -1008,12 +1020,58 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.pendingVal = res.length;
 	});
 
-}])
+}]) 
 
 
-/*********************************************************************************************************************************************
-				Supervisor Panel Info Controller
-*********************************************************************************************************************************************/
-   .controller('supPanelInfoCtrl', ['allObjectives', 'pendingObjectives', '$scope', function (allObjectives, pendingObjectives, $scope) {
+/***********************************************************************************************************************************************
+*****************************************************SUPERVISORVISOR PANEL CONTROLLER*************************************************************
+************************************************************************************************************************************************/
+   .controller('supRoleController', ['pendingObjectives', '$scope', '$http', function (pendingObjectives, $scope, $http) {
    		$scope.empKPAVal = 5;
+
+   		//toggle display of Employee information with KPAs
+   		$scope.empKPAs = false;
+   			$scope.toggleEmpKPA = function() {
+   				$scope.empKPAs = !$scope.empKPAs;
+   		}
+
+   		$scope.getEmps = function() {
+   			//getSecEmployees.success(function (res) {
+   				console.log(res);
+   			//});
+   		}
+
+   		$scope.retrieveEmployees = function () {
+   			$http.post('/getEmpsPendingObjs').success( function (response) {
+   				//console.log(response);
+   				$scope.emps = response;
+   			})
+		}
+
+   }])
+
+   .controller('supEmpObjsCtrl', ['pendingObjectives', '$scope', function (pendingObjectives, $scope) {
+
+   		$scope.retrieveEmpObjs = function (empPF) {
+			//console.log(empPF);
+			pendingObjectives.getPending()
+			.success(function (res) {
+				//console.log(empPF);
+				//console.log(res);
+				//console.log("Pending objectives are as follows:")
+				$scope.empObjArray = res;
+				for (var i = 0; i < $scope.empObjArray.length; i++){
+					if (empPF = $scope.empObjArray[i].PFNum) {
+						console.log("Found the shit!");
+						console.log($scope.empObjArray[i].description);
+						$scope.specificEmpObjs = $scope.empObjArray[i];
+						console.log("So now :");
+						console.log($scope.specificEmpObjs.description);
+					}
+				}
+			})
+			.error(function () {
+				console.log("Buzzer sound!!!");
+			});
+		}
    }]);

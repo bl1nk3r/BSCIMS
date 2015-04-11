@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">  
-	<head>
+	<head> 
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -132,7 +132,7 @@
 	                        <div class="panel-title">Sign In <span class = "glyphicon glyphicon-log-in"></span></div>                       
 	                    </div>     
 	                    <div style="padding-top:10px" class="panel-body" >
-	                        <div id="login-alert" class="alert alert-info col-sm-12">Tip: Use your Novell credentials!</div>                            
+	                        <div id="login-alert" class="alert alert-info col-sm-12"> <p style=" color: #000000;"> Tip: Use your Novell credentials! </p> </div>                            
 	                        <form class="form-horizontal" role="form" name = "loginForm" action="/login" method="post">                                  
 	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.empName.$invalid && loginForm.empName.$dirty}">
 	                                	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -154,7 +154,8 @@
 
 	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$dirty}">
 	                               		<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-	                                	<input id="loginPass" type="password" name="password" class="form-control" placeholder="password" ng-model="password" required>
+	                                	<input id="loginPass" type="password" name="password" class="form-control" placeholder="password" 
+	                                	ng-model="password" required>
 
 	                                	<!-- ERRORS ASSOCIATED WITH PASSWORD INPUT -->
 		                                <span class="help-block" ng-show="loginForm.passkey.$error.required && loginForm.passkey.$dirty">
@@ -191,7 +192,8 @@
 	                           		<div style="margin-top:10px" class="form-group">
 	                                    <!-- Button -->
 	                                    <div class="col-sm-12 controls">                                 
-	                                    <button id="loginButton" style="float:right;" class="btn btn-lg btn-primary "> <span class=".glyphicon .glyphicon-log-in" ></span> Login</button>
+	                                    <button id="loginButton" style="float:right;" class="btn btn-lg btn-primary "> 
+	                                    <span class=".glyphicon .glyphicon-log-in" ></span> Login</button>
 	                                    </div>
 	                           		</div>
 
@@ -206,9 +208,11 @@
 	    <!--script type="text/javascript" src="/js/angular.min.js"></script>
 	    <link href="css/bootstrap.min.css" rel="stylesheet"-->
 	    <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
-	    <script type="text/javascript" src="includes/js/jquery-1.8.2.min.js"></script>	
+	    <script type="text/javascript" src="includes/js/jquery-1.8.2.min.js"></script>
+	    <script type="text/javascript" src="/js/mkActivePane.js"></script>	
 	 	<!-- First try for the online version of jQuery-->
-		<script src="http://code.jquery.com/jquery.js"></script>
+		<!--script src="http://code.jquery.com/jquery.js"></script-->
+		<script> window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
 		
 		<!-- If no online access, fallback to our hardcoded version of jQuery -->
 		<script type="text/javascript" src="/js/features/controller.js"></script>	
