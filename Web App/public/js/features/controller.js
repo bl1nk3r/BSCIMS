@@ -995,7 +995,7 @@ var bsc = angular.module('BSCIMS', []);
 		console.log($scope.objIDArray);
 
 		for (index = 0; index < $scope.objIDArray.length; index++){
-			$http.post("/objectivesSubmitted_status_changed" + $scope.objIDArray[index] , $scope.submitObjController)
+			$http.post("/objectivesSubmitted_status_changed/" + $scope.objIDArray[index] , $scope.submitObjController)
 				.success(function (res) {
 					$('#successObjSubmit').slideDown();
 				})
@@ -1005,6 +1005,57 @@ var bsc = angular.module('BSCIMS', []);
 		}
 
 	}
+}])
+
+/***********************************************************************************************************************************************
+********************************************************COMPILE OBJECTIVE CONTROLLER*************************************************************
+************************************************************************************************************************************************/
+   .controller('compileController', ['approvedObjectives', '$scope','$rootScope', '$http', function (approvedObjectives, $scope, $rootScope, $http) {
+
+	$scope.compile = "Compiling";
+	console.log($scope.compile);
+
+	$scope.retrieveApproved = function () {
+		approvedObjectives.getApproved()
+		.success(function (res) {
+			$scope.appObjectives = res;
+			console.log(res);
+		})
+		.error(function () {
+			console.log('There is an error');
+		});		
+	}
+
+	/*$scope.captureObj = function(objID) {
+		//console.log(obj);
+		$scope.objIDArray.push(objID);
+	
+		console.log("Content of array");
+		console.log(objID);
+		var index;
+
+		for (index = 0; index < $scope.objIDArray.length; index++){
+			console.log($scope.objIDArray[index]);
+		}
+
+	}
+	
+	var IDs = $scope.objIDArray;
+
+	$scope.sendObjs = function() {
+		console.log($scope.objIDArray);
+
+		for (index = 0; index < $scope.objIDArray.length; index++){
+			$http.post("/objectivesSubmitted_status_changed/" + $scope.objIDArray[index] , $scope.submitObjController)
+				.success(function (res) {
+					$('#successObjSubmit').slideDown();
+				})
+				.error(function (res) {
+					console.log(res);
+				});
+		}
+
+	}*/
 }])
 
 

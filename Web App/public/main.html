@@ -32,7 +32,7 @@
 		
 	</head>
 
-	<body ng-app="BSCIMS"> 
+	<body ng-app="BSCIMS" ng-controller="compileController"> 
 	
 		<div class="container" width="900px">
 			<div class="navbar">
@@ -1033,7 +1033,8 @@
 																	<div class="col-lg-4">
 																		Exceeding:
 																		<select id="exceedPerfSelect" 
-																		ng-init="financePerspectiveController.metricFour = exceedOptions[0]" data-ng-model="financePerspectiveController.metricFour"              data-ng-options="exceed.label for exceed in exceedOptions">
+																		ng-init="financePerspectiveController.metricFour = exceedOptions[0]" data-ng-model="financePerspectiveController.metricFour" 
+																		data-ng-options="exceed.label for exceed in exceedOptions">
 																		</select>
 																	</div> <!-- end exceedPerfSelect div-->
 
@@ -1743,7 +1744,7 @@
 					  				</div> <!-- end submitObjModal-dialog-->
 				  				</div> <!-- end submitObjModal-->
 
-				    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" role="button" 
+				    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" ng-click="retrieveApproved()" role="button" 
 				    				class="btn btn-default" data-toggle="modal">
 				    				<span class="glyphicon glyphicon-book"></span> 
 				    				Compile Scorecard 
@@ -1761,10 +1762,10 @@
 				  							</div> <!-- end compileSCModal-header-->
 
 
-				  							<div id="compileSCModalBody" class="modal-body">
+				  							<div id="compileSCModalBody" class="modal-body" >
 
 						  						<h4> Select Approved Objectives...</h4>
-
+						  						<span ng-model="compile">{{compile}}</span>
 						  						<form id="searchObj">
 													<input type="text" class="form-control pull-right" placeholder="Search objectives..." 
 													id="searchInput" ng-model="search.$">
@@ -1774,7 +1775,7 @@
 					  							<hr>
 
 					  							<div id="perspectiveDropDown" class="dropdown">
-													<select id="perspectiveDropDownMenu" role="menu">
+													<select id="approvedPerspectiveDropDownMenu" role="menu">
 														<option value="default">-Select a Perspective-</option>
 														<option value="financeSelect">Finance</option>
 														<option value="customerSelect">Customer & Stakeholders</option>
@@ -1795,51 +1796,51 @@
 							  						</thead>
 							  									
 							  						<tbody>
+							  							<tr ng-repeat="approved in appObjectives | orderBy: 'description' |filter: search |limitTo:10">
+							  								<td><input type="checkbox">
+							  									{{approved.description | uppercase}}
+							  								</td>
+							  								<td>{{approved.DSO}}</td>
+							  							</tr>
+						  							</tbody>	
+						  						</table> <!-- end Finance Approved-Objectives Table-->
+
+						  						<table class="table table-hover" id="customerApprovedObjectivesTable">
+						  							<caption><h5>Customer Objectives</h5></caption>
+						  							<thead>
+							  							<tr>
+							  								<th>Key Performance Area</th>
+							  								<th>Key Performance Indicator</th>
+							  							</tr>
+							  						</thead>
+
+							  						<tbody>
 							  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
 							  								<td><input type="checkbox">
 							  									{{objective.description | uppercase}}
 							  								</td>
 							  								<td>{{objective.DSO}}</td>
 							  							</tr>
-						  							</tbody>	
-						  						</table> <!-- end Finance Approved-Objectives Table-->
-
-						  						<table class="table table-hover" id="customerApprovedObjectivesTable">
-						  										<caption><h5>Customer Objectives</h5></caption>
-						  										<thead>
-							  										<tr>
-							  											<th>Key Performance Area</th>
-							  										    <th>Key Performance Indicator</th>
-							  										</tr>
-							  									</thead>
-
-							  									<tbody>
-							  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  											<td><input type="checkbox">
-							  												{{objective.description | uppercase}}
-							  											</td>
-							  											<td>{{objective.DSO}}</td>
-							  										</tr>
-						  										</tbody>
+						  							</tbody>
 						  						</table> <!-- end Customer Approved-Objectives Table-->
 
-						  						<table class="table table-hover" id="internalObjectivesTable">
-						  										<caption><h5>Internal Business Objectives</h5></caption>
-						  										<thead>
-							  										<tr>
-							  											<th>Key Performance Area</th>
-							  										    <th>Key Performance Indicator</th>
-							  										</tr>
-							  									</thead>
+						  						<table class="table table-hover" id="internalApprovedObjectivesTable">
+						  							<caption><h5>Internal Business Objectives</h5></caption>
+						  							<thead>
+							  							<tr>
+							  								<th>Key Performance Area</th>
+							  								<th>Key Performance Indicator</th>
+							  							</tr>
+							  						</thead>
 
-							  									<tbody>
-							  										<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: 		search |limitTo:10">
-							  											<td><input type="checkbox">
-							  												{{objective.description | uppercase}}
-							  											</td>
-							  											<td>{{objective.DSO}}</td>
-							  										</tr>
-						  										</tbody>
+							  						<tbody>
+							  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
+							  								<td><input type="checkbox">
+							  									{{objective.description | uppercase}}
+							  								</td>
+							  								<td>{{objective.DSO}}</td>
+							  							</tr>
+						  							</tbody>
 						  						</table> <!-- end Internal Approved-Objectives Table-->
 
 						  						<table class="table table-hover" id="learningApprovedObjectivesTable">
