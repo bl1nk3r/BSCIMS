@@ -744,11 +744,12 @@
 
 				  								<div class="modal-footer">
 
-				  									<button onclick="$('#empObjModal').modal({'backdrop': 'static'});" class="btn btn-success" 
-				  										type="button"> 
-				  										<span class="glyphicon glyphicon-pushpin"></span> 
-				  										Save Objectives
-				  									</button>
+				  									<button id="approveFinanceObjButton" class="btn btn-success " 
+														ng-click="approveFinanceObjective(specificEmpFinObjs._id,specificEmpFinObjs.PFNum,specificEmpFinObjs.description, specificEmpFinObjs.DSO
+														,specificEmpFinObjs.metricOneDef,specificEmpFinObjs.metricTwoDef,specificEmpFinObjs.metricThreeDef,specificEmpFinObjs.metricFourDef,specificEmpFinObjs.metricFiveDef)"> 
+														<span class="glyphicon glyphicon-pushpin"></span>
+															Save Objective
+													</button> <!-- end Submit Objective button-->
 
 				  									<button class="btn btn-default" type="button" data-dismiss="modal"> 
 				  										<span class="glyphicon glyphicon-remove"></span> 
@@ -1658,7 +1659,7 @@
 							  							</tbody>					  										
 							  						</table> <!-- end Finance Objectives Table-->
 
-							  						<!--table class="table table-hover" id="customerObjectivesTable">
+							  						<table class="table table-hover" id="customerObjectivesTable">
 							  							<caption><h5>Customer Objectives</h5></caption>
 							  							<thead>
 								  							<tr>
@@ -1674,9 +1675,9 @@
 								  								<td>{{objective.DSO}}</td>
 								  							</tr>
 							  							</tbody>			
-							  						</table--> <!-- end Customer Objectives Table-->
+							  						</table> <!-- end Customer Objectives Table-->
 
-							  						<!--table class="table table-hover" id="internalObjectivesTable">
+							  						<table class="table table-hover" id="internalObjectivesTable">
 							  							<caption><h5>Internal Business Objectives</h5></caption>
 							  							<thead>
 								  							<tr>
@@ -1692,9 +1693,9 @@
 								  								<td>{{objective.DSO}}</td>
 								  							</tr>
 							  							</tbody>				
-							  						</table--> <!-- end Internal Objectives Table-->
+							  						</table> <!-- end Internal Objectives Table-->
 
-							  						<!--table class="table table-hover" id="learningObjectivesTable">
+							  						<table class="table table-hover" id="learningObjectivesTable">
 							  							<caption><h5>Learning & Growth Objectives</h5></caption>
 							  							<thead>
 								  							<tr>
@@ -1710,7 +1711,7 @@
 								  								<td>{{objective.DSO}}</td>
 								  							</tr>
 							  							</tbody>
-							  						</table--> <!-- end Learning Objectives Table-->
+							  						</table> <!-- end Learning Objectives Table-->
 
 							  						<div id="confirmEmailDiv">
 						  								<span>Confirm recipient's email:</span> <input type="email" class="form-control" 
@@ -1772,6 +1773,7 @@
 												</form> <!--end form search-->
 
 												&nbsp;
+
 					  							<hr>
 
 					  							<div id="perspectiveDropDown" class="dropdown">
@@ -1865,11 +1867,11 @@
 
 					  						<div id="compileSCModalFooter" class="modal-footer">
 
-					  							<button onclick="$('#compileSCModal').modal({'backdrop': 'static'});" class="btn btn-success" 
-					  								type="button"> 
-					  								<span class="glyphicon glyphicon-ok"></span> 
-					  								Compile Scorecard
-					  							</button>
+					  							<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="retrieveApproved()" role="button" 
+								    				class="btn btn-success" data-toggle="modal">
+								    				<span class="glyphicon glyphicon-check"></span> 
+								    				Compile Scorecard 
+								    			</a>
 					  											  									
 					  							<button class="btn btn-default" type="button" data-dismiss="modal"> 
 					  								<span class="glyphicon glyphicon-remove"></span> 
@@ -1882,6 +1884,118 @@
 					  				</div> <!-- end compileSCModal-dialog-->
 
 				  				</div> <!-- end CompileSCModal-->
+
+				  				<div class="modal fade in" id="scorecardModal" >
+
+				  					<div id="scorecardModalDialog" class="modal-dialog">
+
+				  						<div id="scorecardModalContent" class="modal-content"> 
+
+				  							<div id="scorecardModalHeader" class="modal-header">
+				  							 	<button class="close" data-dismiss="modal">&times;</button>
+				  								<h3 class="modal-title">Performance Contract</h3>
+				  							</div> <!-- end compileSCModal-header-->
+
+
+				  							<div id="scorecardModalBody" class="modal-body" >
+
+				  								<table class="hlk" width="500">
+													<tr>
+														<th class="hlk-wrek2"></th>
+														<th class="hlk-drop" colspan="10">Perfomance Contract  : Key Perfomance Areas &amp; Key Perfomance Indicators</th>
+													</tr>
+
+													<tr>
+														<td class="hlk-drop" rowspan="6">BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
+														<td class="hlk-suit">Perspective</td>
+														<td class="hlk-kurasaki">Key Performance Area       (KPA)</td>
+														<td class="hlk-kurasaki">Key Performance Indicator (KPI)</td>
+														<td class="hlk-kurasaki">Broad Category Weightings</td>
+														<td class="hlk-kurasaki">Detailed Weightings</td>
+														<td class="hlk-kurasaki">Poor performance - Rating of 1</td>
+														<td class="hlk-kurasaki">Unsatisfactory - Rating of 2</td>
+														<td class="hlk-kurasaki">Target met- rating of 3</td>
+														<td class="hlk-kurasaki">Exceeding : rating of 4</td>
+														<td class="hlk-kurasaki">Outstanding- Rating of 5</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-nl5m" rowspan="2">Financial</td>
+														<td class="hlk-me">Profitability and sustainability</td>
+														<td class="hlk-me">Capex Budget of less than 10% Variance</td>
+														<td class="hlk-suit" rowspan="2">10%</td>
+														<td class="hlk-suit">5%</td>
+														<td class="hlk-truk">&gt;15 % budget variance</td>
+														<td class="hlk-me">&gt; 10 % budget variance</td>
+														<td class="hlk-nl5m">10% budget variance</td>
+														<td class="hlk-me">&lt;5 % budget variance</td>
+														<td class="hlk-me">0 % budget variance</td>
+													</tr>
+																  
+													<tr>
+														<td class="hlk-me">Improved profitability</td>
+														<td class="hlk-me">An Opex Budget of less than 10% Variance</td>
+														<td class="hlk-suit">5%</td>
+														<td class="hlk-truk">&gt;15 % budget variance</td>
+														<td class="hlk-me">&gt; 10 % budget variance</td>
+														<td class="hlk-nl5m">10% budget variance</td>
+														<td class="hlk-me">&lt;5 % budget variance</td>
+														<td class="hlk-me">0 % budget variance</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-889k" rowspan="2">Customer</td>
+														<td class="hlk-me">Quality of service</td>
+														<td class="hlk-me">Prepaid System &amp; Billing Queries and Issues (Vending, MPOS, PC POS, 8888) affecting external customers resolved within 24hrs.</td>
+														<td class="hlk-suit" rowspan="2">15%</td>
+														<td class="hlk-suit">5%</td>
+														<td class="hlk-truk">&lt; 70% of System malfunctions and Cases attended within 24hrs</td>
+														<td class="hlk-me">&lt; 80% of malfunctions and Cases attended within 24hrs</td>
+														<td class="hlk-nl5m">&gt; 90% of System malfunctions and Cases attended within 24hrs</td>
+														<td class="hlk-me">&gt; 95% of System malfunctions and Cases attended within 24hrs</td>
+														<td class="hlk-me">&gt; 98% of System malfunctions and Cases attended within 24hrs</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-me">Quality of service</td>
+														<td class="hlk-me">High Availability of All business Systems affecting external Customers</td>
+														<td class="hlk-suit">10%</td>
+														<td class="hlk-truk">&lt; 75%  Business Systems Uptime</td>
+														<td class="hlk-me">&lt; 80%  Business Systems Uptime</td>
+														<td class="hlk-nl5m">&gt; 90% Business Systems Uptime</td>
+														<td class="hlk-me">&gt; 95%  Business Systems Uptime</td>
+														<td class="hlk-me">&gt; 98%  Business Systems Uptime</td>
+													</tr>
+
+												</table>
+						  						
+					  						</div> <!--end scorecardModalBody-->
+
+					  						<div id="scorecardModalFooter" class="modal-footer">
+
+					  							<button onclick="$('#scorecardodal').modal({'backdrop': 'static'});" class="btn btn-success" 
+					  								type="button"> 
+					  								<span class="glyphicon glyphicon-circle-arrow-right"></span> 
+					  								Export Scorecard
+					  							</button>
+
+					  							<button onclick="$('#scorecardodal').modal({'backdrop': 'static'});" class="btn btn-warning" 
+					  								type="button"> 
+					  								<span class="glyphicon glyphicon-print"></span> 
+					  								Print Scorecard
+					  							</button>
+					  											  									
+					  							<button class="btn btn-default" type="button" data-dismiss="modal"> 
+					  								<span class="glyphicon glyphicon-remove"></span> 
+					  								Close
+					  							</button>		
+					  						</div> <!-- end scorecardModal-footer-->
+
+					  					</div> <!-- end scorecardModal-content-->
+
+					  				</div> <!-- end scorecardModal-dialog-->
+
+				  				</div> <!-- end scorecardModal-->
 
 			  					<br><br>
 
@@ -1920,9 +2034,6 @@
 			</div> <!-- end container-->
 
 		</footer> <!-- end footer-->
-		
-		<!-- First try for the online version of jQuery-->
-		<!--script src="http://code.jquery.com/jquery.js"></script-->
 	
 		<!-- If no online access, fallback to our hardcoded version of jQuery -->
 		<script> window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>

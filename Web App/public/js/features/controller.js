@@ -1012,7 +1012,7 @@ var bsc = angular.module('BSCIMS', []);
 ************************************************************************************************************************************************/
    .controller('compileController', ['approvedObjectives', '$scope','$rootScope', '$http', function (approvedObjectives, $scope, $rootScope, $http) {
 
-	$scope.compile = "Compiling";
+	$scope.compile = "";
 	console.log($scope.compile);
 
 	$scope.retrieveApproved = function () {
@@ -1092,19 +1092,19 @@ var bsc = angular.module('BSCIMS', []);
    		//Initial variables used in "Edit Objective" button for Finance Objective
    		$scope.financeEditLabel = true;
    		$scope.financeUnedittable = true;
-   		$scope.financeEditLabelText = "Edit Objective";
+   		$scope.financeEditLabelText = "Unlock Objective";
 		//Initial variables used in "Edit Objective" button for Customer Objective
 		$scope.customerEditLabel = true;
    		$scope.customerUnedittable = true;
-   		$scope.customerEditLabelText = "Edit Objective";
+   		$scope.customerEditLabelText = "Unlock Objective";
    		//Initial variables used in "Edit Objective" button for internal Objective
 		$scope.internalEditLabel = true;
    		$scope.internalUnedittable = true;
-   		$scope.internalEditLabelText = "Edit Objective";
+   		$scope.internalEditLabelText = "Unlock Objective";
 		//Initial variables used in "Edit Objective" button for Learn Objective
 		$scope.learnEditLabel = true;
    		$scope.learnUnedittable = true;
-   		$scope.learnEditLabelText = "Edit Objective";
+   		$scope.learnEditLabelText = "Unlock Objective";
    		//Edit Finance Objective Button logic for toggling between states of "Edit" && "Lock"
    		$scope.editFinanceObjective = function() {
    			$scope.financeUnedittable = !$scope.financeUnedittable;
@@ -1114,7 +1114,7 @@ var bsc = angular.module('BSCIMS', []);
 	   			$scope.financeEditLabelText = "Lock Objective";
 	   		}
 	   		else if ($scope.financeEditLabel === true) {
-	   			$scope.financeEditLabelText = "Edit Objective";
+	   			$scope.financeEditLabelText = "Unlock Objective";
 	   		}
 
    			console.log($scope.financeEditLabelText);
@@ -1181,7 +1181,7 @@ var bsc = angular.module('BSCIMS', []);
    		$scope.getEmps = function() {
    			//getSecEmployees.success(function (res) {
    				console.log(res);
-   			//});vvv
+   			//});
    		}
 
    		$scope.retrieveEmployees = function () {
@@ -1198,7 +1198,7 @@ var bsc = angular.module('BSCIMS', []);
 				$('#successObjAlert12').show(500);
 			})
 			.error(function (err) {
-				console.log(err);
+				console.log("Objective empty!!");
 			})
 		}
 
