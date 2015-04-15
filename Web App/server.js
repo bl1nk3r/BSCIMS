@@ -13,7 +13,7 @@ var express = require('express') 											//lightweight server framerwork
    ,bodyParser = require('body-parser')  									//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')										//module for handling the application's favicon
    ,sendgrid = require('sendgrid')('bl1nk3r', 'MySendGridAcc0unt')	 		//sendgrid api_user && api_key
-   ,mandrill = require('node-mandrill')('mandrill-api-key');
+   ,mandrill = require('node-mandrill')('mandrill_api_key');
 
 //include access to the MongoDB driver for Node
 var mongojs = require("mongojs")
@@ -24,12 +24,12 @@ var mongojs = require("mongojs")
 //init BSCIMS (database) and Objectives (collection)
     ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Document","Employees"]);
 
-//var	mandrill_client = new mandrill.Mandrill('rgp_Ww_oxK5Jwesp4n735A');
-
 //instantiate the server application 
 var bsc = express()
 //Direct the Express server to the 'public' folder containing static app files
    .use(express.static(__dirname + '/public'))
+   .set('views', __dirname + '/public/views')
+   .set('view engine', 'ejs')
  
 //Invoke all the extensions that Express will need to parse the app's body
    .use(bodyParser.urlencoded({ extended: false}))
@@ -39,64 +39,90 @@ var bsc = express()
    .use(session({ secret: 'qwertyasdfg'}))
 
 //server retrieval of login page
-   .get('/login', function (req, res){
-   		res.sendfile('public/login.html');
-   		//console.log("No BUG_1");
-   })
+.get('/login', function (req, res){
+   		var msg = {error: 'none'};
+	   	res.render('login', msg);
+	})
 
-//route to actual login
-   .post('/login', function (req, res) {
+    .get('/', function (req, res){
+	   	res.render('main');
+	})
+
+    .post('/login', function (req, res){
+
+    	//var users = req.session;
    		var user = {
    			userName: req.body.username,
-   			password: req.body.password
+   			password: req.body.password,
    		};
 
-   		var userRoles = [];
+   		var formRoles = [];
+   		var currRoles = [];
 
-   		//check for access role selections
-   		if (req.body.empRole == "on") {
-   			userRoles.push({isEmp:true});
-   		} else if (req.body.empRole == undefined) {
-   			userRoles.push({isEmp:false});
-   		}
-   		if (req.body.HRRole == "on") {
-   			userRoles.push({isHr:true});
-   		} else if (req.body.HRRole == undefined) {
-   			userRoles.push({isHr:false});
-   		}
-   		if (req.body.supervisorRole == "on") {
-   			userRoles.push({isSup:true});
-   		} else if ((req.body.supervisorRole == undefined)) {
-   			userRoles.push({isSup:false});
-   		}
-
-   		//find that one employee logging in using their login details and create a session
    		db.Employees.findOne(user, function (err, data) {
    			if (data) {
-   				req.session.loggedUser = {userName:data.userName,empName:data.empName,PFNum:data.PFNum,roles:data.roles, chosenRoles:userRoles};
-   				res.redirect('/');
-   				//console.log(req.session.loggedUser);
+   				// create a formRoles array to hold roles chosen at login
+				if (req.body.empRole == 'on') {
+					formRoles.push('employee');
+				}
+				if (req.body.supervisorRole == 'on') {
+					formRoles.push('supervisor');
+				}
+				if (req.body.HRRole == 'on') {
+					formRoles.push('HR');
+				}
 
+				// capture role errors : when no role was choose or when a role where the user is not allowed was choosen
+				if (formRoles.length == 0) {
+					res.render('login', {error: 'Choose atleast one role'});
+				} else if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') == -1)) {
+   					res.render('login', {error: 'You do not have access to emp role'});
+   				} else if ((formRoles.indexOf('supervisor')  !== -1) && (data.roles.indexOf('supervisor') == -1)) {
+   					res.render('login', {error: 'You do not have access to sup role'});
+   				} else	if ((formRoles.indexOf('HR')  !== -1) && (data.roles.indexOf('HR') == -1)) {
+   					res.render('login', {error: 'You do not have access to HR role'});
+   				} else {
+   					// create an array of roles that the user has choosen
+   					if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') !== -1)) {
+						currRoles.push('employee');
+	   				}
+	   				if ((formRoles.indexOf('supervisor') !== -1) && (data.roles.indexOf('supervisor') !== -1)) {
+	   					currRoles.push('supervisor');
+	   				}
+	   				if ((formRoles.indexOf('HR') !== -1) && (data.roles.indexOf('HR') !== -1)) {
+	   					currRoles.push('HR');
+	   				}
+
+	   				//req.session.userId = data.PFNum;
+   					req.session.loggdInUser = {userName:data.userName, empName:data.empName, PFNum:data.PFNum, dbRoles:data.roles, currentRoles:currRoles};
+	   				
+	   				res.redirect('/');
+
+	   				//console.log(req.session[req.session.userId]);
+   				}
    			} else {
-   				res.redirect('/login');
+   				var msg = {error: 'Incorrect credentials'};
+   				res.render('login', msg);
    			}
-   		}) 
-   		//console.log("No BUG_2");
-   })
-
+   		})
+	})
+  
 	.get('*', function(req, res) {
-   		if (!req.session.loggedUser) {
+   		if (!req.session.loggdInUser) {
    			res.redirect('/login');
+   			console.log(req.host);
    		} else {
-   			res.sendfile('public/main.html');
-   		} 
-   		//console.log("No BUG_3");
+   			res.redirect('/');
+   		}
     })
 
-	.get('/logout', function (req, res) {
-		req.session.resert();
+	.post('/logout', function (req, res) {
+		req.session.destroy();
+		//req.session.userId = '';
 		res.redirect('/login');
+		console.log("logout");
 	})
+
 
 /**************************************************************************************************************************************
 ******************************SERVER OPERATIONS FOR FINANCE PERSPECTIVES OBJECTIVES****************************************************
@@ -154,6 +180,20 @@ var bsc = express()
 			});
 	})
 
+	.post("/getUnapprovedObjectives", function ( req, res) {
+	   		//console.log("Beginning of route");
+			db.Objectives.find({status: "approved"}, function (err, docs) {
+				if (err) {
+					console.log("There is an error");
+				} else { 
+					res.json(docs);
+					//console.log(docs);
+				}
+				//onsole.log(res);
+				//console.log("say!");		
+			});
+	})
+
    .post("/showAllDivisions", function (req, res) {
 		db.Division.find(function (err, doc){
 			if ( err || !doc) {
@@ -178,8 +218,8 @@ var bsc = express()
 	})
 
 	.post("/getLoggedInEmp", function (req, res) {
-		res.send(req.session.loggedUser);
-		//console.log("No BUG_6");
+		res.send(req.session.loggdInUser);
+		//console.log(req.session[req.session.userId]);
 	})
 
 	.post("/getEmpObjectives", function (req, res) {
@@ -197,10 +237,12 @@ var bsc = express()
 	})
 
     .post("/financePerspectiveController", function (req, res) {
-		var svc = req.body;
+		
 		db.Objectives.insert(req.body, function (err, doc) {
 			//Update existing objectives and assert a 'status' field - set to unapproved
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance"}}, {multi: false}, 
+			console.log("USER PF:");
+			console.log(req.session.loggdInUser.PFNum);
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 					res.json(doc);
 					//console.log(doc);
@@ -230,7 +272,7 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer"}}, {multi: false}, 
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
 				//console.log(doc);
@@ -260,7 +302,7 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal"}}, {multi: false}, 
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
 				//console.log(doc);
@@ -290,7 +332,7 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn"}}, {multi: false}, 
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
 				//console.log(doc);
@@ -425,6 +467,24 @@ var bsc = express()
 		})
 		
 	})
+
+	/*.post('/rejectFinanceObjective/:id', function (req, res) {
+		var ID = req.params.id;
+
+		console.log("The expected ID is:")
+		console.log(ID);
+		db.Objectives.update({_id: mongojs.ObjectId(ID)}, {$set: {status: "unapproved" }}, {multi: false}, function (err, doc) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(doc);
+				console.log("Unapproved objectives:")
+				console.log(doc);
+			}
+		})
+		
+	})*/
 
 
 //Log on the console the 'init' of the server

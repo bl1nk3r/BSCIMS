@@ -15,6 +15,7 @@
     "body-parser": "latest",
     "cookie-parser": "latest",
     "debug": "latest",
+    "ejs": "^2.3.1",
     "express": "latest",
     "express-session": "latest",
     "mime": "latest",

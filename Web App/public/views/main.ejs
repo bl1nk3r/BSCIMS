@@ -34,7 +34,7 @@
 
 	<body ng-app="BSCIMS" ng-controller="compileController"> 
 	
-		<div class="container" width="900px">
+		<div class="container" width="900px" ng-controller="manageEmployees">
 			<div class="navbar">
 
 				<ul class="nav navbar-nav pull-right" id="myAccount">
@@ -49,7 +49,7 @@
 
 								<li class="dropdown-header">User Details</li>
 
-								<li><a href="#"><span class="glyphicon glyphicon-user"></span> Administrator</a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-user" ng-model="loggedUserName"></span> {{loggedUserName}}</a></li>
 
 							
 								<li class="divider"></li>
@@ -58,7 +58,7 @@
 
 								<li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Preferences</a></li>
 
-								<li><a href="login.html"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+								<li><a href="3" ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
 
 							</ul>
 					</li>
@@ -156,19 +156,19 @@
 
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">	
-                    	<li class="active"> 
+                    	<li class="active" ng-if="isEmp"> 
                     		<a href="#employeeTab" data-toggle="tab" > 
                          		<span class = "glyphicon glyphicon-user"></span> 
                          		Employee
                          	</a>
                          </li>
-                       	<li>
+                       	<li ng-if="isSup">
                        		<a href="#supervisorTab" data-toggle="tab" > 
                        			<span class = "glyphicon glyphicon-eye-open"></span> 
                        			Supervisor
                        		</a>
                        	</li>
-                        <li ng-controller="hrRolesController">
+                        <li ng-controller="hrRolesController" ng-if="isHR">
                         	<a href="#HRTab" data-toggle="tab" ng-click="getDivisions()"> 
 	                        	<span class = "glyphicon glyphicon-globe"></span> 
 	                        	Human Resources
@@ -348,6 +348,11 @@
 																			</div> <!-- end outstandingPerDiv-->
 
 																		</div> <!--end performanceRatingDiv -->
+
+																		<button id="rejectFinanceObjButton" class="btn btn-danger pull-right" 
+																			ng-click="rejectFinanceObjective(specificEmpFinObjs._id)"> <span class="glyphicon glyphicon-remove-circle"></span>
+																			Reject Objective
+																		</button> <!-- end Submit Objective button-->
 																		
 																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
 																			ng-click="approveFinanceObjective(specificEmpFinObjs._id,specificEmpFinObjs.PFNum,specificEmpFinObjs.description, specificEmpFinObjs.DSO
@@ -357,6 +362,12 @@
 																		</button> <!-- end Submit Objective button-->
 																		
 																	</div> <!--end financeObjDiv-->
+
+																	<div class="alert alert-warning alert-block fade in" id="successObjAlertFinReject" ng-if="isRejected">
+																		<button type="button" class="close" data-dismiss="alert">&times;</button>
+																		<h4>Objective Rejected!</h4>
+																		<p>Click the 'x' in the corner to close...</p>
+																	</div> <!--end success alert-->
 																	
 																	<div class="alert alert-success alert-block fade in" id="successObjAlert12">
 																		<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -470,13 +481,18 @@
 
 																		</div> <!--end performanceRatingDiv -->
 
-																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
+																		<button id="rejectCustomerObjButton" class="btn btn-danger pull-right" 
+																			ng-click="rejectCustomerObjective(specificEmpCustObjs._id)"> <span class="glyphicon glyphicon-remove-circle"></span>
+																			Reject Objective
+																		</button> <!-- end Submit Objective button-->
+
+																		<button id="approveCustomerObjButton" class="btn btn-primary pull-right" 
 																			ng-click="approveCustomerObjective(specificEmpCustObjs._id,specificEmpCustObjs.PFNum,specificEmpCustObjs.description, specificEmpCustObjs.DSO
 																						,specificEmpCustObjs.metricOneDef, specificEmpCustObjs.metricTwoDef, specificEmpCustObjs.metricThreeDef
 																						,specificEmpCustObjs.metricFourDef, specificEmpCustObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
 																			Approve Objective
 																		</button> <!-- end Submit Objective button-->
-																		
+
 																	</div> <!--end customerObjDiv2-->
 																	
 																	<div class="alert alert-success alert-block fade in" id="successObjAlert22">
@@ -593,13 +609,18 @@
 
 																		</div> <!--end performanceRatingDiv -->
 
-																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
-																			ng-click="approveFinanceObjective(specificEmpIntObjs._id,specificEmpIntObjs.PFNum,specificEmpIntObjs.description, specificEmpIntObjs.DSO
+																		<button id="rejectInternalObjButton" class="btn btn-danger pull-right" 
+																			ng-click="rejectInternalObjective(specificEmpIntObjs._id)"> <span class="glyphicon glyphicon-remove-circle"></span>
+																			Reject Objective
+																		</button> <!-- end Submit Objective button-->
+
+																		<button id="approveInternalObjButton" class="btn btn-primary pull-right" 
+																			ng-click="approveInternalObjective(specificEmpIntObjs._id,specificEmpIntObjs.PFNum,specificEmpIntObjs.description, specificEmpIntObjs.DSO
 																						,specificEmpIntObjs.metricOneDef, specificEmpIntObjs.metricTwoDef,specificEmpIntObjs.metricThreeDef
 																						,specificEmpIntObjs.metricFourDef, specificEmpIntObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
 																			Approve Objective
 																		</button> <!-- end Submit Objective button-->
-																		
+
 																	</div> <!--end internalObjDiv-->
 																	
 																	<div class="alert alert-success alert-block fade in" id="successObjAlert32">
@@ -711,13 +732,18 @@
 
 																		</div> <!--end performanceRatingDiv -->
 
+																		<button id="rejectLearnObjButton" class="btn btn-danger pull-right" 
+																			ng-click="rejectLearnObjective(specificEmpLearnObjs._id)"> <span class="glyphicon glyphicon-remove-circle"></span>
+																			Reject Objective
+																		</button> <!-- end Submit Objective button-->
+
 																		<button id="approveFinanceObjButton" class="btn btn-primary pull-right" 
-																			ng-click="approveFinanceObjective(specificEmpLearnObjs._id,specificEmpLearnObjs.PFNum,specificEmpLearnObjs.description, specificEmpLearnObjs.DSO
+																			ng-click="approveLearnObjective(specificEmpLearnObjs._id,specificEmpLearnObjs.PFNum,specificEmpLearnObjs.description, specificEmpLearnObjs.DSO
 																						,specificEmpLearnObjs.metricOneDef, specificEmpLearnObjs.metricTwoDef, specificEmpLearnObjs.metricThreeDef
 																						,specificEmpLearnObjs.metricFourDef,specificEmpLearnObjs.metricFiveDef)"> <span class="glyphicon glyphicon-ok"></span>
 																			Approve Objective
 																		</button> <!-- end Submit Objective button-->
-																		
+
 																	</div> <!--end learnObjDiv-->
 																	
 																	<div class="alert alert-success alert-block fade in" 
@@ -743,13 +769,6 @@
 				  								</div> <!-- end empObjModal-body-->
 
 				  								<div class="modal-footer">
-
-				  									<button id="approveFinanceObjButton" class="btn btn-success " 
-														ng-click="approveFinanceObjective(specificEmpFinObjs._id,specificEmpFinObjs.PFNum,specificEmpFinObjs.description, specificEmpFinObjs.DSO
-														,specificEmpFinObjs.metricOneDef,specificEmpFinObjs.metricTwoDef,specificEmpFinObjs.metricThreeDef,specificEmpFinObjs.metricFourDef,specificEmpFinObjs.metricFiveDef)"> 
-														<span class="glyphicon glyphicon-pushpin"></span>
-															Save Objective
-													</button> <!-- end Submit Objective button-->
 
 				  									<button class="btn btn-default" type="button" data-dismiss="modal"> 
 				  										<span class="glyphicon glyphicon-remove"></span> 
@@ -1089,7 +1108,7 @@
 																</div> <!--end performanceRatingDiv -->
 
 																<button id="submitFinanceObjButton" class="btn btn-primary pull-right" 
-																	ng-click="submitFinanceObjective()"> 
+																	ng-click="submitFinanceObjective(financePerspectiveController.PF)"> 
 																	Submit Objective
 																</button> <!-- end Submit Objective button-->
 																
@@ -1896,7 +1915,8 @@
 							  									
 							  						<tbody>
 							  							<tr ng-repeat="appFin in appFinObj | orderBy: 'description' | filter: search | limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureFinApp(appFin._id)" ng-model="grabAppFin">
+							  								<td><input type="checkbox" ng-click="captureFinApp(appFin._id, appFin.description, appFin.DSO, appFin.metricOneDef, appFin.metricTwoDef, appFin.metricThreeDef, 
+							  								appFin.metricFourDef, appFin.metricFiveDef)" ng-model="grabAppFin">
 							  									{{appFin.description | uppercase}}
 							  								</td>
 							  								<td>{{appFin.DSO}}</td>
@@ -1924,7 +1944,8 @@
 
 							  						<tbody>
 							  							<tr ng-repeat="appCust in appCustObj | orderBy: 'description' | filter: search | limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureCustApp(appCust._id)" ng-model="grabAppCust">
+							  								<td><input type="checkbox" ng-click="captureCustApp(appCust._id, appCust.description, appCust.DSO, appCust.metricOneDef, appCust.metricTwoDef, appCust.metricThreeDef, 
+							  								appCust.metricFourDef, appCust.metricFiveDef)" ng-model="grabAppCust">
 							  									{{appCust.description | uppercase}}
 							  								</td>
 							  								<td>{{appCust.DSO}}</td>
@@ -1952,7 +1973,8 @@
 
 							  						<tbody>
 							  							<tr ng-repeat="appInt in appIntObj | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureIntApp(appInt._id)" ng-model="grabAppInt">
+							  								<td><input type="checkbox" ng-click="captureIntApp(appInt._id, appInt.description, appInt.DSO, appInt.metricOneDef, appInt.metricTwoDef, appInt.metricThreeDef, 
+							  								appInt.metricFourDef, appInt.metricFiveDef)" ng-model="grabAppInt">
 							  									{{appInt.description | uppercase}}
 							  								</td>
 							  								<td>{{appInt.DSO}}</td>
@@ -1980,7 +2002,8 @@
 
 							  						<tbody>
 							  							<tr ng-repeat="appLearn in appLearnObj | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureLearnApp(appLearn._id)" ng-model="grabAppLearn">
+							  								<td><input type="checkbox" ng-click="captureLearnApp(appLearn._id, appLearn.description, appLearn.DSO, appLearn.metricOneDef, appLearn.metricTwoDef, appLearn.metricThreeDef, 
+							  								appLearn.metricFourDef, appLearn.metricFiveDef)" ng-model="grabAppLearn">
 							  									{{appLearn.description | uppercase}}
 							  								</td>
 							  								<td>{{appLearn.DSO}}</td>
@@ -2048,12 +2071,12 @@
 													</tr>
 
 													<tr>
-														<td class="hlk-drop" rowspan="10">BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
+														<td class="hlk-drop" ng-model="scorecardHeight" rowspan={{scorecardHeight}} >BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
 														<td class="hlk-suit">Perspective</td>
 														<td class="hlk-kurasaki">Key Performance Area       (KPA)</td>
 														<td class="hlk-kurasaki">Key Performance Indicator (KPI)</td>
-														<td class="hlk-kurasaki">Broad Category Weightings</td>
-														<td class="hlk-kurasaki">Detailed Weightings</td>
+														<!--td class="hlk-kurasaki">Broad Category Weightings</td>
+														<td class="hlk-kurasaki">Detailed Weightings</td-->
 														<td class="hlk-kurasaki">Poor performance - Rating of 1</td>
 														<td class="hlk-kurasaki">Unsatisfactory - Rating of 2</td>
 														<td class="hlk-kurasaki">Target met- rating of 3</td>
@@ -2061,100 +2084,68 @@
 														<td class="hlk-kurasaki">Outstanding- Rating of 5</td>
 													</tr>
 
-													<tr>
-														<td class="hlk-nl5m" rowspan="2">Financial</td>
-														<td class="hlk-me" ng-model="finObjs">{{finObjs.description}} </td>
-														<td class="hlk-me" ng-model="finObjs">{{finObjs.DSO}} </td>
-														<td class="hlk-suit" rowspan="2">10%</td>
+													<tr></tr>
+
+													<tr ng-repeat="appFin in appFinObjective">
+														<td class="hlk-nl5m">{{appFin.perspective}}</td>
+														<td class="hlk-me" >{{appFin.finDes}} </td>
+														<td class="hlk-me" >{{appFin.finDSO}} </td>
+														<!--td class="hlk-suit" ng-model="finRowSpan" rowspan={{finRowSpan}}>10%</td>
 														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk" ng-model="finObjs"> {{finObjs.metricOneDef}} </td>
-														<td class="hlk-me" ng-model="finObjs">   {{finObjs.metricTwoDef}}</td>
-														<td class="hlk-nl5m" ng-model="finObjs"> {{finObjs.metricThreeDef}}</td>
-														<td class="hlk-me" ng-model="finObjs">   {{finObjs.metricFourDef}}</td>
-														<td class="hlk-me" ng-model="finObjs">   {{finObjs.metricFiveDef}}</td>
+														<td class="hlk-suit">5%</td-->
+														<td class="hlk-truk" > {{appFin.finOneDef}} </td>
+														<td class="hlk-me" >   {{appFin.finTwoDef}}</td>
+														<td class="hlk-nl5m" > {{appFin.finThreeDef}}</td>
+														<td class="hlk-me" >   {{appFin.finFourDef}}</td>
+														<td class="hlk-me" >   {{appFin.finFiveDef}}</td>
 													</tr>
-																  
-													<tr>
-														<td class="hlk-me">Improved profitability</td>
-														<td class="hlk-me">An Opex Budget of less than 10% Variance</td>
+
+													<tr></tr>
+
+													<tr ng-repeat="appCust in appCustObjective">
+														<td class="hlk-nl5m">{{appCust.perspective}}</td>
+														<td class="hlk-me" >{{appCust.custDes}} </td>
+														<td class="hlk-me" >{{appCust.custDSO}} </td>
+														<!--td class="hlk-suit" ng-model="finRowSpan" rowspan={{finRowSpan}}>10%</td>
 														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk">&gt;15 % budget variance</td>
-														<td class="hlk-me">&gt; 10 % budget variance</td>
-														<td class="hlk-nl5m">10% budget variance</td>
-														<td class="hlk-me">&lt;5 % budget variance</td>
-														<td class="hlk-me">0 % budget variance</td>
+														<td class="hlk-suit">5%</td-->
+														<td class="hlk-truk" > {{appCust.custOneDef}} </td>
+														<td class="hlk-me" >   {{appCust.custTwoDef}}</td>
+														<td class="hlk-nl5m" > {{appCust.custThreeDef}}</td>
+														<td class="hlk-me" >   {{appCust.custFourDef}}</td>
+														<td class="hlk-me" >   {{appCust.custFiveDef}}</td>
 													</tr>
 
-													<tr>
-														<td class="hlk-889k" rowspan="2">Customer</td>
-														<td class="hlk-me" ng-model="custObjs">{{custObjs.description}} </td>
-														<td class="hlk-me" ng-model="custObjs">{{custObjs.DSO}} </td>
-														<td class="hlk-suit" rowspan="2">15%</td>
+													<tr></tr>
+
+													<tr ng-repeat="appInt in appIntObjective">
+														<td class="hlk-nl5m">{{appInt.perspective}}</td>
+														<td class="hlk-me" >{{appInt.intDes}} </td>
+														<td class="hlk-me" >{{appInt.intDSO}} </td>
+														<!--td class="hlk-suit" ng-model="finRowSpan" rowspan={{finRowSpan}}>10%</td>
 														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk" ng-model="custObjs">{{custObjs.metricOneDef}}</td>
-														<td class="hlk-me" ng-model="custObjs">{{custObjs.metricTwoDef}}</td>
-														<td class="hlk-nl5m" ng-model="custObjs">{{custObjs.metricThreeDef}}</td>
-														<td class="hlk-me" ng-model="custObjs">{{custObjs.metricFourDef}}</td>
-														<td class="hlk-me" ng-model="custObjs">{{custObjs.metricFiveDef}}</td>
+														<td class="hlk-suit">5%</td-->
+														<td class="hlk-truk" > {{appInt.intOneDef}} </td>
+														<td class="hlk-me" >   {{appInt.intTwoDef}}</td>
+														<td class="hlk-nl5m" > {{appInt.intThreeDef}}</td>
+														<td class="hlk-me" >   {{appInt.intFourDef}}</td>
+														<td class="hlk-me" >   {{appInt.intFiveDef}}</td>
 													</tr>
 
-													<tr>
-														<td class="hlk-me">Quality of service</td>
-														<td class="hlk-me">High Availability of All business Systems affecting external Customers</td>
-														<td class="hlk-suit">10%</td>
-														<td class="hlk-truk">&lt; 75%  Business Systems Uptime</td>
-														<td class="hlk-me">&lt; 80%  Business Systems Uptime</td>
-														<td class="hlk-nl5m">&gt; 90% Business Systems Uptime</td>
-														<td class="hlk-me">&gt; 95%  Business Systems Uptime</td>
-														<td class="hlk-me">&gt; 98%  Business Systems Uptime</td>
-													</tr>
+													<tr></tr>
 
-													<tr>
-														<td class="hlk-889k" rowspan="2">Internal Process</td>
-														<td class="hlk-me" ng-model="intObjs">{{intObjs.description}} </td>
-														<td class="hlk-me" ng-model="intObjs">{{intObjs.DSO}} </td>
-														<td class="hlk-suit" rowspan="2">15%</td>
+													<tr ng-repeat="appLearn in appLearnObjective">
+														<td class="hlk-nl5m">{{appLearn.perspective}}</td>
+														<td class="hlk-me" >{{appLearn.learnDes}} </td>
+														<td class="hlk-me" >{{appLearn.learnDSO}} </td>
+														<!--td class="hlk-suit" ng-model="finRowSpan" rowspan={{finRowSpan}}>10%</td>
 														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk" ng-model="intObjs">{{intObjs.metricOneDef}}</td>
-														<td class="hlk-me" ng-model="intObjs">{{intObjs.metricTwoDef}}</td>
-														<td class="hlk-nl5m" ng-model="intObjs">{{intObjs.metricThreeDef}}</td>
-														<td class="hlk-me" ng-model="intObjs">{{intObjs.metricFourDef}}</td>
-														<td class="hlk-me" ng-model="intObjs">{{intObjs.metricFiveDef}}</td>
-													</tr>
-
-													<tr>
-														<td class="hlk-me">Quality of service</td>
-														<td class="hlk-me">High Availability of All business Systems affecting external Customers</td>
-														<td class="hlk-suit">10%</td>
-														<td class="hlk-truk">&lt; 75%  Business Systems Uptime</td>
-														<td class="hlk-me">&lt; 80%  Business Systems Uptime</td>
-														<td class="hlk-nl5m">&gt; 90% Business Systems Uptime</td>
-														<td class="hlk-me">&gt; 95%  Business Systems Uptime</td>
-														<td class="hlk-me">&gt; 98%  Business Systems Uptime</td>
-													</tr>
-
-													<tr>
-														<td class="hlk-889k" rowspan="2">Learning & Growth</td>
-														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.description}} </td>
-														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.DSO}} </td>
-														<td class="hlk-suit" rowspan="2">15%</td>
-														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk" ng-model="learnObjs">{{learnObjs.metricOneDef}}</td>
-														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.metricTwoDef}}</td>
-														<td class="hlk-nl5m" ng-model="learnObjs">{{learnObjs.metricThreeDef}}</td>
-														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.metricFourDef}}</td>
-														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.metricFiveDef}}</td>
-													</tr>
-
-													<tr>
-														<td class="hlk-me">Quality of service</td>
-														<td class="hlk-me">High Availability of All business Systems affecting external Customers</td>
-														<td class="hlk-suit">10%</td>
-														<td class="hlk-truk">&lt; 75%  Business Systems Uptime</td>
-														<td class="hlk-me">&lt; 80%  Business Systems Uptime</td>
-														<td class="hlk-nl5m">&gt; 90% Business Systems Uptime</td>
-														<td class="hlk-me">&gt; 95%  Business Systems Uptime</td>
-														<td class="hlk-me">&gt; 98%  Business Systems Uptime</td>
+														<td class="hlk-suit">5%</td-->
+														<td class="hlk-truk" > {{appLearn.learnOneDef}} </td>
+														<td class="hlk-me" >   {{appLearn.learnTwoDef}}</td>
+														<td class="hlk-nl5m" > {{appLearn.learnThreeDef}}</td>
+														<td class="hlk-me" >   {{appLearn.learnFourDef}}</td>
+														<td class="hlk-me" >   {{appLearn.learnFiveDef}}</td>
 													</tr>
 
 												</table>
