@@ -8,7 +8,7 @@
   "private": true,
   "main": "server.js",
   "config": {
-    "port": "3000"
+    "port": "3002"
   },
   "dependencies": {
     "annyang": "^1.0.1",
@@ -18,6 +18,7 @@
     "express": "latest",
     "express-session": "latest",
     "mime": "latest",
+    "node-mandrill": "^1.0.1",
     "nodemon": "latest",
     "sendgrid": "^1.6.0",
     "serve-favicon": "latest",

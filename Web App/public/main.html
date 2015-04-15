@@ -212,7 +212,7 @@
 											<tr ng-repeat="emp in emps | orderBy: 'empName' |filter: search |limitTo:5">
 												<td><a data-keyboard="false" data-backdrop="static" 
 														href="#empObjModal" role="button" 
-				  									 	data-toggle="modal" ng-click="retrieveEmpObjs(emp.PFNum)">
+				  									 	data-toggle="modal" ng-click="retrieveEmpObjs(emp.PFNum, emp.empName)">
 				  									 	{{emp.empName}}
 				  									 </a>
 				  								</td>
@@ -231,7 +231,7 @@
 
 				  								<div id="empObjModal" class="modal-header">
 				  							 		<button class="close" data-dismiss="modal">&times;</button>
-				  									<h4 class="modal-title">View Brian's Objectives!</h4>
+				  									<h4 class="modal-title" ng-model="empAlias">View {{empAlias.Name}}'s Objectives!</h4>
 				  								</div> <!-- end empObjModal-header-->
 
 				  								<div class="modal-body">
@@ -952,19 +952,39 @@
 
 															</div> <!--end financeObjDiv-->
 
+															<div class="alert alert-danger alert-dismissable" ng-if="hasFinKPAError">
+																<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																<br>
+					        									<span ng-repeat='error in finObjError'>
+					        										{{error}}
+					        									<br>
+					        									</span>
+				   		 	 	 							</div> <!--end danger alert -->
+
 															<div id="financeDSODiv" class="form-group">
-																<label class="col-lg-2 control-label" for="financeDSODescription">
-																	Desire Standard Output (KPI)
-																</label> <!-- end financeDSOlabel-->
+																<div class="form-group">
+																	<label class="col-lg-2 control-label" for="financeDSODescription">
+																		Desire Standard Output (KPI)
+																	</label> <!-- end financeDSOlabel-->
 
-																&nbsp;
-																<div id="financeDSODivInput" class="col-lg-10">
+																	&nbsp;
+																	<div id="financeDSODivInput" class="col-lg-10">
 
-																	<textarea class="form-control" id="financeDSODescription" 
-																	placeholder="Enter the Desired Standard Output..." type="text" rows="3" 
-																	ng-model="financePerspectiveController.DSO"></textarea>
+																		<textarea class="form-control" id="financeDSODescription" 
+																		placeholder="Enter the Desired Standard Output..." type="text" rows="3" 
+																		ng-model="financePerspectiveController.DSO"></textarea>
 
-																</div> <!-- end financeObjDiv-->
+																	</div> <!-- end financeObjDiv-->
+																</div>
+
+																<div class="alert alert-danger alert-dismissable" ng-if="hasFinKPIError">
+																	<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																	<br>
+					        										<span ng-repeat='error in finObjError'>
+					        											{{error}}
+					        										<br>
+					        										</span>
+				   		 	 	 								</div> <!--end danger alert -->
 
 																<div id="performanceRatingDiv" class="form-group" >
 																	<label id="performanceRatingLabel" class="col-lg-2">
@@ -1112,18 +1132,38 @@
 
 															</div> <!--end customerObjDiv-->
 
+															<div class="alert alert-danger alert-dismissable" ng-if="hasCustKPAError">
+																<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																<br>
+					        									<span ng-repeat='error in custObjError'>
+					        										{{error}}
+					        									<br>
+					        									</span>
+				   		 	 	 							</div> <!--end danger alert -->
+
 															<div id="customerDSODiv" class="form-group">
-																<label class="col-lg-2 control-label" for="customerDSODescription">
-																	Desire Standard Output (KPI)
-																</label> <!-- end customerDSOlabel-->
+																<div class="form-group">
+																	<label class="col-lg-2 control-label" for="customerDSODescription">
+																		Desire Standard Output (KPI)
+																	</label> <!-- end customerDSOlabel-->
 
-																<div id="customerDSODivInput" class="col-lg-10">
+																	<div id="customerDSODivInput" class="col-lg-10">
 
-																	<textarea ng-model="customerPerspectiveController.DSO" 
-																	class="form-control"        id="customerDSODescription" 
-																	placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
+																		<textarea ng-model="customerPerspectiveController.DSO" 
+																		class="form-control"        id="customerDSODescription" 
+																		placeholder="Enter the Desired Standard Output..." type="text" rows="3"></textarea>
 
-																</div> <!-- end customerObjDiv-->
+																	</div> <!-- end customerObjDiv-->
+																</div>
+
+																<div class="alert alert-danger alert-dismissable" ng-if="hasCustKPIError">
+																	<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																	<br>
+						        									<span ng-repeat='error in custObjError'>
+						        										{{error}}
+						        									<br>
+						        									</span>
+					   		 	 	 							</div> <!--end danger alert -->
 
 																&nbsp;
 
@@ -1270,20 +1310,40 @@
 
 															</div> <!--end internalObjDiv-->
 
+															<div class="alert alert-danger alert-dismissable" ng-if="hasIntKPAError">
+																<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																<br>
+						        								<span ng-repeat='error in intObjError'>
+						        									{{error}}
+						        								<br>
+						        								</span>
+					   		 	 	 						</div> <!--end danger alert -->
+
 															<div id="internalDSODiv" class="form-group">
-																<label class="col-lg-2 control-label" for="internalDSODescription">
-																	Desire Standard Output (KPI)
-																</label> <!-- end internalDSOlabel-->
+																<div class="form-group">
+																	<label class="col-lg-2 control-label" for="internalDSODescription">
+																		Desire Standard Output (KPI)
+																	</label> <!-- end internalDSOlabel-->
 
-																<div id="internalDSODivInput" class="col-lg-10">
+																	<div id="internalDSODivInput" class="col-lg-10">
 
-																	<textarea ng-model="internalPerspectiveController.DSO" 
-																	class="form-control" id="internalDSODescription" 
-																	placeholder="Enter the Desired Standard Output..." 
-																	type="text" rows="3">
-																	</textarea>
+																		<textarea ng-model="internalPerspectiveController.DSO" 
+																		class="form-control" id="internalDSODescription" 
+																		placeholder="Enter the Desired Standard Output..." 
+																		type="text" rows="3">
+																		</textarea>
 
-																</div> <!-- end internalObjDiv-->
+																	</div> <!-- end internalObjDiv-->
+																</div>
+
+																<div class="alert alert-danger alert-dismissable" ng-if="hasIntKPIError">
+																	<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																	<br>
+						        									<span ng-repeat='error in intObjError'>
+						        										{{error}}
+						        									<br>
+						        									</span>
+					   		 	 	 							</div> <!--end danger alert -->
 
 																&nbsp;
 
@@ -1430,17 +1490,37 @@
 
 															</div> <!--end learnObjDiv-->
 
-															<div id="learnDSODiv" class="form-group">
-																<label class="col-lg-2 control-label" for="learnDSODescription">
-																	Desire Standard Output (KPI)
-																</label> <!-- end learnDSOlabel-->
+															<div class="alert alert-danger alert-dismissable" ng-if="hasLearnKPAError">
+																<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																<br>
+						        								<span ng-repeat='error in learnObjError'>
+						        									{{error}}
+						        								<br>
+						        								</span>
+					   		 	 	 						</div> <!--end danger alert -->
 
-																<div id="learnDSODivInput" class="col-lg-10">
-																	<textarea ng-model="learnPerspectiveController.DSO" 
-																	class="form-control" id="learnDSODescription" 
-																	placeholder="Enter the Desired Standard Output..." type="text" rows="3">
-																	</textarea>
-																</div> <!-- end learnObjDiv-->
+															<div id="learnDSODiv" class="form-group">
+																<div class="form-group">
+																	<label class="col-lg-2 control-label" for="learnDSODescription">
+																		Desire Standard Output (KPI)
+																	</label> <!-- end learnDSOlabel-->
+
+																	<div id="learnDSODivInput" class="col-lg-10">
+																		<textarea ng-model="learnPerspectiveController.DSO" 
+																		class="form-control" id="learnDSODescription" 
+																		placeholder="Enter the Desired Standard Output..." type="text" rows="3">
+																		</textarea>
+																	</div> <!-- end learnObjDiv-->
+																</div>
+
+																<div class="alert alert-danger alert-dismissable" ng-if="hasLearnKPIError">
+																	<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+																	<br>
+						        									<span ng-repeat='error in learnObjError'>
+						        										{{error}}
+						        									<br>
+						        									</span>
+					   		 	 	 							</div> <!--end danger alert -->
 
 																&nbsp;
 
@@ -1649,9 +1729,8 @@
 								  							</tr>
 								  						</thead>
 								  						<tbody>
-								  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id)" 
-								  									ng-model="grabFinanceObj">
+								  							<tr ng-repeat="objective in subFinObj | orderBy: 'description' |filter: search |limitTo:10">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabFinanceObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -1668,8 +1747,8 @@
 								  							</tr>
 								  						</thead>
 								  						<tbody>
-								  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox">
+								  							<tr ng-repeat="objective in subCustObj | orderBy: 'description' |filter: search |limitTo:10">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabCustomerObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -1686,8 +1765,8 @@
 								  							</tr>
 								  						</thead>
 								  						<tbody>
-								  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox">
+								  							<tr ng-repeat="objective in subIntObj | orderBy: 'description' |filter: search |limitTo:10">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.description)"	ng-model="grabInternalObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -1704,11 +1783,29 @@
 								  							</tr>
 								  						</thead>
 								  						<tbody>
-								  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox">
+								  							<tr ng-repeat="objective in subLearnObj | orderBy: 'description' |filter: search |limitTo:10">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.description)"	ng-model="grabLearnObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
+								  							</tr>
+							  							</tbody>
+							  						</table> <!-- end Learning Objectives Table-->
+
+							  						<table class="table table-hover" id="pendingObjTable">
+							  							<caption><h5>Objectives to be sent</h5></caption>
+							  							<thead>
+								  							<tr>
+								  								<th>Key Performance Area</th>
+								  								<th>Key Performance Indicator</th>
+								  							</tr>
+								  						</thead>
+								  						<tbody>
+								  							<tr ng-repeat="objective in pendingObj | orderBy: 'description' |filter: search |limitTo:10">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id)"	ng-model="grabLearnObj">
+								  									{{objective.pendingDescription | uppercase}}
+								  								</td>
+								  								<td>{{objective.pendingDSO}}</td>
 								  							</tr>
 							  							</tbody>
 							  						</table> <!-- end Learning Objectives Table-->
@@ -1719,6 +1816,16 @@
 						  							</div>
 
 						  						</div> <!-- end submitObjController div-->
+						  						<div class="alert alert-danger alert-dismissable" ng-if="hasSendObjErrors">
+						  							<button type="button" class="close" data-dismiss="alert">&times;</button>
+						  							<strong>Error:</strong>
+													<br>
+				        							<span ng-model="sendObjErrorMsg">
+				        								{{sendObjErrorMsg}}
+				        								<br>
+				        							</span>
+			   		 	 	 					</div> <!--end danger alert -->
+
 					  						</div> <!--end submitObjModalBody-->
 
 					  						<div class="modal-footer">
@@ -1734,7 +1841,7 @@
 
 					  							<div class="alert alert-success alert-block fade in" onclick="$('#submitObjModal').modal({'backdrop': 'static'});" id="successObjSubmit">
 													<button type="button" class="close" data-dismiss="alert">&times;</button>
-													<h4>Objective(s) Successfully Submitted!</h4>
+													<h5>Objective(s) Successfully Submitted!</h5>
 													<p>Click the 'x' in the corner to close...</p>
 												</div> <!--end alert-->	
 
@@ -1766,7 +1873,7 @@
 				  							<div id="compileSCModalBody" class="modal-body" >
 
 						  						<h4> Select Approved Objectives...</h4>
-						  						<span ng-model="compile">{{compile}}</span>
+						  						<h6> (by checking)  </h6>
 						  						<form id="searchObj">
 													<input type="text" class="form-control pull-right" placeholder="Search objectives..." 
 													id="searchInput" ng-model="search.$">
@@ -1775,16 +1882,6 @@
 												&nbsp;
 
 					  							<hr>
-
-					  							<div id="perspectiveDropDown" class="dropdown">
-													<select id="approvedPerspectiveDropDownMenu" role="menu">
-														<option value="default">-Select a Perspective-</option>
-														<option value="financeSelect">Finance</option>
-														<option value="customerSelect">Customer & Stakeholders</option>
-														<option value="internalSelect">Internal Business Process</option>
-														<option value="learnSelect">Learning & Growth</option>
-													</select> <!-- end objPerspDropdownMenu-->		  
-												</div> <!-- end div objDropDown-->
 
 												&nbsp;
 
@@ -1798,16 +1895,25 @@
 							  						</thead>
 							  									
 							  						<tbody>
-							  							<tr ng-repeat="approved in appObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox">
-							  									{{approved.description | uppercase}}
+							  							<tr ng-repeat="appFin in appFinObj | orderBy: 'description' | filter: search | limitTo:10">
+							  								<td><input type="checkbox" ng-click="captureFinApp(appFin._id)" ng-model="grabAppFin">
+							  									{{appFin.description | uppercase}}
 							  								</td>
-							  								<td>{{approved.DSO}}</td>
+							  								<td>{{appFin.DSO}}</td>
 							  							</tr>
 						  							</tbody>	
 						  						</table> <!-- end Finance Approved-Objectives Table-->
 
-						  						<table class="table table-hover" id="customerApprovedObjectivesTable">
+						  						<div class="alert alert-danger alert-dismissable" ng-if="hasFinSCErrors">
+					  								<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+						        					<span ng-model='finSCErrorMsg'>
+						        						{{finSCErrorMsg}}
+						        						<br>
+						        					</span>
+					   		 	 	 			</div> <!--end danger alert -->
+
+						  						<table class="table table-hover" id="customerApprovedObjectivesTable" style="width:90%">
 						  							<caption><h5>Customer Objectives</h5></caption>
 						  							<thead>
 							  							<tr>
@@ -1817,16 +1923,25 @@
 							  						</thead>
 
 							  						<tbody>
-							  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox">
-							  									{{objective.description | uppercase}}
+							  							<tr ng-repeat="appCust in appCustObj | orderBy: 'description' | filter: search | limitTo:10">
+							  								<td><input type="checkbox" ng-click="captureCustApp(appCust._id)" ng-model="grabAppCust">
+							  									{{appCust.description | uppercase}}
 							  								</td>
-							  								<td>{{objective.DSO}}</td>
+							  								<td>{{appCust.DSO}}</td>
 							  							</tr>
 						  							</tbody>
 						  						</table> <!-- end Customer Approved-Objectives Table-->
 
-						  						<table class="table table-hover" id="internalApprovedObjectivesTable">
+						  						<div class="alert alert-danger alert-dismissable" ng-if="hasCustSCErrors">
+					  								<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+						        					<span ng-model='custSCErrorMsg'>
+						        						{{custSCErrorMsg}}
+						        						<br>
+						        					</span>
+					   		 	 	 			</div> <!--end danger alert -->
+
+						  						<table class="table table-hover" id="internalApprovedObjectivesTable" style="width:90%">
 						  							<caption><h5>Internal Business Objectives</h5></caption>
 						  							<thead>
 							  							<tr>
@@ -1836,16 +1951,25 @@
 							  						</thead>
 
 							  						<tbody>
-							  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox">
-							  									{{objective.description | uppercase}}
+							  							<tr ng-repeat="appInt in appIntObj | orderBy: 'description' |filter: search |limitTo:10">
+							  								<td><input type="checkbox" ng-click="captureIntApp(appInt._id)" ng-model="grabAppInt">
+							  									{{appInt.description | uppercase}}
 							  								</td>
-							  								<td>{{objective.DSO}}</td>
+							  								<td>{{appInt.DSO}}</td>
 							  							</tr>
 						  							</tbody>
 						  						</table> <!-- end Internal Approved-Objectives Table-->
 
-						  						<table class="table table-hover" id="learningApprovedObjectivesTable">
+						  						<div class="alert alert-danger alert-dismissable" ng-if="hasIntSCErrors">
+					  								<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+						        					<span ng-model='intSCErrorMsg'>
+						        						{{intSCErrorMsg}}
+						        						<br>
+						        					</span>
+					   		 	 	 			</div> <!--end danger alert -->
+
+						  						<table class="table table-hover" id="learningApprovedObjectivesTable" style="width:90%">
 						  							<caption><h5>Learning & Growth Objectives</h5></caption>
 						  							<thead>
 							  							<tr>
@@ -1855,20 +1979,37 @@
 							  						</thead>
 
 							  						<tbody>
-							  							<tr ng-repeat="objective in allObjectives | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox">
-							  									{{objective.description | uppercase}}
+							  							<tr ng-repeat="appLearn in appLearnObj | orderBy: 'description' |filter: search |limitTo:10">
+							  								<td><input type="checkbox" ng-click="captureLearnApp(appLearn._id)" ng-model="grabAppLearn">
+							  									{{appLearn.description | uppercase}}
 							  								</td>
-							  								<td>{{objective.DSO}}</td>
+							  								<td>{{appLearn.DSO}}</td>
 							  							</tr>
 						  							</tbody>			
 						  						</table> <!-- end Learning Approved-Objectives Table-->
+
+						  						<div class="alert alert-danger alert-dismissable" ng-if="hasLearnSCErrors">
+					  								<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+						        					<span ng-model='learnSCErrorMsg'>
+						        						{{learnSCErrorMsg}}
+						        						<br>
+						        					</span>
+					   		 	 	 			</div> <!--end danger alert -->
 					  						</div> <!--end CompileSCModalBody-->
 
 					  						<div id="compileSCModalFooter" class="modal-footer">
 
-					  							<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="retrieveApproved()" role="button" 
-								    				class="btn btn-success" data-toggle="modal">
+					  							<div class="alert alert-danger alert-dismissable" ng-if="hasCompileSCErrors">
+					  								<button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error:</strong>
+													<br>
+						        					<span ng-model='generalErrorMsg'>
+						        						{{generalErrorMsg}}
+						        						<br>
+						        					</span>
+					   		 	 	 			</div> <!--end danger alert -->
+
+					  							<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="scorecardCreate()" role="button" class="btn btn-success" data-toggle="modal">
 								    				<span class="glyphicon glyphicon-check"></span> 
 								    				Compile Scorecard 
 								    			</a>
@@ -1876,7 +2017,8 @@
 					  							<button class="btn btn-default" type="button" data-dismiss="modal"> 
 					  								<span class="glyphicon glyphicon-remove"></span> 
 					  								Close
-					  							</button>		
+					  							</button>
+
 					  						</div> <!-- end CompileSCModal-footer-->
 
 					  					</div> <!-- end compileSCModal-content-->
@@ -1885,7 +2027,7 @@
 
 				  				</div> <!-- end CompileSCModal-->
 
-				  				<div class="modal fade in" id="scorecardModal" >
+				  				<div class="modal fade in" id="scorecardModal" ng-if="scorecardReady">
 
 				  					<div id="scorecardModalDialog" class="modal-dialog">
 
@@ -1906,7 +2048,7 @@
 													</tr>
 
 													<tr>
-														<td class="hlk-drop" rowspan="6">BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
+														<td class="hlk-drop" rowspan="10">BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
 														<td class="hlk-suit">Perspective</td>
 														<td class="hlk-kurasaki">Key Performance Area       (KPA)</td>
 														<td class="hlk-kurasaki">Key Performance Indicator (KPI)</td>
@@ -1921,15 +2063,15 @@
 
 													<tr>
 														<td class="hlk-nl5m" rowspan="2">Financial</td>
-														<td class="hlk-me">Profitability and sustainability</td>
-														<td class="hlk-me">Capex Budget of less than 10% Variance</td>
+														<td class="hlk-me" ng-model="finObjs">{{finObjs.description}} </td>
+														<td class="hlk-me" ng-model="finObjs">{{finObjs.DSO}} </td>
 														<td class="hlk-suit" rowspan="2">10%</td>
 														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk">&gt;15 % budget variance</td>
-														<td class="hlk-me">&gt; 10 % budget variance</td>
-														<td class="hlk-nl5m">10% budget variance</td>
-														<td class="hlk-me">&lt;5 % budget variance</td>
-														<td class="hlk-me">0 % budget variance</td>
+														<td class="hlk-truk" ng-model="finObjs"> {{finObjs.metricOneDef}} </td>
+														<td class="hlk-me" ng-model="finObjs">   {{finObjs.metricTwoDef}}</td>
+														<td class="hlk-nl5m" ng-model="finObjs"> {{finObjs.metricThreeDef}}</td>
+														<td class="hlk-me" ng-model="finObjs">   {{finObjs.metricFourDef}}</td>
+														<td class="hlk-me" ng-model="finObjs">   {{finObjs.metricFiveDef}}</td>
 													</tr>
 																  
 													<tr>
@@ -1945,15 +2087,63 @@
 
 													<tr>
 														<td class="hlk-889k" rowspan="2">Customer</td>
-														<td class="hlk-me">Quality of service</td>
-														<td class="hlk-me">Prepaid System &amp; Billing Queries and Issues (Vending, MPOS, PC POS, 8888) affecting external customers resolved within 24hrs.</td>
+														<td class="hlk-me" ng-model="custObjs">{{custObjs.description}} </td>
+														<td class="hlk-me" ng-model="custObjs">{{custObjs.DSO}} </td>
 														<td class="hlk-suit" rowspan="2">15%</td>
 														<td class="hlk-suit">5%</td>
-														<td class="hlk-truk">&lt; 70% of System malfunctions and Cases attended within 24hrs</td>
-														<td class="hlk-me">&lt; 80% of malfunctions and Cases attended within 24hrs</td>
-														<td class="hlk-nl5m">&gt; 90% of System malfunctions and Cases attended within 24hrs</td>
-														<td class="hlk-me">&gt; 95% of System malfunctions and Cases attended within 24hrs</td>
-														<td class="hlk-me">&gt; 98% of System malfunctions and Cases attended within 24hrs</td>
+														<td class="hlk-truk" ng-model="custObjs">{{custObjs.metricOneDef}}</td>
+														<td class="hlk-me" ng-model="custObjs">{{custObjs.metricTwoDef}}</td>
+														<td class="hlk-nl5m" ng-model="custObjs">{{custObjs.metricThreeDef}}</td>
+														<td class="hlk-me" ng-model="custObjs">{{custObjs.metricFourDef}}</td>
+														<td class="hlk-me" ng-model="custObjs">{{custObjs.metricFiveDef}}</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-me">Quality of service</td>
+														<td class="hlk-me">High Availability of All business Systems affecting external Customers</td>
+														<td class="hlk-suit">10%</td>
+														<td class="hlk-truk">&lt; 75%  Business Systems Uptime</td>
+														<td class="hlk-me">&lt; 80%  Business Systems Uptime</td>
+														<td class="hlk-nl5m">&gt; 90% Business Systems Uptime</td>
+														<td class="hlk-me">&gt; 95%  Business Systems Uptime</td>
+														<td class="hlk-me">&gt; 98%  Business Systems Uptime</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-889k" rowspan="2">Internal Process</td>
+														<td class="hlk-me" ng-model="intObjs">{{intObjs.description}} </td>
+														<td class="hlk-me" ng-model="intObjs">{{intObjs.DSO}} </td>
+														<td class="hlk-suit" rowspan="2">15%</td>
+														<td class="hlk-suit">5%</td>
+														<td class="hlk-truk" ng-model="intObjs">{{intObjs.metricOneDef}}</td>
+														<td class="hlk-me" ng-model="intObjs">{{intObjs.metricTwoDef}}</td>
+														<td class="hlk-nl5m" ng-model="intObjs">{{intObjs.metricThreeDef}}</td>
+														<td class="hlk-me" ng-model="intObjs">{{intObjs.metricFourDef}}</td>
+														<td class="hlk-me" ng-model="intObjs">{{intObjs.metricFiveDef}}</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-me">Quality of service</td>
+														<td class="hlk-me">High Availability of All business Systems affecting external Customers</td>
+														<td class="hlk-suit">10%</td>
+														<td class="hlk-truk">&lt; 75%  Business Systems Uptime</td>
+														<td class="hlk-me">&lt; 80%  Business Systems Uptime</td>
+														<td class="hlk-nl5m">&gt; 90% Business Systems Uptime</td>
+														<td class="hlk-me">&gt; 95%  Business Systems Uptime</td>
+														<td class="hlk-me">&gt; 98%  Business Systems Uptime</td>
+													</tr>
+
+													<tr>
+														<td class="hlk-889k" rowspan="2">Learning & Growth</td>
+														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.description}} </td>
+														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.DSO}} </td>
+														<td class="hlk-suit" rowspan="2">15%</td>
+														<td class="hlk-suit">5%</td>
+														<td class="hlk-truk" ng-model="learnObjs">{{learnObjs.metricOneDef}}</td>
+														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.metricTwoDef}}</td>
+														<td class="hlk-nl5m" ng-model="learnObjs">{{learnObjs.metricThreeDef}}</td>
+														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.metricFourDef}}</td>
+														<td class="hlk-me" ng-model="learnObjs">{{learnObjs.metricFiveDef}}</td>
 													</tr>
 
 													<tr>

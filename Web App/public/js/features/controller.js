@@ -402,10 +402,14 @@ var bsc = angular.module('BSCIMS', []);
 
 		$scope.submitFinanceObjective = function() { 
 
+			$scope.finObjError = [],
 			$scope.createObjectiveErrorMsgs = [],
 			$scope.hasCreateObjErrors = false;
+			$scope.hasFinKPAError = false;
+			$scope.hasFinKPIError = false;
+		
 			var generalErrorMsg = "Please ensure that all fields are filled!"
-				objDescriptionError = "This field cannot be left blank!",
+				objDescriptionError = "The 'Key Performance Area' field is mandatory!",
 				objDSOError = "Please define the Key Performance Indicator!",
 				poorOptionsSelectError = "Select a minimum metric above!",
 				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
@@ -420,13 +424,13 @@ var bsc = angular.module('BSCIMS', []);
 
 			if ($scope.financePerspectiveController.description == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+				$scope.hasFinKPAError = true,
+				$scope.finObjError.push(objDescriptionError);
 			}
 			else if ($scope.financePerspectiveController.DSO == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDSOError);
+				$scope.hasFinKPIError = true,
+				$scope.finObjError.push(objDSOError);
 			}
 			else if ($scope.poorOptions.value == 0) {
 
@@ -461,7 +465,7 @@ var bsc = angular.module('BSCIMS', []);
 			else if ($scope.financePerspectiveController.metricTwoDef == null) {
 
 				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(unsatOptionsDefError);
+				$scope.createObjectiveErrorMsgscreateObjectiveErrorMsgs.push(unsatOptionsDefError);
 			}
 			else if ($scope.financePerspectiveController.metricThreeDef == null) {
 
@@ -567,7 +571,11 @@ var bsc = angular.module('BSCIMS', []);
 
 			$scope.createObjectiveErrorMsgs = [],
 			$scope.hasCreateObjErrors = false;
-			var objDescriptionError = "This field cannot be left blank!",
+			$scope.hasCustKPAError = false;
+			$scope.hasCustKPIError = false;
+			$scope.custObjError = [];
+
+			var objDescriptionError = "The 'Key Performance Area' field is mandatory!",
 				objDSOError = "Please define the Key Performance Indicator!",
 				poorOptionsSelectError = "Select a minimum metric above!",
 				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
@@ -582,13 +590,13 @@ var bsc = angular.module('BSCIMS', []);
 
 			if ($scope.customerPerspectiveController.description == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+				$scope.hasCustKPAError = true,
+				$scope.custObjError.push(objDescriptionError);
 			}
 			else if ($scope.customerPerspectiveController.DSO == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDSOError);
+				$scope.hasCustKPIError = true,
+				$scope.custObjError.push(objDSOError);
 			}
 			else if ($scope.poorOptions.value == 0) {
 
@@ -638,7 +646,7 @@ var bsc = angular.module('BSCIMS', []);
 			else if ($scope.customerPerspectiveController.metricFiveDef == null) {
 
 				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(oustandOptionsDefError);
+				$scope.createObjectiveErrorMsgs.push(outstandOptionsDefError);
 			}
 			else {
 
@@ -712,7 +720,11 @@ var bsc = angular.module('BSCIMS', []);
 
 			$scope.createObjectiveErrorMsgs = [],
 			$scope.hasCreateObjErrors = false;
-			var objDescriptionError = "This field cannot be left blank!",
+			$scope.hasLearnKPAError = false;
+			$scope.hasLearnKPIError = false;
+			$scope.learnObjError = [];
+
+			var objDescriptionError = "The 'Key Performance Area' field is mandatory!",
 				objDSOError = "Please define the Key Performance Indicator!",
 				poorOptionsSelectError = "Select a minimum metric above!",
 				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
@@ -727,13 +739,13 @@ var bsc = angular.module('BSCIMS', []);
 
 			if ($scope.learnPerspectiveController.description == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+				$scope.hasLearnKPAError = true,
+				$scope.learnObjError.push(objDescriptionError);
 			}
 			else if ($scope.learnPerspectiveController.DSO == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDSOError);
+				$scope.hasLearnKPIError = true,
+				$scope.learnObjError.push(objDSOError);
 			}
 			else if ($scope.poorOptions.value == 0) {
 
@@ -851,12 +863,15 @@ var bsc = angular.module('BSCIMS', []);
   					         ];
   	$scope.perspective = "internal",
   	$scope.status = "unapproved";
+  	$scope.hasIntKPAError = false;
+	$scope.hasIntKPIError = false;
+	$scope.intObjError = [];
 
 		$scope.submitInternalObjective = function() {
 
 			$scope.createObjectiveErrorMsgs = [],
 			$scope.hasCreateObjErrors = false;
-			var objDescriptionError = "This field cannot be left blank!",
+			var objDescriptionError = "The 'Key Performance Area' field is mandatory!",
 				objDSOError = "Please define the Key Performance Indicator!",
 				poorOptionsSelectError = "Select a minimum metric above!",
 				unsatOptionsSelectError = "Select an unsatisfactory metric above!",
@@ -871,13 +886,13 @@ var bsc = angular.module('BSCIMS', []);
 
 			if ($scope.internalPerspectiveController.description == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDescriptionError);
+				$scope.hasIntKPAError = true,
+				$scope.intObjError.push(objDescriptionError);
 			}
 			else if ($scope.internalPerspectiveController.DSO == null) {
 
-				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgs.push(objDSOError);
+				$scope.hasIntKPIError = true,
+				$scope.intObjError.push(objDSOError);
 			}
 			else if ($scope.poorOptions.value == 0) {
 
@@ -963,30 +978,52 @@ var bsc = angular.module('BSCIMS', []);
    .controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope, $http) {
 
 	$scope.objIDArray = [];
+	$scope.pendingObj = [];
+	$scope.hasSendObjErrors = false;
+	$scope.sendObjErrorMsg = "Cannot send empty objectives - make sure you select from above!"
 
 	$scope.retrieveObjectives = function () {
 			allObjectives.getObjectives()
 			.success(function (res) {
-				$scope.allObjectives = res;
-				console.log(res);
+			$scope.subFinObj = [];
+			$scope.subCustObj = [];
+			$scope.subIntObj = [];
+			$scope.subLearnObj = [];
+
+			for (var i = 0; i<res.length; i++) {
+				if (res[i].perspective == "finance") {
+					$scope.subFinObj.push(res[i]);
+				}
+				else if (res[i].perspective == "customer") {
+					$scope.subCustObj.push(res[i]);
+				}
+				else if (res[i].perspective == "internal") {
+					$scope.subIntObj.push(res[i]);
+				}
+				else if (res[i].perspective == "learn") {
+					$scope.subLearnObj.push(res[i]);
+				}
+			}
 			})
 			.error(function () {
 				console.log('There is an error');
 			});		
 	}
 
-	$scope.captureObj = function(objID) {
+	$scope.captureObj = function(objID, description, DSO) {
 		//console.log(obj);
 		$scope.objIDArray.push(objID);
+		$scope.pendingObj.push({pendingID: objID, pendingDescription: description, pendingDSO: DSO});
 	
-		console.log("Content of array");
-		console.log(objID);
+		//console.log("Content of array");
+		console.log("Pending Objectives:");
+		//console.log(objID);
 		var index;
 
 		for (index = 0; index < $scope.objIDArray.length; index++){
-			console.log($scope.objIDArray[index]);
+			//console.log($scope.objIDArray[index]);
+			console.log($scope.pendingObj[index].pendingDescription);
 		}
-
 	}
 	
 	var IDs = $scope.objIDArray;
@@ -994,16 +1031,22 @@ var bsc = angular.module('BSCIMS', []);
 	$scope.sendObjs = function() {
 		console.log($scope.objIDArray);
 
-		for (index = 0; index < $scope.objIDArray.length; index++){
-			$http.post("/objectivesSubmitted_status_changed/" + $scope.objIDArray[index] , $scope.submitObjController)
-				.success(function (res) {
-					$('#successObjSubmit').slideDown();
-				})
-				.error(function (res) {
-					console.log(res);
-				});
+		if ($scope.pendingObj.length == 0) {
+			$scope.hasSendObjErrors = true;
 		}
+		else {
 
+			$scope.hasSendObjErrors = false;
+			for (index = 0; index < $scope.objIDArray.length; index++){
+				$http.post("/objectivesSubmitted_status_changed/" + $scope.objIDArray[index] , $scope.submitObjController)
+					.success(function (res) {
+						$('#successObjSubmit').slideDown();
+					})
+					.error(function (res) {
+						console.log(res);
+					});
+			}	
+		}
 	}
 }])
 
@@ -1012,50 +1055,225 @@ var bsc = angular.module('BSCIMS', []);
 ************************************************************************************************************************************************/
    .controller('compileController', ['approvedObjectives', '$scope','$rootScope', '$http', function (approvedObjectives, $scope, $rootScope, $http) {
 
-	$scope.compile = "";
-	console.log($scope.compile);
+	$scope.appFinIDArray = [];
+	$scope.appCustIDArray = [];
+	$scope.appIntIDArray = [];
+	$scope.appLearnIDArray = [];
+
+	$scope.finRowSpan = 0;
+	$scope.custRowSpan = 0;
+	$scope.intRowSpan = 0;
+	$scope.learnRowSpan = 0;
+
+	$scope.scorecardReady = false;
+	$scope.hasCompileSCErrors = false;
+	$scope.hasFinSCErrors     = false;
+	$scope.hasCustSCErrors = false;
+	$scope.hasIntSCErrors = false;
+	$scope.hasLearnSCErrors = false;
+	$scope.generalErrorMsg = "Select atleast one KPA from the above!";
+	$scope.finSCErrorMsg = "Choose one of the Finance Objectives";
+	$scope.custSCErrorMsg = "Choose one of the Customer Objectives";
+	$scope.intSCErrorMsg = "Choose one of the Internal Business Objectives";
+	$scope.learnSCErrorMsg = "Choose one of the Learning & Growth Objectives";
+	
 
 	$scope.retrieveApproved = function () {
 		approvedObjectives.getApproved()
 		.success(function (res) {
-			$scope.appObjectives = res;
 			console.log(res);
+			var scorecardLength = res.length;
+			console.log(scorecardLength);
+			$scope.appFinObj = [];
+			$scope.appCustObj = [];
+			$scope.appIntObj = [];
+			$scope.appLearnObj = [];
+
+			for (var i = 0; i<res.length; i++) {
+				if (res[i].perspective == "finance") {
+					$scope.appFinObj.push(res[i]);
+				}
+				else if (res[i].perspective == "customer") {
+					$scope.appCustObj.push(res[i]);
+				}
+				else if (res[i].perspective == "internal") {
+					$scope.appIntObj.push(res[i]);
+				}
+				else if (res[i].perspective == "learn") {
+					$scope.appLearnObj.push(res[i]);
+				}
+			}
+
 		})
 		.error(function () {
-			console.log('There is an error');
+			console.log('There is an error with compile socrecard! (BUG FOUND)');
 		});		
 	}
 
-	/*$scope.captureObj = function(objID) {
+	$scope.captureFinApp = function(objID) {
 		//console.log(obj);
-		$scope.objIDArray.push(objID);
+		$scope.appFinIDArray.push(objID);
 	
-		console.log("Content of array");
-		console.log(objID);
-		var index;
+		//console.log("Content of finance array");
+		//console.log(objID);
+		console.log($scope.appFinIDArray.length);
 
-		for (index = 0; index < $scope.objIDArray.length; index++){
-			console.log($scope.objIDArray[index]);
+		for (var index = 0; index < $scope.appFinIDArray.length; index++){
+			console.log($scope.appFinIDArray[index]);
 		}
 
 	}
+
+	$scope.captureCustApp = function(objID) {
+		//console.log(obj);
+		$scope.appCustIDArray.push(objID);
 	
-	var IDs = $scope.objIDArray;
+		console.log("Content of customer array");
+		console.log(objID);
+		
 
-	$scope.sendObjs = function() {
-		console.log($scope.objIDArray);
-
-		for (index = 0; index < $scope.objIDArray.length; index++){
-			$http.post("/objectivesSubmitted_status_changed/" + $scope.objIDArray[index] , $scope.submitObjController)
-				.success(function (res) {
-					$('#successObjSubmit').slideDown();
-				})
-				.error(function (res) {
-					console.log(res);
-				});
+		for (var index = 0; index < $scope.appCustIDArray.length; index++){
+			console.log($scope.appCustIDArray[index]);
 		}
 
-	}*/
+	}
+
+	$scope.captureIntApp = function(objID) {
+		//console.log(obj);
+		$scope.appIntIDArray.push(objID);
+	
+		console.log("Content of internal array");
+		console.log(objID);
+		
+
+		for (var index = 0; index < $scope.appIntIDArray.length; index++){
+			console.log($scope.appIntIDArray[index]);
+		}
+
+	}
+
+	$scope.captureLearnApp = function(objID) {
+		//console.log(obj);
+		$scope.appLearnIDArray.push(objID);
+	
+		console.log("Content of learn array");
+		console.log(objID);
+		
+
+		for (var index = 0; index < $scope.appLearnIDArray.length; index++){
+			console.log($scope.appLearnIDArray[index]);
+		}
+
+	}
+
+	$scope.scorecardCreate = function() {
+
+		for (var index = 0; index < $scope.appFinIDArray.length; index++){
+			console.log($scope.appFinIDArray);
+			$http.post("/createScoreCardRoute:/" + $scope.appFinIDArray[index] , $scope.compileController)
+			.success(function (response) {
+				console.log("Successfully done");
+				//$scope.finRowSpan = $scope.appFinIDArray.length;
+				//console.log($scope.finRowSpan);
+				$scope.finObjs = response;
+				//console.log($scope.finObjs);
+			})
+			.error(function (response) {
+				console.log("Error");
+			})
+		}
+
+		$scope.finRowSpan = $scope.appFinIDArray.length;
+		console.log($scope.finRowSpan);
+
+		for (var index = 0; index < $scope.appCustIDArray.length; index++){
+			console.log($scope.appCustIDArray);
+			$http.post("/createScoreCardRoute:/" + $scope.appCustIDArray[index] , $scope.compileController)
+			.success(function (response) {
+				console.log("Successfully done");
+				$scope.custRowSpan = $scope.appCustIDArray.length;
+				//console.log(response);
+				console.log($scope.custRowSpan);
+				$scope.custObjs = response;
+			})
+			.error(function (response) {
+				console.log("Error");
+			})
+		}
+
+		$scope.custRowSpan = $scope.appCustIDArray.length;
+		console.log($scope.custRowSpan);
+
+		for (var index = 0; index < $scope.appIntIDArray.length; index++){
+			console.log($scope.appIntIDArray);
+			$http.post("/createScoreCardRoute:/" + $scope.appIntIDArray[index] , $scope.compileController)
+			.success(function (response) {
+				console.log("Successfully done");
+				$scope.intRowSpan = $scope.appIntIDArray.length;
+				//console.log(response);
+				console.log($scope.intRowSpan);
+				$scope.intObjs = response;
+			})
+			.error(function (response) {
+				console.log("Error");
+			})
+		}
+ 
+ 		$scope.intRowSpan = $scope.appIntIDArray.length;
+		console.log($scope.intRowSpan);
+
+		for (var index = 0; index < $scope.appLearnIDArray.length; index++){
+			console.log($scope.appLearnIDArray);
+			$http.post("/createScoreCardRoute:/" + $scope.appLearnIDArray[index] , $scope.compileController)
+			.success(function (response) {
+				console.log("Successfully done");
+				$scope.learnRowSpan = $scope.appLearnIDArray.length;
+				//console.log(response);
+				console.log($scope.learnRowSpan);
+				$scope.learnObjs = response;
+			})
+			.error(function (response) {
+				console.log("Error");
+			})
+		}
+
+		$scope.learnRowSpan = $scope.appLearnIDArray.length;
+		console.log($scope.learnRowSpan);
+
+		if ($scope.finRowSpan == 0) {
+			$scope.hasFinSCErrors = true;
+		}
+		else if ($scope.finRowSpan > 0) {
+			$scope.hasFinSCErrors = false;
+		}
+
+		if ($scope.custRowSpan == 0) {
+			$scope.hasCustSCErrors = true;
+		}
+		else if ($scope.custRowSpan > 0) {
+			$scope.hasCustSCErrors = false;
+		}
+
+		if ($scope.intRowSpan == 0) {
+			$scope.hasIntSCErrors = true;
+		}
+		else if ($scope.intRowSpan > 0) {
+			$scope.hasIntSCErrors = false;
+		}
+
+		if ($scope.learnRowSpan == 0) {
+			$scope.hasLearnSCErrors = true;
+		}
+		else if ($scope.learnRowSpan > 0) {
+			$scope.hasLearnSCErrors = false;
+		}
+
+		if ($scope.finRowSpan > 0 && $scope.custRowSpan > 0 && $scope.intRowSpan > 0 && $scope.learnRowSpan > 0) {
+			$scope.scorecardReady = true;
+		}
+		
+
+	}
 }])
 
 
@@ -1186,8 +1404,10 @@ var bsc = angular.module('BSCIMS', []);
 
    		$scope.retrieveEmployees = function () {
    			$http.post('/getEmpsPendingObjs').success( function (response) {
-   				//console.log(response);
+   				console.log(response);
    				$scope.emps = response;
+
+
    			})
 		}
 
@@ -1238,16 +1458,25 @@ var bsc = angular.module('BSCIMS', []);
 
    .controller('supEmpObjsCtrl', ['pendingObjectives', '$scope', function (pendingObjectives, $scope) {
 
-   		$scope.retrieveEmpObjs = function (empPF) {
+   		$scope.retrieveEmpObjs = function (empPF, empName) {
 			//console.log(empPF);
+			//console.log(empName)
+			//$scope.empAlias = {};
+			$scope.empAlias = {PF: empPF, Name: empName};
+			console.log($scope.empAlias);
 			pendingObjectives.getPending()
 			.success(function (res) {
 				console.log(empPF);
-				console.log(res);
+				;
+
+				//for( var i = 0; i< res.length)
+
 				console.log("Pending objectives are as follows:")
 				$scope.empObjArray = res;
 				for (var i = 0; i < $scope.empObjArray.length; i++){
+
 					if (empPF = $scope.empObjArray[i].PFNum) {
+
 						if ($scope.empObjArray[i].perspective = "finance"){
 							$scope.specificEmpFinObjs = $scope.empObjArray[i];
 							console.log("So now :");

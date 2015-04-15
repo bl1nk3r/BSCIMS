@@ -2,17 +2,18 @@
 *****************************************NODE.JS Server Source-code********************************************************************
 **************************************************************************************************************************************/
  
-var http  = require ('http') 									//built in module provides HTTP server and client functionality
-   ,fs    = require ('fs')   									//built in fs module provides filesystem-related functionality
-   ,path  = require ('path') 									//built in path module provides filesystem path-related functionality
-   ,cache = {};				 									//cache object is where the contents of cached files are stored
+var http  = require ('http') 												//built in module provides HTTP server and client functionality
+   ,fs    = require ('fs')   												//built in fs module provides filesystem-related functionality
+   ,path  = require ('path') 												//built in path module provides filesystem path-related functionality
+   ,cache = {};				 												//cache object is where the contents of cached files are stored
  
-var express = require('express') 								//lightweight server framerwork
-   ,session = require('express-session')	 					//client session manager for handling logged in users
-   ,cookieParser = require('cookie-parser')						//module for parsing cookies
-   ,bodyParser = require('body-parser')  						//middleware for parsing strings to JSON objects
-   ,favicon = require('serve-favicon')							//module for handling the application's favicon
-   ,sendgrid = require('sendgrid')('api_user', 'api_key'); 		//sendgrid api_user && api_key
+var express = require('express') 											//lightweight server framerwork
+   ,session = require('express-session')	 								//client session manager for handling logged in users
+   ,cookieParser = require('cookie-parser')									//module for parsing cookies
+   ,bodyParser = require('body-parser')  									//middleware for parsing strings to JSON objects
+   ,favicon = require('serve-favicon')										//module for handling the application's favicon
+   ,sendgrid = require('sendgrid')('bl1nk3r', 'MySendGridAcc0unt')	 		//sendgrid api_user && api_key
+   ,mandrill = require('node-mandrill')('mandrill-api-key');
 
 //include access to the MongoDB driver for Node
 var mongojs = require("mongojs")
@@ -22,6 +23,8 @@ var mongojs = require("mongojs")
     ,port = "27017"					
 //init BSCIMS (database) and Objectives (collection)
     ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Document","Employees"]);
+
+//var	mandrill_client = new mandrill.Mandrill('rgp_Ww_oxK5Jwesp4n735A');
 
 //instantiate the server application 
 var bsc = express()
@@ -105,7 +108,7 @@ var bsc = express()
 			}
 			else {
 				res.json(docs);
-			}
+			} 
 		});
 	})*/
 
@@ -121,30 +124,6 @@ var bsc = express()
 			//console.log(res);
 			//onsole.log("say!");		
 		});
-		
-
-		/*sendgrid.send({
-			to: 'jay.rego.14@gmail.com',
-			from: 'testRun@bscims.com',
-			subject: 'Kindly Receive These Objectives',
-			text: "Isn't this awesome :D ",
-			//Termplate not yet working... get back to it <ASAP/>
-			//"%body%": "Coming soon",
-			"filters": {
-				"templates": {
-					"settings": {
-						"enabled": 1,
-						"template_id": "dc857727-f018-4267-8a45-b31919e2c247"
-					}
-				}
-			}
-
-		}, function (err, json) {
-			if (err) {
-				return console.error(err);
-			}
-			console.log(json);
-		})*/
 	})
 
 	.post("/getPendingObjectives", function ( req, res) {
@@ -327,28 +306,6 @@ var bsc = express()
 		});
 	})
 
-	.get('/', function (req, res) {
-		sendgrid.send({
-			to: ['jay.rego.14@gmail.com'],
-			from: 'testRun@bscims.com',
-			subject: 'Kindly Receive These Objectives',
-			"filters": {
-				"templates": {
-					"settings": {
-						"enabled": 1,
-						"template_id": "dc857727-f018-4267-8a45-b31919e2c247"
-					}
-				}
-			}
-
-		}, function (err, json) {
-			if (err) {
-				return console.error(err);
-			}
-			console.log(json);
-		});
-	})
-
 /******************************************************************************************************************************************
 ***********************************SUBMIT OBJECTIVE OPERATION (CHANGES STATUS OF OBJECTIVE)************************************************
 ******************************************************************************************************************************************/
@@ -367,6 +324,48 @@ var bsc = express()
 				console.log(doc);
 			}
 		});
+
+
+		/*sendgrid.send({
+			to: 'jay.rego.14@gmail.com',
+			from: 'objectives@bscims.com',
+			subject: 'Kindly Receive These Objectives',
+			text: "Isn't this awesome :D ",
+			//Termplate not yet working... get back to it <ASAP/>
+			//"%body%": "Coming soon",
+			/*"filters": {
+				"templates": {
+					"settings": {
+						"enabled": 1,
+						"template_id": "dc857727-f018-4267-8a45-b31919e2c247"
+					}
+				}
+			}
+
+		}, function (err, json) {
+			if (err) {
+				return console.error(err);
+			}
+			console.log(json);
+			console.log("Email sent!");
+		})*/
+		mandrill('/messages/send', {
+			message: {
+			to: [{email: 'jay.rego@gmail.com', name: 'Jose Rego'}],
+			from_email: 'objectives@bscims.sec',
+			subject: "You have objectives!",
+			text: "An employee has sent you objectives for review... View : 127.0.0.1:3002/login.html"
+			}
+		}, function (error, response) {
+			if (error) {
+				console.log(JSON.stringify(error));
+			}
+			else {
+				console.log(response);
+			}
+		});
+
+		
 	})
  
  
@@ -380,6 +379,26 @@ var bsc = express()
 				//console.log(cur);
 			}
 		})
+	})
+
+/******************************************************************************************************************************************
+***********************************SUBMIT OBJECTIVE OPERATION (CHANGES STATUS OF OBJECTIVE)************************************************
+******************************************************************************************************************************************/
+
+	.post("/createScoreCardRoute:/:id", function (req, res) {
+		var ID = req.params.id;
+		console.log(ID);
+		
+		//Updating status of sent objectives to distinguish them from unsent in order for Supervisor to have access to them
+		db.Objectives.findOne({ _id: mongojs.ObjectId(ID)}, function (err, doc) {		
+			if (err) {																															
+				console.log(err);																												
+			} 
+			else {
+				res.json(doc);
+				//console.log(doc);
+			}
+		});
 	})
 
 /******************************************************************************************************************************************

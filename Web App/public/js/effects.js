@@ -54,11 +54,6 @@ $(document).ready(function(){
 	$('#internalObjectivesTable2').hide();
 	$('#learningObjectivesTable2').hide();
 
-	$('#financeApprovedObjectivesTable').hide();
-	$('#customerApprovedObjectivesTable').hide();
-	$('#internalApprovedObjectivesTable').hide();
-	$('#learningApprovedObjectivesTable').hide();
-
 	//$('#confirmEmailDiv').hide();
 
 
@@ -235,45 +230,6 @@ $('#objPerspDropdownMenu2').change(function(){ //inspect the dropdown selection
 			$('#customerObjectivesTable').hide(500);
 			$('#internalObjectivesTable').hide(500);
 			$('#learningObjectivesTable').hide(500);
-		}
-	});
-
-	$('#approvedPerspectiveDropDownMenu').change(function() {
-		value = $(this).val();
-
-		if (value == 'financeSelect') {
-			$('#financeApprovedObjectivesTable').show(500);
-			$('#customerApprovedObjectivesTable').hide(500);
-			$('#internalApprovedObjectivesTable').hide(500);
-			$('#learningApprovedObjectivesTable').hide(500);
-		}
-
-		else if (value == 'customerSelect') {
-			$('#financeApprovedObjectivesTable').hide(500);
-			$('#customerApprovedObjectivesTable').show(500);
-			$('#internalApprovedObjectivesTable').hide(500);
-			$('#learningApprovedObjectivesTable').hide(500);
-		}
-
-		else if (value == 'internalSelect') {
-			$('#financeApprovedObjectivesTable').hide(500);
-			$('#customerApprovedObjectivesTable').hide(500);
-			$('#internalApprovedObjectivesTable').show(500);
-			$('#learningApprovedObjectivesTable').hide(500);
-		}
-
-		else if (value == 'learnSelect') {
-			$('#financeApprovedObjectivesTable').hide(500);
-			$('#customerApprovedObjectivesTable').hide(500);
-			$('#internalApprovedObjectivesTable').hide(500);
-			$('#learningApprovedObjectivesTable').show(500);
-		}
-
-		else if (value == 'default') {
-			$('#financeApprovedObjectivesTable').hide(500);
-			$('#customerApprovedObjectivesTable').hide(500);
-			$('#internalApprovedObjectivesTable').hide(500);
-			$('#learningApprovedObjectivesTable').hide(500);
 		}
 	});
 });
