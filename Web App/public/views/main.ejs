@@ -209,7 +209,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="emp in emps | orderBy: 'empName' |filter: search |limitTo:5">
+											<tr ng-repeat="emp in emps | orderBy: 'empName' |filter: search |limitTo:10">
 												<td><a data-keyboard="false" data-backdrop="static" 
 														href="#empObjModal" role="button" 
 				  									 	data-toggle="modal" ng-click="retrieveEmpObjs(emp.PFNum, emp.empName)">
@@ -350,7 +350,7 @@
 																		</div> <!--end performanceRatingDiv -->
 
 																		<button id="rejectFinanceObjButton" class="btn btn-danger pull-right" 
-																			ng-click="rejectFinanceObjective(specificEmpFinObjs._id)"> <span class="glyphicon glyphicon-remove-circle"></span>
+																			ng-click="rejectFinanceObjective()"> <span class="glyphicon glyphicon-remove-circle"></span>
 																			Reject Objective
 																		</button> <!-- end Submit Objective button-->
 																		
@@ -363,7 +363,8 @@
 																		
 																	</div> <!--end financeObjDiv-->
 
-																	<div class="alert alert-warning alert-block fade in" id="successObjAlertFinReject" ng-if="isRejected">
+																	<div class="alert alert-warning alert-block fade in" 
+																	id="successObjAlertFinReject" ng-if="isRejected">
 																		<button type="button" class="close" data-dismiss="alert">&times;</button>
 																		<h4>Objective Rejected!</h4>
 																		<p>Click the 'x' in the corner to close...</p>
@@ -2071,7 +2072,8 @@
 													</tr>
 
 													<tr>
-														<td class="hlk-drop" ng-model="scorecardHeight" rowspan={{scorecardHeight}} >BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
+														<!--td class="hlk-drop" ng-model="scorecardHeight" rowspan={{scorecardHeight}} >BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td-->
+														<td class="hlk-drop" ng-model="scorecardHeight" rowspan="20" >BALANCED SCORE CARD FOR SWAZILAND ELECTRICITY COMPANY</td>
 														<td class="hlk-suit">Perspective</td>
 														<td class="hlk-kurasaki">Key Performance Area       (KPA)</td>
 														<td class="hlk-kurasaki">Key Performance Indicator (KPI)</td>

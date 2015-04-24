@@ -13,7 +13,9 @@ var express = require('express') 											//lightweight server framerwork
    ,bodyParser = require('body-parser')  									//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')										//module for handling the application's favicon
    ,sendgrid = require('sendgrid')('bl1nk3r', 'MySendGridAcc0unt')	 		//sendgrid api_user && api_key
-   ,mandrill = require('node-mandrill')('mandrill_api_key');
+   ,mandrill = require('node-mandrill')('YxuIuXU9xHh78Wiruo0ZwQ')
+   ,ejs      = require('ejs')
+   ,flash    = require('connect-flash');
 
 //include access to the MongoDB driver for Node
 var mongojs = require("mongojs")
@@ -36,81 +38,94 @@ var bsc = express()
    .use(bodyParser.json())
    .use(bodyParser.text())
    .use(bodyParser.raw())
-   .use(session({ secret: 'qwertyasdfg'}))
+   .use(cookieParser())
 
-//server retrieval of login page
-.get('/login', function (req, res){
+   .use(session({
+       //key: 'express.sid',
+       secret: 'secret',
+       maxAge: new Date(Date.now() + 3600000),
+       //store: new MongoStore({ db: 'bscims', collection: 'sessions' })
+   }))
+
+	//server retrieval of login page
+	.get('/login', function (req, res){
    		var msg = {error: 'none'};
-	   	res.render('login', msg);
+
+   		if (req.session.loggdUser) {
+   			res.render('main');
+   		} else {
+   			res.render('login', msg);
+   		}
 	})
 
     .get('/', function (req, res){
-	   	res.render('main');
+    	if (!req.session.loggdUser) {
+   			res.redirect('/login');
+   		} else {
+   			res.render('main');
+   		}
 	})
 
     .post('/login', function (req, res){
-
-    	//var users = req.session;
    		var user = {
    			userName: req.body.username,
    			password: req.body.password,
    		};
+  
+   		if (req.body.username == '' || req.body.password == '') {
+   			res.render('login', {error: 'Please fill in all fields'});
+   		} else {
+	   		var formRoles = [];
+	   		var currRoles = [];
 
-   		var formRoles = [];
-   		var currRoles = [];
+	   		db.Employees.findOne(user, function (err, data) {
+	   			if (data) {
+	   				// create a formRoles array to hold roles chosen at login
+					if (req.body.empRole == 'on') {
+						formRoles.push('employee');
+					}
+					if (req.body.supervisorRole == 'on') {
+						formRoles.push('supervisor');
+					}
+					if (req.body.HRRole == 'on') {
+						formRoles.push('HR');
+					}
 
-   		db.Employees.findOne(user, function (err, data) {
-   			if (data) {
-   				// create a formRoles array to hold roles chosen at login
-				if (req.body.empRole == 'on') {
-					formRoles.push('employee');
-				}
-				if (req.body.supervisorRole == 'on') {
-					formRoles.push('supervisor');
-				}
-				if (req.body.HRRole == 'on') {
-					formRoles.push('HR');
-				}
-
-				// capture role errors : when no role was choose or when a role where the user is not allowed was choosen
-				if (formRoles.length == 0) {
-					res.render('login', {error: 'Choose atleast one role'});
-				} else if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') == -1)) {
-   					res.render('login', {error: 'You do not have access to emp role'});
-   				} else if ((formRoles.indexOf('supervisor')  !== -1) && (data.roles.indexOf('supervisor') == -1)) {
-   					res.render('login', {error: 'You do not have access to sup role'});
-   				} else	if ((formRoles.indexOf('HR')  !== -1) && (data.roles.indexOf('HR') == -1)) {
-   					res.render('login', {error: 'You do not have access to HR role'});
-   				} else {
-   					// create an array of roles that the user has choosen
-   					if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') !== -1)) {
-						currRoles.push('employee');
+					// capture role errors : when no role was choose or when a role where the user is not allowed was choosen
+					if (formRoles.length == 0) {
+						res.render('login', {error: 'Choose atleast one role!'});
+					} else if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') == -1)) {
+	   					res.render('login', {error: 'You do not have access to emp role'});
+	   				} else if ((formRoles.indexOf('supervisor')  !== -1) && (data.roles.indexOf('supervisor') == -1)) {
+	   					res.render('login', {error: 'You do not have access to sup role'});
+	   				} else	if ((formRoles.indexOf('HR')  !== -1) && (data.roles.indexOf('HR') == -1)) {
+	   					res.render('login', {error: 'You do not have access to HR role'});
+	   				} else {
+	   					// create an array of roles that the user has choosen
+	   					if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') !== -1)) {
+							currRoles.push('employee');
+		   				}
+		   				if ((formRoles.indexOf('supervisor') !== -1) && (data.roles.indexOf('supervisor') !== -1)) {
+		   					currRoles.push('supervisor');
+		   				}
+		   				if ((formRoles.indexOf('HR') !== -1) && (data.roles.indexOf('HR') !== -1)) {
+		   					currRoles.push('HR');
+		   				}
+		   				
+	   					req.session.loggdUser = {userName:data.userName,empName:data.empName,PFNum:data.PFNum,dbRoles:data.roles, currentRoles:currRoles};
+		   				res.redirect('/');
 	   				}
-	   				if ((formRoles.indexOf('supervisor') !== -1) && (data.roles.indexOf('supervisor') !== -1)) {
-	   					currRoles.push('supervisor');
-	   				}
-	   				if ((formRoles.indexOf('HR') !== -1) && (data.roles.indexOf('HR') !== -1)) {
-	   					currRoles.push('HR');
-	   				}
-
-	   				//req.session.userId = data.PFNum;
-   					req.session.loggdInUser = {userName:data.userName, empName:data.empName, PFNum:data.PFNum, dbRoles:data.roles, currentRoles:currRoles};
-	   				
-	   				res.redirect('/');
-
-	   				//console.log(req.session[req.session.userId]);
-   				}
-   			} else {
-   				var msg = {error: 'Incorrect credentials'};
-   				res.render('login', msg);
-   			}
-   		})
+	   			} else {
+	   				var msg = {error: 'Incorrect credentials, login again'};
+	   				res.render('login', msg);
+	   			}
+   			})
+		}
 	})
   
 	.get('*', function(req, res) {
-   		if (!req.session.loggdInUser) {
+   		if (!req.session.loggdUser) {
    			res.redirect('/login');
-   			console.log(req.host);
    		} else {
    			res.redirect('/');
    		}
@@ -127,17 +142,6 @@ var bsc = express()
 /**************************************************************************************************************************************
 ******************************SERVER OPERATIONS FOR FINANCE PERSPECTIVES OBJECTIVES****************************************************
 **************************************************************************************************************************************/
-    /*.get("/retrieveFinanceObjectives", function (req, res) {
-		db.Objectives.find(function (err, docs) {
-			if (err) {
-				console.log(err);
-			}
-			else {
-				res.json(docs);
-			} 
-		});
-	})*/
-
     .post("/getAllObjectives", function ( req, res) {
    		//console.log("Beginning of route");
 		db.Objectives.find({status: "unapproved"}, function (err, docs) {
@@ -218,14 +222,14 @@ var bsc = express()
 	})
 
 	.post("/getLoggedInEmp", function (req, res) {
-		res.send(req.session.loggdInUser);
+		res.send(req.session.loggdUser);
 		//console.log(req.session[req.session.userId]);
 	})
 
 	.post("/getEmpObjectives", function (req, res) {
 		var pfnum = Number(req.body.pfno);
 		console.log(pfnum);
-		db.Objectives.find({createdBy:pfnum},function (err, doc){
+		db.Objectives.find({PFNum: pfnum},function (err, doc){
 			if ( err || !doc) {
                 res.send("No objectives found");
             } else {
@@ -241,8 +245,8 @@ var bsc = express()
 		db.Objectives.insert(req.body, function (err, doc) {
 			//Update existing objectives and assert a 'status' field - set to unapproved
 			console.log("USER PF:");
-			console.log(req.session.loggdInUser.PFNum);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
+			console.log(req.session.loggdUser.PFNum);
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "finance", PFNum: req.session.loggdUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 					res.json(doc);
 					//console.log(doc);
@@ -272,7 +276,7 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "customer", PFNum: req.session.loggdUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
 				//console.log(doc);
@@ -302,7 +306,7 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "internal", PFNum: req.session.loggdUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
 				//console.log(doc);
@@ -332,7 +336,7 @@ var bsc = express()
 		//res.send("Success");
 		db.Objectives.insert(req.body, function (err, doc) {
 			//res.json(doc);
-			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn", PFNum: req.session.loggdInUser.PFNum}}, {multi: false}, 
+			db.Objectives.update({description: req.body.description}, {$set : {status: "unapproved", perspective: "learn", PFNum: req.session.loggdUser.PFNum}}, {multi: false}, 
 				function (err, doc) {
 				res.json(doc);
 				//console.log(doc);
@@ -393,7 +397,7 @@ var bsc = express()
 		})*/
 		mandrill('/messages/send', {
 			message: {
-			to: [{email: 'jay.rego@gmail.com', name: 'Jose Rego'}],
+			to: [{email: 'jay.rego.14@gmail.com', name: 'Mamba'}],
 			from_email: 'objectives@bscims.sec',
 			subject: "You have objectives!",
 			text: "An employee has sent you objectives for review... View : 127.0.0.1:3002/login.html"

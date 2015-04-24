@@ -10,7 +10,7 @@ var bsc = angular.module('BSCIMS', []);
 			this.getObjectives = function () {
 				return $http.post("/getAllObjectives");
 			}
-		}])
+		}]) 
 
 	//while this one does the same only for objectives that have been sent for processing or approval (with a status of  "sent_for_approval")
 	 	.service('pendingObjectives', ['$http', function ($http) {
@@ -51,6 +51,18 @@ var bsc = angular.module('BSCIMS', []);
 		this.getEmps = function() {
 			var deferred = $q.defer();
 			$http.post('/showAllEmps').success(function (res) {
+				deferred.resolve(res);
+				console.log(res);
+			}).error(function (res) {
+				deferred.reject(res);
+			});
+
+			return deferred.promise;	
+		}
+
+		this.getEmpsWithPending = function() {
+			var deferred = $q.defer();
+			$http.post('/showEmpsWithPending').success(function (res) {
 				deferred.resolve(res);
 				console.log(res);
 			}).error(function (res) {
@@ -382,7 +394,7 @@ var bsc = angular.module('BSCIMS', []);
    .controller('financePerspectiveController', function ($scope, $rootScope, $http) {
 		
 	//$scope.PF = $rootScope.PF;
-	console.log($rootScope.PF);
+	//console.log($rootScope.PF);
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
 						  { label: '>15% budget variance', value: 15 },
@@ -552,34 +564,34 @@ var bsc = angular.module('BSCIMS', []);
     .controller('customerPerspectiveController', function ($scope, $http) {
 		
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
-						  { label: '>15% budget variance', value: 15 },
-    				      { label: '>16% budget variance', value: 16 },
-  					      { label: '>17% budget variance', value: 17 },
-  					      { label: '>18% budget variance', value: 18 }
+						  { label: '>70% Sys malfunctions', value: 15 },
+    				      { label: '>80% Sys malfunctions', value: 15 },
+  					      { label: '>90% Sys malfunctions', value: 15 },
+  					      { label: '>95% Sys malfunctions', value: 15 },
+  					      { label: '>98% Sys malfunctions', value: 15 }
   					     ];
 
   	$scope.unsatOptions = [{ label: '-Select metric-', value: 0},
-				           { label: '>19% budget variance', value: 19 },
-    			           { label: '>20% budget variance', value: 20 },
-  				           { label: '>21% budget variance', value: 21 },
-  				           { label: '>22% budget variance', value: 22 }
+				           { label: '>80% Sys malfunctions', value: 15 },
+    			           { label: '>82% Sys malfunctions', value: 15 },
+  				           { label: '>83% Sys malfunctions', value: 15 }
   				          ];
 
   	$scope.targetOptions = [{ label: '-Select metric-', value: 0},
-						    { label: '9% budget variance', value: 9 },
-    				        { label: '10% budget variance', value: 10 },
-  					        { label: '11% budget variance', value: 11 }
+						    { label: '>89% Sys malfunctions', value: 15 },
+    				        { label: '>89% Sys malfunctions', value: 15 },
+  					        { label: '>89% Sys malfunctions', value: 15 }
   					       ];
 
   	$scope.exceedOptions = [{ label: '-Select metric-', value: 0},
-					        { label: '<5% budget variance', value: 5 },
-    				        { label: '<6% budget variance', value: 6 },
-  					        { label: '<7% budget variance', value: 7 }
+					        { label: '>94% Sys malfunctions', value: 15 },
+  					        { label: '>95% Sys malfunctions', value: 15 },
+  					        { label: '>96% Sys malfunctions ', value: 15 }
   					       ];
 
   	$scope.outstandOptions = [{ label: '-Select metric-', value: 0},
-						      { label: '0% budget variance', value: 00 },
-    				          { label: '1% budget variance', value: 16 }
+						      { label: '>98% Sys malfunctions', value: 15 },
+    				          { label: '>99% Sys malfunctions', value: 15 }
   					         ];
   	$scope.perspective = "customer",
   	$scope.status = "unapproved";
@@ -700,34 +712,27 @@ var bsc = angular.module('BSCIMS', []);
    .controller('learnPerspectiveController', function ($scope, $http) {
 
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
-						  { label: '>15% budget variance', value: 15 },
-    				      { label: '>16% budget variance', value: 16 },
-  					      { label: '>17% budget variance', value: 17 },
-  					      { label: '>18% budget variance', value: 18 }
+						  { label: 'Support submitted on 8th', value: 15 },
+    				      { label: 'Support submitted on 9th', value: 15 }
   					     ];
 
   	$scope.unsatOptions = [{ label: '-Select metric-', value: 0},
-				           { label: '>19% budget variance', value: 19 },
-    			           { label: '>20% budget variance', value: 20 },
-  				           { label: '>21% budget variance', value: 21 },
-  				           { label: '>22% budget variance', value: 22 }
+				           { label: 'Support submitted on 6th', value: 15 },
+				           { label: 'Support submitted on 7th', value: 15 }
   				          ];
 
   	$scope.targetOptions = [{ label: '-Select metric-', value: 0},
-						    { label: '9% budget variance', value: 9 },
-    				        { label: '10% budget variance', value: 10 },
-  					        { label: '11% budget variance', value: 11 }
+						    { label: 'Support submitted on 5th', value: 15 },
+						    { label: 'Support submitted on 4th', value: 15 }
   					       ];
 
   	$scope.exceedOptions = [{ label: '-Select metric-', value: 0},
-					        { label: '<5% budget variance', value: 5 },
-    				        { label: '<6% budget variance', value: 6 },
-  					        { label: '<7% budget variance', value: 7 }
-  					          ];
+					        { label: 'Support submitted on 3rd', value: 15 },
+						    { label: 'Support submitted on 2nd', value: 15 }
+  					       ];
 
   	$scope.outstandOptions = [{ label: '-Select metric-', value: 0},
-						      { label: '0% budget variance', value: 00 },
-    				          { label: '1% budget variance', value: 16 }
+						      { label: 'Support submitted on 1st', value: 15 }
   					         ];
   	$scope.perspective = "learn",
   	$scope.status = "unapproved";
@@ -849,35 +854,35 @@ var bsc = angular.module('BSCIMS', []);
    .controller('internalPerspectiveController', function ($scope, $http) {
 	
 	$scope.poorOptions = [{ label: '-Select metric-', value: 0},
-						  { label: '>15% budget variance', value: 15 },
-    				      { label: '>16% budget variance', value: 16 },
-  					      { label: '>17% budget variance', value: 17 },
-  					      { label: '>18% budget variance', value: 18 }
+						  { label: '60% participation', value: 15 },
+    				      { label: '58% participation', value: 15 },
+    				      { label: '56% participation', value: 15 }
   					     ];
 
   	$scope.unsatOptions = [{ label: '-Select metric-', value: 0},
-				           { label: '>19% budget variance', value: 19 },
-    			           { label: '>20% budget variance', value: 20 },
-  				           { label: '>21% budget variance', value: 21 },
-  				           { label: '>22% budget variance', value: 22 }
+				           { label: '60% participation', value: 15 },
+    				       { label: '58% participation', value: 15 },
+    				       { label: '56% participation', value: 15 }
   				          ];
 
   	$scope.targetOptions = [{ label: '-Select metric-', value: 0},
-						    { label: '9% budget variance', value: 9 },
-    				        { label: '10% budget variance', value: 10 },
-  					        { label: '11% budget variance', value: 11 }
+						    { label: '60% participation', value: 15 },
+    				        { label: '58% participation', value: 15 },
+    				        { label: '56% participation', value: 15 }
   					       ];
 
   	$scope.exceedOptions = [{ label: '-Select metric-', value: 0},
-					        { label: '<5% budget variance', value: 5 },
-    				        { label: '<6% budget variance', value: 6 },
-  					        { label: '<7% budget variance', value: 7 }
+					        { label: '60% participation', value: 15 },
+    				        { label: '58% participation', value: 15 },
+    				        { label: '56% participation', value: 15 }
   					       ];
 
   	$scope.outstandOptions = [{ label: '-Select metric-', value: 0},
-						      { label: '0% budget variance', value: 00 },
-    				          { label: '1% budget variance', value: 16 }
+						      { label: '60% participation', value: 15 },
+    				          { label: '58% participation', value: 15 },
+    				          { label: '56% participation', value: 15 }
   					         ];
+
   	$scope.perspective = "internal",
   	$scope.status = "unapproved";
   	$scope.hasIntKPAError = false;
@@ -1105,6 +1110,8 @@ var bsc = angular.module('BSCIMS', []);
 		.success(function (res) {
 			console.log(res);
 			$scope.scorecardHeight = res.length + 1;
+			console.log("Score card height is:")
+
 			console.log($scope.scorecardHeight);
 			$scope.appFinObj = [];
 			$scope.appCustObj = [];
@@ -1376,7 +1383,7 @@ var bsc = angular.module('BSCIMS', []);
    		}
    		console.log($scope.isRejected);
 
-   		$scope.rejectFinanceObjective = function(ID) {
+   		$scope.rejectFinanceObjective = function() {
    			$scope.isRejected = true;
    			console.log($scope.isRejected);
    		}
@@ -1447,7 +1454,7 @@ var bsc = angular.module('BSCIMS', []);
 
    		$scope.retrieveEmployees = function () {
    			$http.post('/getEmpsPendingObjs').success( function (response) {
-   				console.log(response);
+   				//console.log(response);
    				$scope.emps = response;
 
 
@@ -1465,7 +1472,7 @@ var bsc = angular.module('BSCIMS', []);
 			})
 		}
 
-		$scope.rejectFinanceObjective = function (id) {
+		/*$scope.rejectFinanceObjective = function (id) {
 			$http.post('/rejectFinanceObjective/' + id)
 			.success(function () {
 				$('#successObjAlertFinReject').show(500);
@@ -1473,7 +1480,7 @@ var bsc = angular.module('BSCIMS', []);
 			.error(function (err) {
 				console.log("Objective empty!!");
 			})
-		}
+		}*/
 
 		$scope.approveCustomerObjective = function (id, PFNum, custDescription, custDSO, custOneDef, custTwoDef, custThreeDef, custFourDef, custFiveDef) {
 			$scope.approveCustObj = {PF: PFNum, description: custDescription, DSO: custDSO, oneDef: custOneDef, twoDef: custTwoDef, threeDef: custThreeDef, fourDef: custFourDef, fiveDef: custFiveDef, perspective: "customer"}
@@ -1519,35 +1526,38 @@ var bsc = angular.module('BSCIMS', []);
 			console.log($scope.empAlias);
 			pendingObjectives.getPending()
 			.success(function (res) {
-				console.log(empPF);
-				;
+				console.log("Response is:::")
+				console.log(res);
 
 				//for( var i = 0; i< res.length)
 
 				console.log("Pending objectives are as follows:")
 				$scope.empObjArray = res;
+				console.log($scope.empObjArray);
+				console.log("PF is:::");
+				console.log(empPF);
 				for (var i = 0; i < $scope.empObjArray.length; i++){
-
-					if (empPF = $scope.empObjArray[i].PFNum) {
+					//console.log($scope.empObjArray[i].PFNum);
+					if (empPF == $scope.empObjArray[i].PFNum) {
 
 						if ($scope.empObjArray[i].perspective = "finance"){
 							$scope.specificEmpFinObjs = $scope.empObjArray[i];
-							console.log("So now :");
-							console.log($scope.specificEmpFinObjs.PFNum);
+							console.log("So now Fin :");
+							//console.log($scope.specificEmpFinObjs.empObjArray[i]);
 						}
 						else if ($scope.empObjArray[i].perspective = "customer"){
-							$scope.specificEmpFinObjs = $scope.empObjArray[i];
-							console.log("So now :");
-							console.log($scope.specificEmpEmpObjs.description);
+							$scope.specificEmpCustObjs = $scope.empObjArray[i];
+							console.log("So now Cust :");
+							console.log($scope.specificEmpCustObjs.description);
 						}
 						else if ($scope.empObjArray[i].perspective = "internal"){
-							$scope.specificEmpFinObjs = $scope.empObjArray[i];
-							console.log("So now :");
+							$scope.specificEmpIntObjs = $scope.empObjArray[i];
+							console.log("So now Int:");
 							console.log($scope.specificEmpIntObjs.description);
 						}
 						else if ($scope.empObjArray[i].perspective = "learning"){
-							$scope.specificEmpFinObjs = $scope.empObjArray[i];
-							console.log("So now :");
+							$scope.specificEmpLearnObjs = $scope.empObjArray[i];
+							console.log("So now Learn:");
 							console.log($scope.specificEmpLearnObjs.description);
 						}
 						else {

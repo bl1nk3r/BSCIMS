@@ -141,7 +141,8 @@ th, td {
 
 
 @media screen and (min-width: 768px) {
-  #scorecardModal .modal-dialog { width: 800px; height: 1000px;}
+  #scorecardModal .modal-dialog { width: 900px; height: 1000px;}
+  #createObjModal .modal-dialog { width: 600px; height: auto;}
 }
 
 /*SCORECARD TABLE STYLES (thanks to HULK!!!)*/
