@@ -12,8 +12,8 @@ var express = require('express') 											//lightweight server framerwork
    ,cookieParser = require('cookie-parser')									//module for parsing cookies
    ,bodyParser = require('body-parser')  									//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')										//module for handling the application's favicon
-   ,sendgrid = require('sendgrid')('bl1nk3r', 'MySendGridAcc0unt')	 		//sendgrid api_user && api_key
-   ,mandrill = require('node-mandrill')('YxuIuXU9xHh78Wiruo0ZwQ')
+   ,sendgrid = require('sendgrid')('bl1nk3r', 'SendGrid-api')	 		//sendgrid api_user && api_key
+   ,mandrill = require('node-mandrill')('Mandrill-api')
    ,ejs      = require('ejs')
    ,flash    = require('connect-flash');
 
