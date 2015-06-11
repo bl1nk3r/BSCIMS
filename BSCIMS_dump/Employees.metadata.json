@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "BSCIMS.Employees", "name" : "_id_" } ] }

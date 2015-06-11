@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "BSCIMS",
   "version": "0.0.1",
   "author": {
@@ -24,7 +24,7 @@
     "nodemon": "latest",
     "sendgrid": "^1.6.0",
     "serve-favicon": "latest",
-    "underscore": "latest"
+    "mongojs": "latest"
   },
   "scripts": {
     "start": "nodemon ./bin/www"

@@ -1822,7 +1822,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in pendingObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id)"	ng-model="grabLearnObj">
+								  								<td>
 								  									{{objective.pendingDescription | uppercase}}
 								  								</td>
 								  								<td>{{objective.pendingDSO}}</td>
@@ -2035,7 +2035,7 @@
 
 					  							<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="scorecardCreate()" role="button" class="btn btn-success" data-toggle="modal">
 								    				<span class="glyphicon glyphicon-check"></span> 
-								    				Compile Scorecard 
+								    				Compile
 								    			</a>
 					  											  									
 					  							<button class="btn btn-default" type="button" data-dismiss="modal"> 
@@ -2210,7 +2210,7 @@
 
 				<div class="row">
 					<div class="col-sm-6">
-						<h6>Copyright &copy; 2015 Rego (140226) & Mzwa (142765) </h6>
+						<h6>Copyright &copy; MEAN-PMS </h6>
 					</div> <!-- end col-sm-6-->
 				</div> <!-- end row -->
 
