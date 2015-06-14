@@ -496,7 +496,7 @@ var bsc = angular.module('BSCIMS', []);
 			else if ($scope.financePerspectiveController.metricTwoDef == null) {
 
 				$scope.hasCreateObjErrors = true,
-				$scope.createObjectiveErrorMsgscreateObjectiveErrorMsgs.push(unsatOptionsDefError);
+				$scope.createObjectiveErrorMsgs.push(unsatOptionsDefError);
 			}
 			else if ($scope.financePerspectiveController.metricThreeDef == null) {
 
@@ -885,14 +885,15 @@ var bsc = angular.module('BSCIMS', []);
 
   	$scope.perspective = "internal",
   	$scope.status = "unapproved";
-  	$scope.hasIntKPAError = false;
-	$scope.hasIntKPIError = false;
-	$scope.intObjError = [];
 
 		$scope.submitInternalObjective = function() {
 
 			$scope.createObjectiveErrorMsgs = [],
+			$scope.intObjError = [],
+			$scope.hasIntKPAError = false,
+			$scope.hasIntKPIError = false,
 			$scope.hasCreateObjErrors = false;
+
 			var objDescriptionError = "The 'Key Performance Area' field is mandatory!",
 				objDSOError = "Please define the Key Performance Indicator!",
 				poorOptionsSelectError = "Select a minimum metric above!",
@@ -1032,6 +1033,8 @@ var bsc = angular.module('BSCIMS', []);
 			});		
 	}
 
+	//Checkbox invokes 'captureObj' function that pushes content into 'pendingObj' array [needs to toggle]
+	$scope.uncaptureObj = !$scope.captureObj;
 	$scope.captureObj = function(objID, description, DSO) {
 		//console.log(obj);
 		$scope.objIDArray.push(objID);
@@ -1043,7 +1046,6 @@ var bsc = angular.module('BSCIMS', []);
 		var index;
 
 		for (index = 0; index < $scope.objIDArray.length; index++){
-			//console.log($scope.objIDArray[index]);
 			console.log($scope.pendingObj[index].pendingDescription);
 		}
 	}
@@ -1131,6 +1133,9 @@ var bsc = angular.module('BSCIMS', []);
 				else if (res[i].perspective == "learn") {
 					$scope.appLearnObj.push(res[i]);
 				}
+
+				console.log("Finance items :")
+				console.log($scope.appFinObj[i]);
 			}
 
 		})

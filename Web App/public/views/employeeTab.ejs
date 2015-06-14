@@ -810,7 +810,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in subIntObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.description)"	ng-model="grabInternalObj">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabInternalObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -828,7 +828,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in subLearnObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.description)"	ng-model="grabLearnObj">
+								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabLearnObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -941,8 +941,8 @@
 							  									
 							  						<tbody>
 							  							<tr ng-repeat="appFin in appFinObj | orderBy: 'description' | filter: search | limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureFinApp(appFin._id, appFin.description, appFin.DSO, appFin.metricOneDef, appFin.metricTwoDef, appFin.metricThreeDef, 
-							  								appFin.metricFourDef, appFin.metricFiveDef)" ng-model="grabAppFin">
+							  								<td><!--input type="checkbox" ng-click="captureFinApp(appFin._id, appFin.description, appFin.DSO, appFin.metricOneDef, appFin.metricTwoDef, appFin.metricThreeDef, 
+							  								appFin.metricFourDef, appFin.metricFiveDef)" ng-model="grabAppFin"-->
 							  									{{appFin.description | uppercase}}
 							  								</td>
 							  								<td>{{appFin.DSO}}</td>
@@ -970,8 +970,8 @@
 
 							  						<tbody>
 							  							<tr ng-repeat="appCust in appCustObj | orderBy: 'description' | filter: search | limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureCustApp(appCust._id, appCust.description, appCust.DSO, appCust.metricOneDef, appCust.metricTwoDef, appCust.metricThreeDef, 
-							  								appCust.metricFourDef, appCust.metricFiveDef)" ng-model="grabAppCust">
+							  								<td><!--input type="checkbox" ng-click="captureCustApp(appCust._id, appCust.description, appCust.DSO, appCust.metricOneDef, appCust.metricTwoDef, appCust.metricThreeDef, 
+							  								appCust.metricFourDef, appCust.metricFiveDef)" ng-model="grabAppCust"-->
 							  									{{appCust.description | uppercase}}
 							  								</td>
 							  								<td>{{appCust.DSO}}</td>
@@ -999,8 +999,8 @@
 
 							  						<tbody>
 							  							<tr ng-repeat="appInt in appIntObj | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureIntApp(appInt._id, appInt.description, appInt.DSO, appInt.metricOneDef, appInt.metricTwoDef, appInt.metricThreeDef, 
-							  								appInt.metricFourDef, appInt.metricFiveDef)" ng-model="grabAppInt">
+							  								<td><!--input type="checkbox" ng-click="captureIntApp(appInt._id, appInt.description, appInt.DSO, appInt.metricOneDef, appInt.metricTwoDef, appInt.metricThreeDef, 
+							  								appInt.metricFourDef, appInt.metricFiveDef)" ng-model="grabAppInt"-->
 							  									{{appInt.description | uppercase}}
 							  								</td>
 							  								<td>{{appInt.DSO}}</td>
@@ -1028,8 +1028,8 @@
 
 							  						<tbody>
 							  							<tr ng-repeat="appLearn in appLearnObj | orderBy: 'description' |filter: search |limitTo:10">
-							  								<td><input type="checkbox" ng-click="captureLearnApp(appLearn._id, appLearn.description, appLearn.DSO, appLearn.metricOneDef, appLearn.metricTwoDef, appLearn.metricThreeDef, 
-							  								appLearn.metricFourDef, appLearn.metricFiveDef)" ng-model="grabAppLearn">
+							  								<td><!--input type="checkbox" ng-click="captureLearnApp(appLearn._id, appLearn.description, appLearn.DSO, appLearn.metricOneDef, appLearn.metricTwoDef, appLearn.metricThreeDef, 
+							  								appLearn.metricFourDef, appLearn.metricFiveDef)" ng-model="grabAppLearn"-->
 							  									{{appLearn.description | uppercase}}
 							  								</td>
 							  								<td>{{appLearn.DSO}}</td>
