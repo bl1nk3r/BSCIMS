@@ -1034,7 +1034,7 @@ var bsc = angular.module('BSCIMS', []);
 	}
 
 	//Checkbox invokes 'captureObj' function that pushes content into 'pendingObj' array [needs to toggle]
-	$scope.uncaptureObj = !$scope.captureObj;
+	//$scope.uncaptureObj = !$scope.captureObj;
 	$scope.captureObj = function(objID, description, DSO) {
 		//console.log(obj);
 		$scope.objIDArray.push(objID);
@@ -1133,18 +1133,19 @@ var bsc = angular.module('BSCIMS', []);
 				else if (res[i].perspective == "learn") {
 					$scope.appLearnObj.push(res[i]);
 				}
-
-				console.log("Finance items :")
-				console.log($scope.appFinObj[i]);
 			}
-
+			console.log("Finance items :")
+		 	console.log($scope.appFinObj);
+		 	for (var k =0; k<$scope.appFinObj.length; k++) {
+		 		console.log($scope.appFinObj[k]._id);
+		 	}
 		})
 		.error(function () {
 			console.log('There is an error with compile socrecard! (BUG FOUND)');
 		});		
 	}
 
-	$scope.captureFinApp = function(objID, finDes, finDSO, finOneDef, finTwoDef, finThreeDef, finFourDef, finFiveDef) {
+	/*$scope.captureFinApp = function(objID, finDes, finDSO, finOneDef, finTwoDef, finThreeDef, finFourDef, finFiveDef) {
 		//console.log(obj);
 		$scope.appFinIDArray.push(objID);
 		$scope.appFinObjective.push({id: objID, finDes: finDes, finDSO: finDSO, finOneDef: finOneDef, finTwoDef: finTwoDef, finThreeDef: finThreeDef, finFourDef: finFourDef, finFiveDef: finFiveDef, perspective: "Financial"});
@@ -1216,11 +1217,11 @@ var bsc = angular.module('BSCIMS', []);
 		//console.log($scope.appLearnObj.length);
 		$scope.learnRowSpan = $scope.appLearnIDArray.length;
 
-	}
+	}*/
 
 	$scope.scorecardCreate = function() {
 
-		for (var index = 0; index < $scope.appFinIDArray.length; index++){
+		/*for (var index = 0; index < $scope.appFinIDArray.length; index++){
 			console.log($scope.appFinObjective);
 			$http.post("/createScoreCardRoute:/" + $scope.appFinIDArray[index] , $scope.compileController)
 			.success(function (response) {
@@ -1232,12 +1233,26 @@ var bsc = angular.module('BSCIMS', []);
 			.error(function (response) {
 				console.log("Error");
 			})
+		}*/
+
+		for (var index = 0; index < $scope.appFinObj.length; index++){
+			console.log($scope.appFinObj);
+			$http.post("/createScoreCardRoute:/" + $scope.appFinObj[index]._id , $scope.compileController)
+			.success(function (response) {
+				$scope.finRowSpan = $scope.appFinObj.length;
+				//console.log($scope.finRowSpan);
+				$scope.finObjs = response;
+				//console.log($scope.finObjs);
+			})
+			.error(function (response) {
+				console.log("Error with Fin Obj for SC_create");
+			})
 		}
 
-		$scope.finRowSpan = $scope.appFinIDArray.length;
+		$scope.finRowSpan = $scope.appFinObj.length;
 		console.log($scope.finRowSpan);
 
-		for (var index = 0; index < $scope.appCustIDArray.length; index++){
+		/*for (var index = 0; index < $scope.appCustIDArray.length; index++){
 			console.log($scope.appCustObjective);
 			$http.post("/createScoreCardRoute:/" + $scope.appCustIDArray[index] , $scope.compileController)
 			.success(function (response) {
@@ -1249,12 +1264,26 @@ var bsc = angular.module('BSCIMS', []);
 			.error(function (response) {
 				console.log("Error");
 			})
+		}*/
+
+		for (var index = 0; index < $scope.appCustObj.length; index++){
+			console.log($scope.appCustObj);
+			$http.post("/createScoreCardRoute:/" + $scope.appCustObj[index]._id , $scope.compileController)
+			.success(function (response) {
+				$scope.custRowSpan = $scope.appCustObj.length;
+				//console.log(response);
+				console.log($scope.custRowSpan);
+				$scope.custObjs = response;
+			})
+			.error(function (response) {
+				console.log("Error with Cust Obj for SC_create");
+			})
 		}
 
-		$scope.custRowSpan = $scope.appCustIDArray.length;
+		$scope.custRowSpan = $scope.appCustObj.length;
 		console.log($scope.custRowSpan);
 
-		for (var index = 0; index < $scope.appIntIDArray.length; index++){
+		/*for (var index = 0; index < $scope.appIntIDArray.length; index++){
 			console.log($scope.appIntObjective);
 			$http.post("/createScoreCardRoute:/" + $scope.appIntIDArray[index] , $scope.compileController)
 			.success(function (response) {
@@ -1266,12 +1295,26 @@ var bsc = angular.module('BSCIMS', []);
 			.error(function (response) {
 				console.log("Error");
 			})
+		}*/
+
+		for (var index = 0; index < $scope.appIntObj.length; index++){
+			console.log($scope.appIntObj);
+			$http.post("/createScoreCardRoute:/" + $scope.appIntObj[index]._id , $scope.compileController)
+			.success(function (response) {
+				$scope.intRowSpan = $scope.appIntObj.length;
+				//console.log(response);
+				console.log($scope.intRowSpan);
+				$scope.intObjs = response;
+			})
+			.error(function (response) {
+				console.log("Error with Int Obj for SC_create");
+			})
 		}
  
- 		$scope.intRowSpan = $scope.appIntIDArray.length;
+ 		$scope.intRowSpan = $scope.appIntObj.length;
 		console.log($scope.intRowSpan);
 
-		for (var index = 0; index < $scope.appLearnIDArray.length; index++){
+		/*for (var index = 0; index < $scope.appLearnIDArray.length; index++){
 			console.log($scope.appLearnObjective);
 			$http.post("/createScoreCardRoute:/" + $scope.appLearnIDArray[index] , $scope.compileController)
 			.success(function (response) {
@@ -1283,12 +1326,26 @@ var bsc = angular.module('BSCIMS', []);
 			.error(function (response) {
 				console.log("Error");
 			})
+		}*/
+		
+		for (var index = 0; index < $scope.appLearnObj.length; index++){
+			console.log($scope.appLearnObj);
+			$http.post("/createScoreCardRoute:/" + $scope.appLearnObj[index]._id , $scope.compileController)
+			.success(function (response) {
+				$scope.learnRowSpan = $scope.appLearnObj.length;
+				//console.log(response);
+				console.log($scope.learnRowSpan);
+				$scope.learnObjs = response;
+			})
+			.error(function (response) {
+				console.log("Error with Learn Obj for SC_create");
+			})
 		}
 
-		$scope.learnRowSpan = $scope.appLearnIDArray.length;
+		$scope.learnRowSpan = $scope.appLearnObj.length;
 		console.log($scope.learnRowSpan);
 
-		if ($scope.finRowSpan == 0) {
+		/*if ($scope.finRowSpan == 0) {
 			$scope.hasFinSCErrors = true;
 		}
 		else if ($scope.finRowSpan > 0) {
@@ -1314,13 +1371,12 @@ var bsc = angular.module('BSCIMS', []);
 		}
 		else if ($scope.learnRowSpan > 0) {
 			$scope.hasLearnSCErrors = false;
-		}
+		}*/
 
+		//Creates the Scorecard if (and only if) there are (approved) objectives to fill into the table
 		if ($scope.finRowSpan > 0 && $scope.custRowSpan > 0 && $scope.intRowSpan > 0 && $scope.learnRowSpan > 0) {
 			$scope.scorecardReady = true;
 		}
-		
-
 	}
 }])
 
