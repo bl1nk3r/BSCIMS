@@ -774,7 +774,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in subFinObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabFinanceObj">
+								  								<td><input type="checkbox" ng-click="captureFinObj(objective._id, objective.description, objective.DSO)"	ng-model="grabFinanceObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -792,7 +792,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in subCustObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabCustomerObj">
+								  								<td><input type="checkbox" ng-click="captureCustObj(objective._id, objective.description, objective.DSO)"	ng-model="grabCustomerObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -810,7 +810,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in subIntObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabInternalObj">
+								  								<td><input type="checkbox" ng-click="captureIntObj(objective._id, objective.description, objective.DSO)"	ng-model="grabInternalObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -828,7 +828,7 @@
 								  						</thead>
 								  						<tbody>
 								  							<tr ng-repeat="objective in subLearnObj | orderBy: 'description' |filter: search |limitTo:10">
-								  								<td><input type="checkbox" ng-click="captureObj(objective._id, objective.description, objective.DSO)"	ng-model="grabLearnObj">
+								  								<td><input type="checkbox" ng-click="captureLearnObj(objective._id, objective.description, objective.DSO)"	ng-model="grabLearnObj">
 								  									{{objective.description | uppercase}}
 								  								</td>
 								  								<td>{{objective.DSO}}</td>
@@ -897,7 +897,8 @@
 					  				</div> <!-- end submitObjModal-dialog-->
 				  				</div> <!-- end submitObjModal-->
 
-				    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" ng-click="retrieveApproved()" role="button" 
+				    			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" 
+				    			ng-click="retrieveApproved()" role="button" 
 				    				class="btn btn-default" data-toggle="modal">
 				    				<span class="glyphicon glyphicon-book"></span> 
 				    				Compile Scorecard 
@@ -918,7 +919,7 @@
 				  							<div id="compileSCModalBody" class="modal-body" >
 
 						  						<h4> Select Approved Objectives...</h4>
-						  						<h6> (by checking)  </h6>
+						  						
 						  						<form id="searchObj">
 													<input type="text" class="form-control pull-right" placeholder="Search objectives..." 
 													id="searchInput" ng-model="search.$">
@@ -1058,7 +1059,8 @@
 						        					</span>
 					   		 	 	 			</div> <!--end danger alert -->
 
-					  							<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="scorecardCreate()" role="button" class="btn btn-success" data-toggle="modal">
+					  							<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="scorecardCreate()" role="button" class="btn btn-success" 
+					  							data-toggle="modal">
 								    				<span class="glyphicon glyphicon-check"></span> 
 								    				Compile
 								    			</a>
@@ -1114,7 +1116,7 @@
 													<tr></tr>
 
 													<tr ng-repeat="appFin in appFinObj">
-														<td class="hlk-nl5m">{{appFin.perspective}}</td>
+														<td class="hlk-nl5m" ng-model="sc_persp">{{appFin.perspective}}</td>
 														<td class="hlk-me" >{{appFin.description}} </td>
 														<td class="hlk-me" >{{appFin.DSO}} </td>
 														<!--td class="hlk-suit" ng-model="finRowSpan" rowspan={{finRowSpan}}>10%</td>
@@ -1193,7 +1195,7 @@
 					  								Print Scorecard
 					  							</button>
 					  											  									
-					  							<button class="btn btn-default" type="button" data-dismiss="modal"> 
+					  							<button class="btn btn-default" type="button" data-dismiss="modal" ng-click="initScorecard()"> 
 					  								<span class="glyphicon glyphicon-remove"></span> 
 					  								Close
 					  							</button>		

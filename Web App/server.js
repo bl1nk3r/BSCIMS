@@ -12,7 +12,7 @@ var express = require('express') 											//lightweight server framerwork
    ,cookieParser = require('cookie-parser')									//module for parsing cookies
    ,bodyParser = require('body-parser')  									//middleware for parsing strings to JSON objects
    ,favicon = require('serve-favicon')										//module for handling the application's favicon
-   ,sendgrid = require('sendgrid')('bl1nk3r', 'SendGrid-api')	 		//sendgrid api_user && api_key
+   ,sendgrid = require('sendgrid')('bl1nk3r', 'SendGrid-api')	 		    //sendgrid api_user && api_key
    ,mandrill = require('node-mandrill')('Mandrill-api')
    ,ejs      = require('ejs')
    ,flash    = require('connect-flash');
@@ -24,7 +24,7 @@ var mongojs = require("mongojs")
 //use the default port for Mongo server/client connections			
     ,port = "27017"					
 //init BSCIMS (database) and Objectives (collection)
-    ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Document","Employees"]);
+    ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Document","Employees", "Scorecard"]);
 
 //instantiate the server application 
 var bsc = express()
@@ -206,7 +206,6 @@ var bsc = express()
                 res.json(doc);
             }
 		});
-		//console.log("No BUG_4");
 	})
 
 	.post("/getSecEmployees", function (req, res) {
@@ -218,7 +217,6 @@ var bsc = express()
                 res.send(doc);
             }
 		});
-		//console.log("No BUG_5");
 	})
 
 	.post("/getLoggedInEmp", function (req, res) {
@@ -237,7 +235,6 @@ var bsc = express()
                 //console.log(doc);
             }
 		});
-		//console.log("No BUG_7");
 	})
 
     .post("/financePerspectiveController", function (req, res) {
@@ -433,7 +430,7 @@ var bsc = express()
 
 	.post("/createScoreCardRoute:/:id", function (req, res) {
 		var ID = req.params.id;
-		console.log(ID);
+		//console.log(req.body);
 		
 		//Updating status of sent objectives to distinguish them from unsent in order for Supervisor to have access to them
 		db.Objectives.findOne({ _id: mongojs.ObjectId(ID)}, function (err, doc) {		
@@ -445,6 +442,50 @@ var bsc = express()
 				//console.log(doc);
 			}
 		});
+
+		/*db.Scorecard.insert(req.params.ID, function (err, doc) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(doc);
+			}
+		});*/
+	})
+
+/******************************************************************************************************************************************
+***********************************INITIALIZE SCORECARD OPERATION (ON "CLOSE" BUTTON CLICK ************************************************
+******************************************************************************************************************************************/
+
+	.post("/initScorecardRoute:/", function (req, res) {
+		//var ID = req.params.id;
+		//var SC = req.body;
+		//console.log(ID);
+		var ID =req.body;
+		//console.log(ID);
+		
+		for (var i = 0; i<ID.length; i++){
+			db.Objectives.findOne({ _id: mongojs.ObjectId(ID[i]._id)}, function (err, doc) {		
+				if (err) {																															
+					console.log(err);																												
+				} 
+				else {
+					//res.json(doc);
+					console.log(doc);
+					db.Scorecard.insert({"Objectives_ID": doc._id, "Createdby:": doc.PFNum, "DateCreated": Date()}, function (err, doc) {
+						if (err) {
+
+							console.log(err);
+						}
+						else {
+							//res.json(doc);
+							console.log("here:");
+							console.log(doc);
+						}
+					});
+				}
+			});
+		}
 	})
 
 /******************************************************************************************************************************************

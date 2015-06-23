@@ -999,10 +999,11 @@ var bsc = angular.module('BSCIMS', []);
 *****************************************************SUBMIT OBJECTIVE CONTROLLER*************************************************************
 ************************************************************************************************************************************************/
    .controller('submitObjController', ['allObjectives', '$scope','$rootScope', '$http', function (allObjectives,$scope, $rootScope, $http) {
-
+   	$scope.index = 0;
 	$scope.objIDArray = [];
 	$scope.pendingObj = [];
 	$scope.hasSendObjErrors = false;
+	$scope.capChecked = true;
 	$scope.sendObjErrorMsg = "Cannot send empty objectives - make sure you select from above!"
 
 	$scope.retrieveObjectives = function () {
@@ -1034,20 +1035,209 @@ var bsc = angular.module('BSCIMS', []);
 	}
 
 	//Checkbox invokes 'captureObj' function that pushes content into 'pendingObj' array [needs to toggle]
-	//$scope.uncaptureObj = !$scope.captureObj;
-	$scope.captureObj = function(objID, description, DSO) {
-		//console.log(obj);
-		$scope.objIDArray.push(objID);
-		$scope.pendingObj.push({pendingID: objID, pendingDescription: description, pendingDSO: DSO});
+	$scope.captureFinObj = function(objID, description, DSO) {
+		$scope.capChecked = !$scope.capChecked;	
+		console.log($scope.capChecked);	
+		/*$scope.objIDArray.push(objID);
+		$scope.pointer = {objID, description, DSO};
+		$scope.pendingObj.push({pendingID: $scope.pointer.objID, pendingDescription: $scope.pointer.description, pendingDSO: $scope.pointer.DSO});
 	
-		//console.log("Content of array");
-		console.log("Pending Objectives:");
-		//console.log(objID);
-		var index;
+		if ( $scope.capChecked == false) {
+			//var index = $scope.pendingObj.indexOf($scope.pointer);
 
-		for (index = 0; index < $scope.objIDArray.length; index++){
-			console.log($scope.pendingObj[index].pendingDescription);
+			for (var index = 0; index < $scope.pendingObj.length; index++){
+				if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+					console.log("The index is Below")
+					console.log(index);
+				}
+				else {
+					console.log("Error caught!");
+				}
+				$scope.index = index;
+			}
+
+			$scope.pendingObj.splice(index, 1);
+			console.log("After unchecking we get the index: ")
+			console.log(index);
 		}
+		else {
+			var index = $scope.pendingObj.indexOf($scope.pointer);
+			console.log("capChecked is true");
+			console.log(index);
+		}*/
+
+		/*var array = ["one", "two", "three", "four"];
+			console.log(array);
+			array.splice(2, 2, "this", "was", "spliced");
+			console.log("The spliced array is :")
+			console.log(array);
+
+		for (var index = 0; index < $scope.objIDArray.length; index++){
+			if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+				console.log("The index is Below")
+				console.log(index);
+			}
+			else {
+				console.log("Error caught!");
+			}
+		}
+			*/
+
+		/*console.log("Pending Objectives before splice:")
+		console.log($scope.pendingObj.pendingID);*/
+	}
+	$scope.captureCustObj = function(objID, description, DSO) {
+		$scope.capChecked = !$scope.capChecked;	
+		console.log($scope.capChecked);	
+		/*$scope.objIDArray.push(objID);
+		$scope.pointer = {objID, description, DSO};
+		$scope.pendingObj.push({pendingID: $scope.pointer.objID, pendingDescription: $scope.pointer.description, pendingDSO: $scope.pointer.DSO});
+	
+		if ( $scope.capChecked == false) {
+			//var index = $scope.pendingObj.indexOf($scope.pointer);
+
+			for (var index = 0; index < $scope.pendingObj.length; index++){
+				if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+					console.log("The index is Below")
+					console.log(index);
+				}
+				else {
+					console.log("Error caught!");
+				}
+				$scope.index = index;
+			}
+
+			$scope.pendingObj.splice(index, 1);
+			console.log("After unchecking we get the index: ")
+			console.log(index);
+		}
+		else {
+			var index = $scope.pendingObj.indexOf($scope.pointer);
+			console.log("capChecked is true");
+			console.log(index);
+		}*/
+
+		/*var array = ["one", "two", "three", "four"];
+			console.log(array);
+			array.splice(2, 2, "this", "was", "spliced");
+			console.log("The spliced array is :")
+			console.log(array);
+
+		for (var index = 0; index < $scope.objIDArray.length; index++){
+			if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+				console.log("The index is Below")
+				console.log(index);
+			}
+			else {
+				console.log("Error caught!");
+			}
+		}
+			*/
+
+		/*console.log("Pending Objectives before splice:")
+		console.log($scope.pendingObj.pendingID);*/
+	}
+	$scope.captureIntObj = function(objID, description, DSO) {
+		$scope.capChecked = !$scope.capChecked;	
+		console.log($scope.capChecked);	
+		/*$scope.objIDArray.push(objID);
+		$scope.pointer = {objID, description, DSO};
+		$scope.pendingObj.push({pendingID: $scope.pointer.objID, pendingDescription: $scope.pointer.description, pendingDSO: $scope.pointer.DSO});
+	
+		if ( $scope.capChecked == false) {
+			//var index = $scope.pendingObj.indexOf($scope.pointer);
+
+			for (var index = 0; index < $scope.pendingObj.length; index++){
+				if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+					console.log("The index is Below")
+					console.log(index);
+				}
+				else {
+					console.log("Error caught!");
+				}
+				$scope.index = index;
+			}
+
+			$scope.pendingObj.splice(index, 1);
+			console.log("After unchecking we get the index: ")
+			console.log(index);
+		}
+		else {
+			var index = $scope.pendingObj.indexOf($scope.pointer);
+			console.log("capChecked is true");
+			console.log(index);
+		}*/
+
+		/*var array = ["one", "two", "three", "four"];
+			console.log(array);
+			array.splice(2, 2, "this", "was", "spliced");
+			console.log("The spliced array is :")
+			console.log(array);
+
+		for (var index = 0; index < $scope.objIDArray.length; index++){
+			if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+				console.log("The index is Below")
+				console.log(index);
+			}
+			else {
+				console.log("Error caught!");
+			}
+		}
+			*/
+
+		/*console.log("Pending Objectives before splice:")
+		console.log($scope.pendingObj.pendingID);*/
+	}
+	$scope.captureLearnObj = function(objID, description, DSO) {
+		$scope.capChecked = !$scope.capChecked;	
+		console.log($scope.capChecked);	
+		/*$scope.objIDArray.push(objID);
+		$scope.pointer = {objID, description, DSO};
+		$scope.pendingObj.push({pendingID: $scope.pointer.objID, pendingDescription: $scope.pointer.description, pendingDSO: $scope.pointer.DSO});
+	
+		if ( $scope.capChecked == false) {
+			//var index = $scope.pendingObj.indexOf($scope.pointer);
+
+			for (var index = 0; index < $scope.pendingObj.length; index++){
+				if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+					console.log("The index is Below")
+					console.log(index);
+				}
+				else {
+					console.log("Error caught!");
+				}
+				$scope.index = index;
+			}
+
+			$scope.pendingObj.splice(index, 1);
+			console.log("After unchecking we get the index: ")
+			console.log(index);
+		}
+		else {
+			var index = $scope.pendingObj.indexOf($scope.pointer);
+			console.log("capChecked is true");
+			console.log(index);
+		}*/
+
+		/*var array = ["one", "two", "three", "four"];
+			console.log(array);
+			array.splice(2, 2, "this", "was", "spliced");
+			console.log("The spliced array is :")
+			console.log(array);
+
+		for (var index = 0; index < $scope.objIDArray.length; index++){
+			if ($scope.pointer.objID == $scope.pendingObj[index].pendingID) {
+				console.log("The index is Below")
+				console.log(index);
+			}
+			else {
+				console.log("Error caught!");
+			}
+		}
+			*/
+
+		/*console.log("Pending Objectives before splice:")
+		console.log($scope.pendingObj.pendingID);*/
 	}
 	
 	var IDs = $scope.objIDArray;
@@ -1377,6 +1567,28 @@ var bsc = angular.module('BSCIMS', []);
 		if ($scope.finRowSpan > 0 && $scope.custRowSpan > 0 && $scope.intRowSpan > 0 && $scope.learnRowSpan > 0) {
 			$scope.scorecardReady = true;
 		}
+	}
+
+	$scope.initScorecard = function() {
+		approvedObjectives.getApproved()
+		.success(function (res) {
+
+			console.log("initScorecard gives:")
+			//for(var i = 0; i<res.length; i++) {
+				//console.log(res[i]._id);
+				$http.post("/initScorecardRoute:/", res)
+				.success(function (res) {
+					console.log("initScorecard posted successfully!")
+					//console.log(res[i]._id);
+				})
+				.error(function (res) {
+					console.log(res);
+				});
+			//}
+		})
+		.error (function () {
+			console.log("initScorecard is throwing errors!!!");
+		});
 	}
 }])
 
