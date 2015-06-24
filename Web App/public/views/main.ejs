@@ -161,7 +161,7 @@
                          		<span class = "glyphicon glyphicon-user"></span> 
                          		Employee
                          	</a>
-                         </li>
+                        </li>
                        	<li ng-if="isSup">
                        		<a href="#supervisorTab" data-toggle="tab" > 
                        			<span class = "glyphicon glyphicon-eye-open"></span> 
@@ -172,6 +172,12 @@
                         	<a href="#HRTab" data-toggle="tab" ng-click="getDivisions()"> 
 	                        	<span class = "glyphicon glyphicon-globe"></span> 
 	                        	Human Resources
+	                        </a>
+                        </li>
+                        <li ng-if="isAdmin">
+                        	<a href="#adminTab" data-toggle="tab" ng-click="getDivisions()"> 
+	                        	<span class = "glyphicon glyphicon-briefcase"></span> 
+	                        	Admininstrator
 	                        </a>
                         </li>                     
                     </ul>
@@ -189,6 +195,9 @@
 
                     	<!-- Employee Tab content-->
                         <% include employeeTab %>
+
+                        <!-- Administrator Tab content-->
+                        <% include adminTab %>
                         
                     </div> <!-- end tab content  -->
                     

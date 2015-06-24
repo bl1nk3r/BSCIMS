@@ -90,8 +90,11 @@ var bsc = express()
 					if (req.body.HRRole == 'on') {
 						formRoles.push('HR');
 					}
+					if (req.body.adminRole == 'on') {
+						formRoles.push('admin');
+					}
 
-					// capture role errors : when no role was choose or when a role where the user is not allowed was choosen
+					// capture role errors : when no role was chosen or when a role where the user is not allowed was choosen
 					if (formRoles.length == 0) {
 						res.render('login', {error: 'Choose atleast one role!'});
 					} else if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') == -1)) {
@@ -100,6 +103,8 @@ var bsc = express()
 	   					res.render('login', {error: 'You do not have access to sup role'});
 	   				} else	if ((formRoles.indexOf('HR')  !== -1) && (data.roles.indexOf('HR') == -1)) {
 	   					res.render('login', {error: 'You do not have access to HR role'});
+	   				} else	if ((formRoles.indexOf('admin')  !== -1) && (data.roles.indexOf('admin') == -1)) {
+	   					res.render('login', {error: 'You do not have access to admin role'});
 	   				} else {
 	   					// create an array of roles that the user has choosen
 	   					if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') !== -1)) {
@@ -111,6 +116,9 @@ var bsc = express()
 		   				if ((formRoles.indexOf('HR') !== -1) && (data.roles.indexOf('HR') !== -1)) {
 		   					currRoles.push('HR');
 		   				}
+		   				if ((formRoles.indexOf('admin') !== -1) && (data.roles.indexOf('admin') !== -1)) {
+		   					currRoles.push('admin');
+		   				}
 		   				
 	   					req.session.loggdUser = {userName:data.userName,empName:data.empName,PFNum:data.PFNum,dbRoles:data.roles, currentRoles:currRoles};
 		   				res.redirect('/');
@@ -118,6 +126,10 @@ var bsc = express()
 	   			} else {
 	   				var msg = {error: 'Incorrect credentials, login again'};
 	   				res.render('login', msg);
+	   			}
+
+	   			for (var i = 0; i< currRoles.length; i++) {
+	   				console.log(currRoles[i]);
 	   			}
    			})
 		}
@@ -135,7 +147,7 @@ var bsc = express()
 		req.session.destroy();
 		//req.session.userId = '';
 		res.redirect('/login');
-		console.log("logout");
+		console.log("***********************************************************logged out*********************************************");
 	})
 
 

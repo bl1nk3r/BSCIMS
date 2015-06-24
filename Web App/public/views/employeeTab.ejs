@@ -1210,14 +1210,15 @@
 			  					<br><br>
 
 			  					<div id="panelListGroupDiv" class="list-group" ng-controller="empPanelInfoCtrl">
-				  					<a href="#" class="list-group-item"> <span class="badge"> 0 </span> Notifications</a>
-				  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails</a>
-				  					<a href="#" class="list-group-item"> <span class="badge" ng-model="unapprovedVal"> {{unapprovedVal}} </span>Unapproved</a>
+				  					<a href="#" class="list-group-item"> <span class="badge"> 0 </span> Notifications <span class="glyphicon glyphicon-asterisk"></span></a>
+				  					<a href="#" class="list-group-item"> <span class="badge"> 3 </span> Emails <span class="glyphicon glyphicon-inbox"></span></a>
+				  					<a href="#" class="list-group-item"> <span class="badge" ng-model="unapprovedVal"> {{unapprovedVal}} </span>Unapproved <span class="glyphicon glyphicon-thumbs-down"></span></a>
 				  					<a href="#" class="list-group-item"> <span class="badge" ng-model="pendingVal"> {{pendingVal}} </span> 
-				  						Pending
+				  						Pending <span class="glyphicon glyphicon-repeat"></span>
 				  					</a>
-				  					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed</a>
-				  					<a href="#" class="list-group-item"> <span class="badge" ng-model="approvedVal"> {{approvedVal}} </span> Approved</a>
+				  					<a href="#" class="list-group-item"> <span class="badge"> 1 </span> Completed <span class="glyphicon glyphicon-ok-circle"></span></a>
+				  					<a href="#" class="list-group-item"> <span class="badge" ng-model="approvedVal"> {{approvedVal}} </span> Approved <span class="glyphicon glyphicon-thumbs-up"></span>
+				  					</a>
 								</div> <!-- end panelListGroupDiv-->
 
 							</div> <!--end btn-group-->
