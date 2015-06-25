@@ -127,7 +127,7 @@ var bsc = express()
 	   				var msg = {error: 'Incorrect credentials, login again'};
 	   				res.render('login', msg);
 	   			}
-
+//COMMENT
 	   			for (var i = 0; i< currRoles.length; i++) {
 	   				console.log(currRoles[i]);
 	   			}
