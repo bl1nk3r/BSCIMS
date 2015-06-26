@@ -185,7 +185,7 @@
 
                 <div class="panel-body">
 
-                    <div class="tab-content">
+                    <div class="tab-content"> <!--This 'div' uses the .ejs templating engine to call all templates segregated from 'main' -->
 
                     	<!-- Supervisor Tab content -->
                     	<% include supervisorTab %>
@@ -199,6 +199,8 @@
                         <!-- Administrator Tab content-->
                         <% include adminTab %>
                         
+                        <!-- Invoke all modals-->
+                    	<%include modals %>
                     </div> <!-- end tab content  -->
                     
                 </div> <!--end panel-body-->
@@ -233,5 +235,4 @@
 		<!-- Custom JS -->
 		<script src="/includes/js/script.js"></script>
 	</body>
-	
 </html>

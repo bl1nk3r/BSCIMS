@@ -1,0 +1,27 @@
+	    <div class="panel-body">
+	    	<!--Table of company objectives (departmental scale)-->
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Division</th>
+						<th>GM</th>
+						<th>Departments</th>
+						<th colspan="3">Sections</th>
+											
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{division.DivName}}</td>
+						<td>{{division.GM}}</td>
+						<td ng-repeat='dept in departments'>{{dept.DepName}}</td>
+						<td ng-repeat='sec in sections'>
+							<a data-keyboard="false" data-backdrop="static" href="#showEmployeesModal" role="button" data-toggle="modal" 
+							ng-click="getSecEmployees(sec.SecName,dept.DepName,division.DivName)">
+				  			{{sec.SecName}}
+				  			</a>
+			  			</td>
+					</tr>
+				</tbody>
+			</table> <!--end Departmental Objectives Table-->
+		</div> <!--end panel-body-->

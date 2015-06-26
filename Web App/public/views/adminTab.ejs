@@ -1,12 +1,25 @@
-<!--initially 125 lines of HR Code-->
-<div class="tab-pane fade in" id="adminTab" ng-controller="adminController">
-    <div id="quickAdminActionsBtnGroup" class="btn-group" role="group">
-   		<a data-backdrop="static" data-keyboard="false" href="#modifyUsersModal" role="button" class="btn btn-default" data-toggle="modal"> 
-			<span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-user"></span> System Users
-		</a> <!-- end Modify Users button link -->
 
-		<a data-backdrop="static" data-keyboard="false" href="#modifyUsersModal" role="button" class="btn btn-default" data-toggle="modal"> 
-			<span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-random"></span><span class="glyphicon glyphicon-user"></span> Swap Roles 
-		</a> <!-- end a*&^%$ button link -->
-    </div>
+<div class="tab-pane fade in" id="adminTab" ng-controller="adminController">
+	<div class="panel panel-inverse">
+			<div class="panel-heading">
+				<h3 class="panel-title">Admin Quick Actions</h3>
+			</div>
+
+	    <div id="quickAdminActionsBtnGroup" class="btn-group" role="group">
+	   		<a data-backdrop="static" data-keyboard="false" href="#modifyUsersModal" role="button" class="btn btn-default" data-toggle="modal"> 
+				<span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-user"></span> System Users
+			</a> <!-- end Modify Users button link -->
+
+			<a data-backdrop="static" data-keyboard="false" href="#modifyUsersModal" role="button" class="btn btn-default" data-toggle="modal"> 
+				<span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-random"></span><span class="glyphicon glyphicon-user"></span> Swap Roles 
+			</a> <!-- end a*&^%$ button link -->
+			&nbsp; <br> <br>
+			<div id="panelListGroupDiv" class="list-group" ng-controller="empPanelInfoCtrl">
+				<a href="#" class="list-group-item"> <span class="badge"> 0 </span><span class="glyphicon glyphicon-asterisk"> </span> Notifications </a>
+				<a href="#" class="list-group-item"> <span class="badge"> 3 </span><span class="glyphicon glyphicon-envelope"> </span> Emails </a>
+				<a href="#" class="list-group-item"> <span class="badge"> 7 </span><span class="glyphicon glyphicon-inbox"> </span> Requests </a>
+				<a href="#" class="list-group-item"> <span class="badge"> 15 </span><span class="glyphicon glyphicon-exclamation-sign"> </span> Cases </a>
+			</div> <!-- end panelListGroupDiv-->
+	    </div>
+	</div>
 </div> <!--end adminTab div-->

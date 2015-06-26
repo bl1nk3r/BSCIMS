@@ -1,226 +1,35 @@
-<!--initially 125 lines of HR Code-->
 <div class="tab-pane fade in" id="HRTab" ng-controller="hrRolesController">
     <div class="panel panel-inverse">
 		<div class="panel-heading">
-			<h3 class="panel-title">SEC Departmental Objectives</h3>
+			<h3 class="panel-title">HR Quick Actions</h3>
 		</div>
 
-	    <div class="panel-body">
-	    <!--Table of company objectives (departmental scale)-->
-			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th>Division</th>
-						<th>GM</th>
-						<th>Departments</th>
-						<th colspan="3">Sections</th>
-											
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>{{division.DivName}}</td>
-						<td>{{division.GM}}</td>
-						<td ng-repeat='dept in departments'>{{dept.DepName}}</td>
-						<td ng-repeat='sec in sections'>
-							<a data-keyboard="false" data-backdrop="static" href="#showEmployeesModal" role="button" data-toggle="modal" 
-							ng-click="getSecEmployees(sec.SecName,dept.DepName,division.DivName)">
-				  			{{sec.SecName}}
-				  			</a>
-			  			</td>
-					</tr>
-				</tbody>
-			</table> <!--end Departmental Objectives Table-->
+		<div class="btn-group" role="group">
+			<a data-backdrop="static" data-keyboard="false" href="#divObjModal" role="button" class="btn btn-default" data-toggle="modal"> 
+				<span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Divisional Objectives
+			</a> <!-- end View Objectives button link -->
 
-			<div class="modal fade" id="showEmployeesModal" class="col-md-8">
-				<div id="showEmployeesModalDialog" class="modal-dialog">
-					<div id="showEmployeesModalContent" class="modal-content"> 
-						<div id="submitObjModalHeader" class="modal-header">
-						  	<button class="close" data-dismiss="modal">&times;</button>
-						  	<h4 class="modal-title">Sectional Employees - {{section}}</h4>
-						</div>
+			<a data-backdrop="static" data-keyboard="false" href="#defMetricsModal" role="button" class="btn btn-default" data-toggle="modal"> 
+				<span class="glyphicon glyphicon-cog"></span> Define Financial Metrics
+			</a> <!-- end View Scorecards button link -->
 
-						<div id="showEmployeesModalBody" class="modal-body">
-							<table class="table table-hover" id="employeesTable">
-								<thead>
-									<tr>
-									  	<th>Employee Name</th>
-									  	<th>PF Number</th>
-									  	<th>Gender</th>
-									  	<th>Position</th>
-									  	<th>View</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="emp in secEmployees">
-									  	<td>{{emp.EmpName}}</td>
-									  	<td>{{emp.PFNum}}</td>
-									  	<td>{{emp.Gender}}</td>
-									  	<td>{{emp.Position}}</td>
-									  	<td>
-										  	<button type="button" class="btn btn-primary" id="empObjectives" data-dismiss="modal" 
-										  	ng-click="getEmpObjectives(emp.PFNum, emp.EmpName)" data-toggle="modal" data-target="#empObjsWarlock" 
-										  	data-backdrop="static"><span class = "glyphicon glyphicon-book"></span> Scorecards</button>
-									  	</td>
-									</tr>
-								</tbody>
-							</table> <!--end Sectional Employees Table-->
-				  		</div> 
+			<a data-backdrop="static" data-keyboard="false" href="#employeeSCModal" role="button" class="btn btn-default" data-toggle="modal"> 
+				<span class="glyphicon glyphicon-user"> </span><span class="glyphicon glyphicon-list-alt"> </span> Employee Scorecards
+			</a> <!-- end Evaluate Employee button link -->
+			
+			<hr>
 
-				  		<div class="modal-footer">		  											  			
-				  			<button class="btn btn-default" type="button" data-dismiss="modal"> 
-				  				<span class="glyphicon glyphicon-remove"></span> Close
-				  			</button>
-				  		</div> <!-- end modal-footer-->
-				  	</div> <!-- end showEmployeeModal-content-->
+			<div class="list-group">
+				<a href="#" class="list-group-item" ng-click="toggleEmpKPA()"> 
+					<span class="badge" ng-model="empKPAVal"> {{empKPAVal}} </span> 
+					Employees KPAs in your tray 
+				</a>
 
-				</div> <!-- end showEmployeeModal-dialog-->
-			</div> <!-- end showEmployeeModal-->
-
-
-			<div class="modal fade" id="empObjsWarlock">
-				<div id="empObjsWarlocklDialog" class="modal-dialog">
-					<div id="empObjsWarlockContent" class="modal-content"> 
-						<div id="empObjsWarlockHeader" class="modal-header">
-						  	<button class="close" data-dismiss="modal">&times;</button>
-						  	<h4 class="modal-title">Employee Objectives - {{empName}}</h4>
-						</div>
-
-						<div id="showEmployeesModalBody" class="modal-body">
-							<table class="table table-hover" id="employeesTable">
-								<thead>
-									<tr>
-									  	<th>Employee Name</th>
-									  	<th>PF Number</th>
-									  	<th>Gender</th>
-									  	<th>Position</th>
-									  	<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="emp in secEmployees">
-									  	<td>Test1</td>
-									  	<td>Test1</td>
-									  	<td>Test1</td>
-									  	<td>Test1</td>
-									  	<td>
-										  	<button type="button" class="btn btn-primary" id="addUser" data-dismiss="modal" data-toggle="modal" 
-										  	data-target="#empObjsWarlock" data-backdrop="static"> <span class = "glyphicon glyphicon-folder-open"></span> View
-										  	</button>
-									  	</td>
-									</tr>
-								</tbody>
-							</table>
-				  		</div> <!--end showEmployeesModalBody div-->
-
-				  		<div class="modal-footer">		  											  			
-				  			<button class="btn btn-default" type="button" data-dismiss="modal"> 
-				  				<span class="glyphicon glyphicon-remove"></span> Close
-				  			</button>
-				  		</div> <!-- end modal-footer-->
-				  	</div> <!-- end empObjsWarlock-content-->
-				</div> <!-- end empObjsWarlock-dialog-->
-			</div> <!-- end empObjsWarlock modal-->
-		</div> <!--end panel-body-->
-	</div> <!--end panel-->
-
-	<div class="panel panel-inverse">
-		<div class="panel-heading">
-			<h3 class="panel-title">SEC Objectives Description</h3>
+				<a href="#" class="list-group-item" ng-click="toggleApproved()"> 
+					<span class="badge" ng-model="empApprovedVal"> {{empApprovedVal}} </span> 
+					Objectives Approved 
+				</a>
+			</div>
 		</div>
-
-	    <div class="panel-body">
-	    <!--Table of company objectives defined (from metrics to be used to role assignment-->
-			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th>Division</th>
-						<th>GM</th>
-						<th>Departments</th>
-						<th colspan="3">Sections</th>
-											
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						
-					</tr>
-				</tbody>
-			</table> <!--end Departmental Objectives Table-->
-
-			<div class="modal fade" id="showEmployeesModal" class="col-md-8">
-				<div id="showEmployeesModalDialog" class="modal-dialog">
-					<div id="showEmployeesModalContent" class="modal-content"> 
-						<div id="submitObjModalHeader" class="modal-header">
-						  	<button class="close" data-dismiss="modal">&times;</button>
-						  	<h4 class="modal-title">Sectional Employees - {{section}}</h4>
-						</div>
-
-						<div id="showEmployeesModalBody" class="modal-body">
-							<table class="table table-hover" id="employeesTable">
-								<thead>
-									<tr>
-									  	<th>Employee Name</th>
-									  	<th>PF Number</th>
-									  	<th>Gender</th>
-									  	<th>Position</th>
-									  	<th>View</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="emp in secEmployees">
-									  	
-									</tr>
-								</tbody>
-							</table> <!--end Sectional Employees Table-->
-				  		</div> 
-
-				  		<div class="modal-footer">		  											  			
-				  			<button class="btn btn-default" type="button" data-dismiss="modal"> 
-				  				<span class="glyphicon glyphicon-remove"></span> Close
-				  			</button>
-				  		</div> <!-- end modal-footer-->
-				  	</div> <!-- end showEmployeeModal-content-->
-
-				</div> <!-- end showEmployeeModal-dialog-->
-			</div> <!-- end showEmployeeModal-->
-
-
-			<div class="modal fade" id="empObjsWarlock">
-				<div id="empObjsWarlocklDialog" class="modal-dialog">
-					<div id="empObjsWarlockContent" class="modal-content"> 
-						<div id="empObjsWarlockHeader" class="modal-header">
-						  	<button class="close" data-dismiss="modal">&times;</button>
-						  	<h4 class="modal-title">Employee Objectives - {{empName}}</h4>
-						</div>
-
-						<div id="showEmployeesModalBody" class="modal-body">
-							<table class="table table-hover" id="employeesTable">
-								<thead>
-									<tr>
-									  	<th>Employee Name</th>
-									  	<th>PF Number</th>
-									  	<th>Gender</th>
-									  	<th>Position</th>
-									  	<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="emp in secEmployees">
-									
-									</tr>
-								</tbody>
-							</table>
-				  		</div> <!--end showEmployeesModalBody div-->
-
-				  		<div class="modal-footer">		  											  			
-				  			<button class="btn btn-default" type="button" data-dismiss="modal"> 
-				  				<span class="glyphicon glyphicon-remove"></span> Close
-				  			</button>
-				  		</div> <!-- end modal-footer-->
-				  	</div> <!-- end empObjsWarlock-content-->
-				</div> <!-- end empObjsWarlock-dialog-->
-			</div> <!-- end empObjsWarlock modal-->
-		</div> <!--end panel-body-->
 	</div> <!--end panel-->
 </div> <!--end HRTab div-->
