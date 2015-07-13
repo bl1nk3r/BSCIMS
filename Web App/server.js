@@ -1,6 +1,6 @@
-/**************************************************************************************************************************************
-*****************************************NODE.JS Server Source-code********************************************************************
-**************************************************************************************************************************************/
+/**************************************************************************************************************************************************
+*****************************************NODE.JS Server Source-code********************************************************************************
+**************************************************************************************************************************************************/
  
 var http  = require ('http') 												//built in module provides HTTP server and client functionality
    ,fs    = require ('fs')   												//built in fs module provides filesystem-related functionality
@@ -260,7 +260,7 @@ var bsc = express()
 					res.json(doc);
 					//console.log(doc);
 			});
-		})
+		}) 
 	})
 
 	.delete("/financePerspectiveController/:id", function (req, res) {
@@ -465,39 +465,26 @@ var bsc = express()
 		});*/
 	})
 
-/******************************************************************************************************************************************
-***********************************INITIALIZE SCORECARD OPERATION (ON "CLOSE" BUTTON CLICK ************************************************
-******************************************************************************************************************************************/
+/*******************************************************************************************************************************************
+***********************************INITIALIZE SCORECARD OPERATION (ON "CLOSE" BUTTON CLICK) ************************************************
+*******************************************************************************************************************************************/
 
 	.post("/initScorecardRoute:/", function (req, res) {
-		//var ID = req.params.id;
-		//var SC = req.body;
-		//console.log(ID);
-		var ID =req.body;
-		//console.log(ID);
-		
-		for (var i = 0; i<ID.length; i++){
-			db.Objectives.findOne({ _id: mongojs.ObjectId(ID[i]._id)}, function (err, doc) {		
-				if (err) {																															
-					console.log(err);																												
-				} 
-				else {
-					//res.json(doc);
-					console.log(doc);
-					db.Scorecard.insert({"Objectives_ID": doc._id, "Createdby:": doc.PFNum, "DateCreated": Date()}, function (err, doc) {
-						if (err) {
+		var thiss =req.body
+			,objs = [];   //'objs' will be the objectives' _id array to be dropped into an individual scorecard as referral
 
-							console.log(err);
-						}
-						else {
-							//res.json(doc);
-							console.log("here:");
-							console.log(doc);
-						}
-					});
-				}
-			});
-		}
+		//populating the objs array	
+		for (var i = 0; i < thiss.length; i++) {
+			objs.push(thiss[i]._id);
+		};
+
+		////console.log(objs); 	
+		db.Scorecard.insert({"Createdby": req.session.loggdUser.PFNum, "DateCreated": Date(), "Objectives_IDs": objs}, function (err, doc) {
+			if (err) 
+				console.log(err);
+			else 
+				console.log("Scorecard created by:" + req.session.loggdUser.PFNum + " successfully created...");
+		});
 	})
 
 /******************************************************************************************************************************************
@@ -545,6 +532,6 @@ var bsc = express()
 
 
 //Log on the console the 'init' of the server
-console.log("Server initialized on port 3002...");
+console.log("Server initialized on port 3003...");
 
 module.exports = bsc;

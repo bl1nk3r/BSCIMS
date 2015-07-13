@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <!--SUPERVISOR TAB MODALS-->
 	<!-- begin employee Objective Modal-->
 		<div class="modal fade" id="empObjModal">
 
 			<div class="modal-dialog">
-
+ 
 				<div class="modal-content"> 
 
 					<div id="empObjModal" class="modal-header">
@@ -1069,7 +1070,7 @@
 
 										</div> <!--end performanceRatingDiv -->
 
-										<button id="submitInternalObjButton" class="btn btn-primary pull-right" ng-click="submitInternalObjective()" >		Submit Objective
+										<button id="submitInternalObjButton" class="btn btn-primary pull-right" ng-click="submitInternalObjective()" > Submit Objective
 										</button>
 																	
 									</div> <!--end internalObjDiv-->
@@ -1270,171 +1271,6 @@
 			  						
 			</div> <!-- end createObjModal-->
 	<!-- end create objective modal-->
-
-	<!-- begin submit objective modal-->
-		<div class="modal fade" id="submitObjModal">
-
-			<div id="submitObjModalDialog" class="modal-dialog">
-
-				<div id="submitObjModalContent" class="modal-content"> 
-
-					<div id="submitObjModalHeader" class="modal-header">
-					  	<button class="close" data-dismiss="modal">&times;</button>
-					  	<h4 class="modal-title">Submit Objectives</h4>
-					</div> <!-- end createObjModal-header-->
-
-
-					<div id="submitObjModalBody" class="modal-body">
-						<h4> Select a perspective to work on...</h4>
-
-						<form id="searchObj">
-							<input type="text" class="form-control pull-right" placeholder="Search objectives..." id="searchInput" ng-model="search.$">
-						</form> <!--end form search-->
-
-						&nbsp;
-						<hr>
-
-						<div id="perspectiveDropDown" class="dropdown">
-							<select id="perspectiveDropDownMenu" role="menu">
-								<option value="default">-Select a Perspective-</option>
-								<option value="financeSelect">Finance</option>
-								<option value="customerSelect">Customer & Stakeholders</option>
-								<option value="internalSelect">Internal Business Process</option>
-								<option value="learnSelect">Learning & Growth</option>
-							</select> <!-- end objPerspDropdownMenu-->  
-						</div> <!-- end div objDropDown-->
-
-						&nbsp;
-						<div>
-							<table class="table table-hover" id="financeObjectivesTable" style="width:90%">
-								<caption><h5>Finance Objectives</h5></caption>
-								<thead>
-									<tr>
-									  	<th>Key Performance Area</th>
-									  	<th>Key Performance Indicator</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="objective in subFinObj | orderBy: 'description' |filter: search |limitTo:10">
-									  	<td><input type="checkbox" ng-click="captureFinObj(objective._id, objective.description, objective.DSO)"	ng-model="grabFinanceObj">
-									  		{{objective.description | uppercase}}
-									  	</td>
-									  	<td>{{objective.DSO}}</td>
-									</tr>
-								</tbody>					  										
-							</table> <!-- end Finance Objectives Table-->
-
-							<table class="table table-hover" id="customerObjectivesTable">
-								<caption><h5>Customer Objectives</h5></caption>
-								<thead>
-									<tr>
-									  	<th>Key Performance Area</th>
-									  	<th>Key Performance Indicator</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="objective in subCustObj | orderBy: 'description' |filter: search |limitTo:10">
-									  	<td><input type="checkbox" ng-click="captureCustObj(objective._id, objective.description, objective.DSO)"	ng-model="grabCustomerObj">
-									  		{{objective.description | uppercase}}
-									  	</td>
-									  	<td>{{objective.DSO}}</td>
-									</tr>
-								</tbody>			
-							</table> <!-- end Customer Objectives Table-->
-
-							<table class="table table-hover" id="internalObjectivesTable">
-								<caption><h5>Internal Business Objectives</h5></caption>
-								<thead>
-									<tr>
-										<th>Key Performance Area</th>
-									  	<th>Key Performance Indicator</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="objective in subIntObj | orderBy: 'description' |filter: search |limitTo:10">
-									  	<td><input type="checkbox" ng-click="captureIntObj(objective._id, objective.description, objective.DSO)"	ng-model="grabInternalObj">
-									  		{{objective.description | uppercase}}
-									  	</td>
-									  	<td>{{objective.DSO}}</td>
-									</tr>
-								</tbody>				
-							</table> <!-- end Internal Objectives Table-->
-
-							<table class="table table-hover" id="learningObjectivesTable">
-								<caption><h5>Learning & Growth Objectives</h5></caption>
-								<thead>
-									<tr>
-									  	<th>Key Performance Area</th>
-									  	<th>Key Performance Indicator</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="objective in subLearnObj | orderBy: 'description' |filter: search |limitTo:10">
-									  	<td><input type="checkbox" ng-click="captureLearnObj(objective._id, objective.description, objective.DSO)"	ng-model="grabLearnObj">
-									  		{{objective.description | uppercase}}
-									  	</td>
-									  	<td>{{objective.DSO}}</td>
-									</tr>
-								</tbody>
-							</table> <!-- end Learning Objectives Table-->
-
-							<table class="table table-hover" id="pendingObjTable">
-								<caption><h5>Objectives to be sent</h5></caption>
-								<thead>
-									<tr>
-									  	<th>Key Performance Area</th>
-									  	<th>Key Performance Indicator</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="objective in pendingObj | orderBy: 'description' |filter: search |limitTo:10">
-										<td>
-										  	{{objective.pendingDescription | uppercase}}
-										</td>
-										<td>{{objective.pendingDSO}}</td>
-									</tr>
-								</tbody>
-							</table> <!-- end Learning Objectives Table-->
-
-							<div id="confirmEmailDiv">
-							  	<span>Confirm recipient's email:</span> <input type="email" class="form-control" placeholder="petros@uniswa.sz"> <!--COME BACK & DROP IN AN NG-MODEL FOR SUP EMAIL-->
-							</div>
-
-						</div> <!-- end submitObjController div-->
-							  						
-						<div class="alert alert-danger alert-dismissable" ng-if="hasSendObjErrors">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<strong>Error:</strong>
-							<br>
-					        <span ng-model="sendObjErrorMsg">
-					        	{{sendObjErrorMsg}}
-					        	<br>
-					        </span>
-				   		</div> <!--end danger alert -->
-
-					</div> <!--end submitObjModalBody-->
-
-						<div class="modal-footer">
-						  	<button onclick="$('#submitObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button" ng-click="sendObjs()"> 
-						  		<span class="glyphicon glyphicon-ok"></span> 
-						  		Send Objectives
-						  	</button>
-									
-						  	<button class="btn btn-default" type="button" data-dismiss="modal"> 
-						  		<span class="glyphicon glyphicon-remove"></span> Close
-						  	</button>
-
-						  	<div class="alert alert-success alert-block fade in" onclick="$('#submitObjModal').modal({'backdrop': 'static'});" id="successObjSubmit">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								<h5>Objective(s) Successfully Submitted!</h5>
-								<p>Click the 'x' in the corner to close...</p>
-							</div> <!--end alert-->	
-						</div> <!-- end modal-footer-->
-				</div> <!-- end submitObjModal-content-->
-
-			</div> <!-- end submitObjModal-dialog-->
-		</div> 
-	<!-- end submit objective modal-->
 
 	<!-- begin CompileSCModal -->
 		<div class="modal fade in" id="compileSCModal" >
@@ -1894,3 +1730,24 @@
 			</div> <!-- end empObjsWarlock-dialog-->
 		</div> 
 	<!-- end empObjsWarlock2 modal-->
+	
+	<!--**************************************************************************REPORTS MODALS************************************ -->
+	
+	
+	<div class="modal fade" id="" class="col-md-12">
+			<div id="" class="modal-dialog">
+				<div id="" class="modal-content"> 
+					<div id="" class="modal-header">
+						<button class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">System Access Report</h4>
+					</div>
+
+					<div id="" class="modal-body">
+					</div>
+					<div id="" class="modal-footer">
+						<button class="btn btn-info">Print</button> &nbsp;
+						<button class="btn btn-danger">Close</button>
+					</div>
+				</div>
+			</div>
+	</div>

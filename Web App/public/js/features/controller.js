@@ -9,7 +9,7 @@ var bsc = angular.module('BSCIMS', []);
 	 bsc.service('allObjectives', ['$http', function ($http){
 			this.getObjectives = function () {
 				return $http.post("/getAllObjectives");
-			}
+			} 
 		}]) 
 
 	//while this one does the same only for objectives that have been sent for processing or approval (with a status of  "sent_for_approval")
@@ -1026,25 +1026,28 @@ var bsc = angular.module('BSCIMS', []);
 	$scope.retrieveObjectives = function () {
 			allObjectives.getObjectives()
 			.success(function (res) {
-			$scope.subFinObj = [];
-			$scope.subCustObj = [];
-			$scope.subIntObj = [];
-			$scope.subLearnObj = [];
+				console.log("Response is:")
+				console.log(res);
+				$scope.subFinObj = [];
+				$scope.subCustObj = [];
+				$scope.subIntObj = [];
+				$scope.subLearnObj = [];
 
-			for (var i = 0; i<res.length; i++) {
-				if (res[i].perspective == "finance") {
-					$scope.subFinObj.push(res[i]);
+				for (var i = 0; i<res.length; i++) {
+					if (res[i].perspective == "finance") {
+						$scope.subFinObj.push(res[i]);
+						console.log($scope.subFinObj);
+					}
+					else if (res[i].perspective == "customer") {
+						$scope.subCustObj.push(res[i]);
+					}
+					else if (res[i].perspective == "internal") {
+						$scope.subIntObj.push(res[i]);
+					}
+					else if (res[i].perspective == "learn") {
+						$scope.subLearnObj.push(res[i]);
+					}
 				}
-				else if (res[i].perspective == "customer") {
-					$scope.subCustObj.push(res[i]);
-				}
-				else if (res[i].perspective == "internal") {
-					$scope.subIntObj.push(res[i]);
-				}
-				else if (res[i].perspective == "learn") {
-					$scope.subLearnObj.push(res[i]);
-				}
-			}
 			})
 			.error(function () {
 				console.log('There is an error');

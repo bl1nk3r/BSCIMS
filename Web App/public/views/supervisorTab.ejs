@@ -1,18 +1,22 @@
+<!DOCTYPE html>
 <div class="tab-pane fade in" id="supervisorTab" ng-controller="supRoleController" ng-click="retrieveEmployees()">
-	<div class="panel panel-inverse">
+	<div class="container"> 
+			
+	<div class="panel panel-inverse col-sm-12">
 			<div class="panel-heading">
 				<h3 class="panel-title">Supervisor Quick Actions</h3>
 			</div>
+		<div class="col-sm-6">
 		<div class="btn-group" role="group">
-			<a data-backdrop="static" data-keyboard="false" href="#viewEmpObjModal" role="button" class="btn btn-default" data-toggle="modal"> 
+			<a data-backdrop="static" data-keyboard="false" href="#viewEmpObjModal" role="button" class="btn btn-primary" data-toggle="modal"> 
 				<span class="glyphicon glyphicon-list"> </span> View Objectives
 			</a> <!-- end View Objectives button link -->
 
-			<a data-backdrop="static" data-keyboard="false" href="#viewEmpSCModal" role="button" class="btn btn-default" data-toggle="modal"> 
+			<a data-backdrop="static" data-keyboard="false" href="#viewEmpSCModal" role="button" class="btn btn-primary" data-toggle="modal"> 
 				<span class="glyphicon glyphicon-list-alt"> </span> View Scorecards
 			</a> <!-- end View Scorecards button link -->
 
-			<a data-backdrop="static" data-keyboard="false" href="#evalEmpSCModal" role="button" class="btn btn-default" data-toggle="modal"> 
+			<a data-backdrop="static" data-keyboard="false" href="#evalEmpSCModal" role="button" class="btn btn-primary" data-toggle="modal"> 
 				<span class="glyphicon glyphicon-screenshot"> </span> Evaluate Employee
 			</a> <!-- end Evaluate Employee button link -->
 			
@@ -30,7 +34,30 @@
 				</a>
 			</div>
 		</div>
+		</div>
+		<div class="panel panel-primary col-sm-6 col-sm-offset-1">
+			<div class="panel-heading">			
+				<h4 class="panel-title"> <span class="glyphicon glyphicon-resize-small"> </span>Supervisory Mini-Dash</h4>
+			</div>
+			<div class="panel-body">
+				<div class="btn-group ">
+					<button class="btn btn-info" href="#">Last Month</button>
+					<button class="btn" href="#">This year</button>
+					<button class="btn" href="#">Supervisee Rating</button>
+				</div>
+				<hr>
+				<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<p>No Data Found!</p>
+				</div>				
+			</div>
+			<div class="panel-footer">
+				<button class="btn  btn-small btn-danger" href="#"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear</button>
+				<button class="btn btn-small btn-success" href="#" ><span class="glyphicon glyphicon-ok"></span>&nbsp;Save Dashboard</button>
+			</div>
+		</div>
+	
 	</div>
 
-	&nbsp;
+	</div>
 </div> <!-- end supervisorTab div-->

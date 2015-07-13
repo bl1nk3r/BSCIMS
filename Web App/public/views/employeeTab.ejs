@@ -1,50 +1,243 @@
+<!DOCTYPE html>
 <div class="tab-pane fade in active" id="employeeTab">
+	 
 	<div class="panel panel-inverse">
-			<div class="panel-heading">
-				<h3 class="panel-title">Employee Quick Actions</h3>
+		<div class="panel-heading">
+			<h3 class="panel-title">Employee Quick Actions</h3>
+		</div>
+		<div class="container"> 
+			<div class="panel col-sm-8">	
+				<div id="quickActionsBtnGroup" class="btn-group" role="group" ng-controller="submitObjController">
+
+					<a data-backdrop="static" data-keyboard="false" href="#createObjModal" role="button" class="btn btn-primary" data-toggle="modal"> 
+						<span class="glyphicon glyphicon-plus"></span> Create an Objective (KPA)
+					</a> <!-- end Create an Objective button link -->
+
+					<!--CREATE OBJECTIVE MODAL-->
+
+					<a data-backdrop="static" data-keyboard="false" ng-click="retrieveObjectives()" href="#submitObjModal" role="button"class="btn btn-primary" data-toggle="modal"> 
+						<span class="glyphicon glyphicon-share"></span> 
+						Submit Objectives 
+					</a> <!-- end Submit Objectives button link-->
+
+					<!--SUBMIT OBJECTIVE MODAL-->
+					<!-- begin submit objective modal-->
+					<div class="modal fade" id="submitObjModal" >
+
+						<div id="submitObjModalDialog" class="modal-dialog">
+
+							<div id="submitObjModalContent" class="modal-content"> 
+
+								<div id="submitObjModalHeader" class="modal-header">
+								  	<button class="close" data-dismiss="modal">&times;</button>
+								  	<h4 class="modal-title">Submit Objectives</h4>
+								</div> <!-- end createObjModal-header-->
+
+
+								<div id="submitObjModalBody" class="modal-body">
+									<h4> Select a perspective to work on...</h4>
+
+									<form id="searchObj">
+										<input type="text" class="form-control pull-right" placeholder="Search objectives..." id="searchInput" ng-model="search.$">
+									</form> <!--end form search-->
+
+									&nbsp;
+									<hr>
+
+									<div id="perspectiveDropDown" class="dropdown">
+										<select id="perspectiveDropDownMenu" role="menu">
+											<option value="default">-Select a Perspective-</option>
+											<option value="financeSelect">Finance</option>
+											<option value="customerSelect">Customer &amp; Stakeholders</option>
+											<option value="internalSelect">Internal Business Process</option>
+											<option value="learnSelect">Learning &amp; Growth</option>
+										</select> <!-- end objPerspDropdownMenu-->  
+									</div> <!-- end div objDropDown-->
+
+									&nbsp;
+									<div>
+										<table class="table table-hover" id="financeObjectivesTable" style="width:90%">
+											<caption><h5>Finance Objectives</h5></caption>
+											<thead>
+												<tr>
+												  	<th>Key Performance Area</th>
+												  	<th>Key Performance Indicator</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="objective in subFinObj | orderBy: 'description' |filter: search |limitTo:10">
+												  	<td><input type="checkbox" ng-click="captureFinObj(objective._id, objective.description, objective.DSO)" ng-model="grabFinanceObj">
+												  		{{objective.description | uppercase}}
+												  	</td>
+												  	<td>{{objective.DSO}}</td>
+												</tr>
+											</tbody>					  										
+										</table> <!-- end Finance Objectives Table-->
+
+										<table class="table table-hover" id="customerObjectivesTable">
+											<caption><h5>Customer Objectives</h5></caption>
+											<thead>
+												<tr>
+												  	<th>Key Performance Area</th>
+												  	<th>Key Performance Indicator</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="objective in subCustObj | orderBy: 'description' |filter: search |limitTo:10">
+												  	<td><input type="checkbox" ng-click="captureCustObj(objective._id, objective.description, objective.DSO)"	ng-model="grabCustomerObj">
+												  		{{objective.description | uppercase}}
+												  	</td>
+												  	<td>{{objective.DSO}}</td>
+												</tr>
+											</tbody>			
+										</table> <!-- end Customer Objectives Table-->
+
+										<table class="table table-hover" id="internalObjectivesTable">
+											<caption><h5>Internal Business Objectives</h5></caption>
+											<thead>
+												<tr>
+													<th>Key Performance Area</th>
+												  	<th>Key Performance Indicator</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="objective in subIntObj | orderBy: 'description' |filter: search |limitTo:10">
+												  	<td><input type="checkbox" ng-click="captureIntObj(objective._id, objective.description, objective.DSO)"	ng-model="grabInternalObj">
+												  		{{objective.description | uppercase}}
+												  	</td>
+												  	<td>{{objective.DSO}}</td>
+												</tr>
+											</tbody>				
+										</table> <!-- end Internal Objectives Table-->
+
+										<table class="table table-hover" id="learningObjectivesTable">
+											<caption><h5>Learning &amp; Growth Objectives</h5></caption>
+											<thead>
+												<tr>
+												  	<th>Key Performance Area</th>
+												  	<th>Key Performance Indicator</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="objective in subLearnObj | orderBy: 'description' |filter: search |limitTo:10">
+												  	<td><input type="checkbox" ng-click="captureLearnObj(objective._id, objective.description, objective.DSO)"	ng-model="grabLearnObj">
+												  		{{objective.description | uppercase}}
+												  	</td>
+												  	<td>{{objective.DSO}}</td>
+												</tr>
+											</tbody>
+										</table> <!-- end Learning Objectives Table-->
+
+										<table class="table table-hover" id="pendingObjTable">
+											<caption><h5>Objectives to be sent</h5></caption>
+											<thead>
+												<tr>
+												  	<th>Key Performance Area</th>
+												  	<th>Key Performance Indicator</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="objective in pendingObj | orderBy: 'description' |filter: search |limitTo:10">
+													<td>
+													  	{{objective.pendingDescription | uppercase}}
+													</td>
+													<td>{{objective.pendingDSO}}</td>
+												</tr>
+											</tbody>
+										</table> <!-- end Learning Objectives Table-->
+
+										<div id="confirmEmailDiv">
+										  	<span>Confirm recipient's email:</span> <input type="email" class="form-control" placeholder="petros@uniswa.sz"> <!--COME BACK & DROP IN AN NG-MODEL FOR SUP EMAIL-->
+										</div>
+
+									</div> <!-- end submitObjController div-->
+										  						
+									<div class="alert alert-danger alert-dismissable" ng-if="hasSendObjErrors">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										<strong>Error:</strong>
+										<br>
+								        <span ng-model="sendObjErrorMsg">
+								        	{{sendObjErrorMsg}}
+								        	<br>
+								        </span>
+							   		</div> <!--end danger alert -->
+
+								</div> <!--end submitObjModalBody-->
+
+									<div class="modal-footer">
+									  	<button onclick="$('#submitObjModal').modal({'backdrop': 'static'});" class="btn btn-success" type="button" ng-click="sendObjs()"> 
+									  		<span class="glyphicon glyphicon-ok"></span> 
+									  		Send Objectives
+									  	</button>
+												
+									  	<button class="btn btn-default" type="button" data-dismiss="modal"> 
+									  		<span class="glyphicon glyphicon-remove"></span> Close
+									  	</button>
+
+									  	<div class="alert alert-success alert-block fade in" onclick="$('#submitObjModal').modal({'backdrop': 'static'});" id="successObjSubmit">
+											<button type="button" class="close" data-dismiss="alert">&times;</button>
+											<h5>Objective(s) Successfully Submitted!</h5>
+											<p>Click the 'x' in the corner to close...</p>
+										</div> <!--end alert-->	
+									</div> <!-- end modal-footer-->
+							</div> <!-- end submitObjModal-content-->
+
+						</div> <!-- end submitObjModal-dialog-->
+					</div> 
+					<!-- end submit objective modal-->
+
+					<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" ng-click="retrieveApproved()" role="button" class="btn btn-primary" data-toggle="modal">
+						<span class="glyphicon glyphicon-book"></span> 
+						Compile Scorecard 
+					</a> <!-- end Compile SC button link-->
+
+					<!--COMPILE SCORECARD MODAL-->
+
+					<!--SCORECARD MODAL-->
+
+
+					<a data-backdrop="static" data-keyboard="false" href="#selfEvalModal" role="button" class="btn btn-primary" data-toggle="modal"> 
+						<span class="glyphicon glyphicon-screenshot"></span> Self Evaluation
+					</a> <!-- end Create an Objective button link -->
+
+					<br><br>
+
+					<div id="panelListGroupDiv" class="list-group" ng-controller="empPanelInfoCtrl">
+						<a href="#" class="list-group-item"> <span class="badge"> 0 </span><span class="glyphicon glyphicon-asterisk"> </span> Notifications </a>
+						<a href="#" class="list-group-item"> <span class="badge"> 3 </span><span class="glyphicon glyphicon-inbox"> </span> Emails </a>
+						<a href="#" class="list-group-item"> <span class="badge" ng-model="unapprovedVal"> {{unapprovedVal}} </span><span class="glyphicon glyphicon-thumbs-down"> </span> Unapproved </a>
+						<a href="#" class="list-group-item"> <span class="badge" ng-model="pendingVal"> {{pendingVal}} </span><span class="glyphicon glyphicon-repeat"> </span> Pending 
+						</a>
+						<a href="#" class="list-group-item"> <span class="badge"> 1 </span><span class="glyphicon glyphicon-ok-circle"> </span> Completed </a>
+						<a href="#" class="list-group-item"> <span class="badge" ng-model="approvedVal"> {{approvedVal}} </span><span class="glyphicon glyphicon-thumbs-up"> </span> Approved 
+						</a>
+					</div> <!-- end panelListGroupDiv-->
+				</div> <!--end btn-group-->
 			</div>
-	                        	
-		<div id="quickActionsBtnGroup" class="btn-group" role="group" ng-controller="submitObjController">
-
-			<a data-backdrop="static" data-keyboard="false" href="#createObjModal" role="button" class="btn btn-default" data-toggle="modal"> 
-				<span class="glyphicon glyphicon-plus"></span> Create an Objective (KPA)
-			</a> <!-- end Create an Objective button link -->
-
-			<!--CREATE OBJECTIVE MODAL-->
-
-			<a data-backdrop="static" data-keyboard="false" ng-click="retrieveObjectives()" href="#submitObjModal" role="button"class="btn btn-default" data-toggle="modal"> 
-				<span class="glyphicon glyphicon-share"></span> 
-				Submit Objectives 
-			</a> <!-- end Submit Objectives button link-->
-
-			<!--SUBMIT OBJECTIVE MODAL-->
-
-			<a data-backdrop="static" data-keyboard="false" href="#compileSCModal" ng-click="retrieveApproved()" role="button" class="btn btn-default" data-toggle="modal">
-				<span class="glyphicon glyphicon-book"></span> 
-				Compile Scorecard 
-			</a> <!-- end Compile SC button link-->
-
-			<!--COMPILE SCORECARD MODAL-->
-
-			<!--SCORECARD MODAL-->
-
-
-			<a data-backdrop="static" data-keyboard="false" href="#selfEvalModal" role="button" class="btn btn-default" data-toggle="modal"> 
-				<span class="glyphicon glyphicon-screenshot"></span> Self Evaluation
-			</a> <!-- end Create an Objective button link -->
-
-			<br><br>
-
-			<div id="panelListGroupDiv" class="list-group" ng-controller="empPanelInfoCtrl">
-				<a href="#" class="list-group-item"> <span class="badge"> 0 </span><span class="glyphicon glyphicon-asterisk"> </span> Notifications </a>
-				<a href="#" class="list-group-item"> <span class="badge"> 3 </span><span class="glyphicon glyphicon-inbox"> </span> Emails </a>
-				<a href="#" class="list-group-item"> <span class="badge" ng-model="unapprovedVal"> {{unapprovedVal}} </span><span class="glyphicon glyphicon-thumbs-down"> </span> Unapproved </a>
-				<a href="#" class="list-group-item"> <span class="badge" ng-model="pendingVal"> {{pendingVal}} </span><span class="glyphicon glyphicon-repeat"> </span> Pending 
-				</a>
-				<a href="#" class="list-group-item"> <span class="badge"> 1 </span><span class="glyphicon glyphicon-ok-circle"> </span> Completed </a>
-				<a href="#" class="list-group-item"> <span class="badge" ng-model="approvedVal"> {{approvedVal}} </span><span class="glyphicon glyphicon-thumbs-up"> </span> Approved 
-				</a>
-			</div> <!-- end panelListGroupDiv-->
-		</div> <!--end btn-group-->
-	</div>
+			&nbsp;
+			<div class="panel panel-primary col-sm-4 col-sm-offset-1">
+				<div class="panel-heading">
+					
+					<h4 class="panel-title"> <span class="glyphicon glyphicon-resize-small"> </span>Mini-Dash</h4>
+				</div>
+				<div class="panel-body">
+					<div class="btn-group ">
+						<button class="btn btn-info" href="#">Last Month</button>
+						<button class="btn" href="#">This year</button>
+						<button class="btn" href="#">My Overrall Rating</button>
+					</div>
+					<hr>
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						<p>No Data Found!</p>
+					</div>
+					
+				</div>
+				<div class="panel-footer">
+					<button class="btn  btn-small btn-danger" href="#"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear</button>
+					<button class="btn btn-small btn-success" href="#" ><span class="glyphicon glyphicon-ok"></span>&nbsp;Save Dashboard</button>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div> <!-- end of employee tab -->

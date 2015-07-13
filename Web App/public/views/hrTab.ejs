@@ -1,19 +1,21 @@
+<!DOCTYPE html>
 <div class="tab-pane fade in" id="HRTab" ng-controller="hrRolesController">
     <div class="panel panel-inverse">
 		<div class="panel-heading">
 			<h3 class="panel-title">HR Quick Actions</h3>
 		</div>
-
+		<div class="container">
+		<div class="col-sm-7">
 		<div class="btn-group" role="group">
-			<a data-backdrop="static" data-keyboard="false" href="#divObjModal" role="button" class="btn btn-default" data-toggle="modal"> 
+			<a data-backdrop="static" data-keyboard="false" href="#divObjModal" role="button" class="btn btn-primary" data-toggle="modal"> 
 				<span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Divisional Objectives
 			</a> <!-- end View Objectives button link -->
 
-			<a data-backdrop="static" data-keyboard="false" href="#defMetricsModal" role="button" class="btn btn-default" data-toggle="modal"> 
+			<a data-backdrop="static" data-keyboard="false" href="#defMetricsModal" role="button" class="btn btn-primary" data-toggle="modal"> 
 				<span class="glyphicon glyphicon-cog"></span> Define Financial Metrics
 			</a> <!-- end View Scorecards button link -->
 
-			<a data-backdrop="static" data-keyboard="false" href="#employeeSCModal" role="button" class="btn btn-default" data-toggle="modal"> 
+			<a data-backdrop="static" data-keyboard="false" href="#employeeSCModal" role="button" class="btn btn-primary" data-toggle="modal"> 
 				<span class="glyphicon glyphicon-user"> </span><span class="glyphicon glyphicon-list-alt"> </span> Employee Scorecards
 			</a> <!-- end Evaluate Employee button link -->
 			
@@ -30,6 +32,29 @@
 					Objectives Approved 
 				</a>
 			</div>
+		</div>
+		</div>
+		<div class="panel panel-primary col-sm-5 col-sm-offset-1">
+			<div class="panel-heading">			
+				<h4 class="panel-title"> <span class="glyphicon glyphicon-resize-small"> </span>HR Mini-Dash</h4>
+			</div>
+			<div class="panel-body">
+				<div class="btn-group ">
+					<button class="btn btn-info" href="#">Last Month</button>
+					<button class="btn" href="#">This year</button>
+					<button class="btn" href="#">Company Employee Rating</button>
+				</div>
+				<hr>
+				<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<p>No Data Found!</p>
+				</div>				
+			</div>
+			<div class="panel-footer">
+				<button class="btn  btn-small btn-danger" href="#"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear</button>
+				<button class="btn btn-small btn-success" href="#" ><span class="glyphicon glyphicon-ok"></span>&nbsp;Save Dashboard</button>
+			</div>
+		</div>
 		</div>
 	</div> <!--end panel-->
 </div> <!--end HRTab div-->
