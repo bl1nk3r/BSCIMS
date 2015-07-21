@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Bootstrap -->
 		<!-- Website Title & Description for Search Engine purposes -->
-		<link rel="SHORTCUT ICON" href="/images/SEC.ico"/>
-		<title>BSCIMS Login</title><meta name="description" content="">
+		<link rel="SHORTCUT ICON" href="/images/favicon.ico"/>
+		<title>Sebentile | Login</title><meta name="description" content="">
 
 		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 		
@@ -24,117 +24,36 @@
 		<script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
 		<script type="text/javascript" src="/bower_components/annyang/annyang.js"></script>
 		<script type="text/javascript" src="/js/features/controller.js"></script>
-
-		<style type="text/css">
-
-					@import('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css') .funkyradio div {
-					clear: both;
-						    /*margin: 0 50px;*/
-					overflow: hidden;
-						}
-						.funkyradio label {
-						    /*min-width: 400px;*/
-						    width: 100%;
-						    border-radius: 3px;
-						    border: 1px solid #D1D3D4;
-						    font-weight: normal;
-						}
-						.funkyradio input[type="radio"]:empty, .funkyradio input[type="checkbox"]:empty {
-						    display: none;
-						}
-						.funkyradio input[type="radio"]:empty ~ label, .funkyradio input[type="checkbox"]:empty ~ label {
-						    position: relative;
-						    line-height: 2.5em;
-						    text-indent: 3.25em;
-						    margin-top: 2em;
-						    cursor: pointer;
-						    -webkit-user-select: none;
-						    -moz-user-select: none;
-						    -ms-user-select: none;
-						    user-select: none;
-						}
-						.funkyradio input[type="radio"]:empty ~ label:before, .funkyradio input[type="checkbox"]:empty ~ label:before {
-						    position: absolute;
-						    display: block;
-						    top: 0;
-						    bottom: 0;
-						    left: 0;
-						    content:'';
-						    width: 2.5em;
-						    background: #D1D3D4;
-						    border-radius: 3px 0 0 3px;
-						}
-						.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before, .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
-						    content:'\2714';
-						    text-indent: .9em;
-						    color: #C2C2C2;
-						}
-						.funkyradio input[type="radio"]:hover:not(:checked) ~ label, .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
-						    color: #888;
-						}
-						.funkyradio input[type="radio"]:checked ~ label:before, .funkyradio input[type="checkbox"]:checked ~ label:before {
-						    content:'\2714';
-						    text-indent: .9em;
-						    color: #333;
-						    background-color: #ccc;
-						}
-						.funkyradio input[type="radio"]:checked ~ label, .funkyradio input[type="checkbox"]:checked ~ label {
-						    color: #777;
-						}
-						.funkyradio input[type="radio"]:focus ~ label:before, .funkyradio input[type="checkbox"]:focus ~ label:before {
-						    box-shadow: 0 0 0 3px #999;
-						}
-						.funkyradio-default input[type="radio"]:checked ~ label:before, .funkyradio-default input[type="checkbox"]:checked ~ label:before {
-						    color: #333;
-						    background-color: #ccc;
-						}
-						.funkyradio-primary input[type="radio"]:checked ~ label:before, .funkyradio-primary input[type="checkbox"]:checked ~ label:before {
-						    color: #fff;
-						    background-color: #337ab7;
-						}
-						.funkyradio-success input[type="radio"]:checked ~ label:before, .funkyradio-success input[type="checkbox"]:checked ~ label:before {
-						    color: #fff;
-						    background-color: #5cb85c;
-						}
-						.funkyradio-danger input[type="radio"]:checked ~ label:before, .funkyradio-danger input[type="checkbox"]:checked ~ label:before {
-						    color: #fff;
-						    background-color: #d9534f;
-						}
-						.funkyradio-warning input[type="radio"]:checked ~ label:before, .funkyradio-warning input[type="checkbox"]:checked ~ label:before {
-						    color: #fff;
-						    background-color: #f0ad4e;
-						}
-						.funkyradio-info input[type="radio"]:checked ~ label:before, .funkyradio-info input[type="checkbox"]:checked ~ label:before {
-						    color: #fff;
-						    background-color: #5bc0de;
-						}
-		</style>		
-				<!-- Custom CSS -->
-				<link href="includes/css/styles.css" rel="stylesheet">
-				<!-- Include Modernizr in the head, before any other Javascript -->
-				<script src="includes/js/modernizr-2.6.2.min.js"></script>	
+		<!-- Custom CSS -->
+	    <link href="includes/css/styles.css" rel="stylesheet">
+	    <!-- Include Modernizr in the head, before any other Javascript -->
+		<script src="includes/js/modernizr-2.6.2.min.js"></script>	
 	</head>
 	<body ng-app="BSCIMS">
 		<div class="container">  			
 			<div class="panel">
 				<a class="navbar-brand" href="/">
-					<img class=".img-responsive img-rounded"  src="images/SEC.png" width="170" height="130"  alt="SEC Logo">
+					<img class="img-responsive img-rounded"  src="images/logo.png" width="170" height="110"  alt="Logo">
 				</a>
 				<div>
-					<h2 class="text-left"><strong><p class="text-primary">BSCIMS </p> </strong></h2><span class="label label-primary">Perfomance Management</span> <span class="badge" > v 0.0.1</span> 
+					<h2 class="text-left"><strong><p class="text-primary">Sebentile</p> </strong></h2><span class="label label-info">Fast, Simple, Efficient. </span>&nbsp;
+					<span class="badge badge-info"> v 0.0.1</span> 
 				</div>
 			</div> <!--end panel-->
 
 	        <div id="loginbox" style="margin-top:20px;" class="mainbox col-md-6 col-md-offset-6 col-sm-8 col-sm-offset-2"> 
-
 	            <div class="panel panel-primary" >
 	                    <div class="panel-heading">
 	                        <div class="panel-title">Sign In <span class = "glyphicon glyphicon-log-in"></span></div>                       
 	                    </div>     
-	                    <div style="padding-top:10px" class="panel-body" >
-	                        <div id="login-alert" class="alert alert-info col-sm-12"> <p style=" color: #000000;"> Tip: Use your Novell credentials! </p> </div>                            
+	                    <div style="padding-top:5px" class="panel-body" >
+	                        <div id="login-alert" class="alert alert-info col-sm-12">
+								<button type="button" class="close" data-dismiss="alert-info">×</button>
+								Tip: Use your Novell credentials!</div>
+							<div>
 	                        <form class="form-horizontal" role="form" name = "loginForm" action="/login" method="post">                                  
 	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.empName.$invalid && loginForm.empName.$dirty}">
+										
 	                                	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 	                                	<input id="loginName" type="text" name="username" class="form-control" 
 	                                	placeholder="username" required ng-pattern="/^sec[0-9]/" ng-maxlength=7 ng-model="empName">
@@ -163,29 +82,35 @@
 		                                </span>
 	                            	</div> 
 
-	                        		<div id="wrapper" align="">
-	                        			<label>Access Level :</label>
-
+	                        		<div id="wrapper" class="wrapper">
+	                        			<label class="text text-primary"><strong>Select your Access Level :</strong></label>
 	                           			<div class="form-group">
-	                            		  <label for="roleAdmin" class="col-sm-4 control-label">Employee <span class = "glyphicon glyphicon-user"></label>
+	                            		  <label for="roleAdmin" class="col-sm-4 control-label">Employee</label>
 	                              			<div class="col-sm-2">
-	                                			<input type="checkbox" name="empRole" class="form-control" id="empRole" ng-model="empRole" ng-init="empRole=true">
+	                                			<input type="checkbox" name="empRole" class="form-control" id="empRole" ng-model="empRole">
 	                              			</div>
 	                            		</div>
 
 		                            	<div class="form-group">
-		                              		<label for="roleSup" class="col-sm-4 control-label">Supervisor <span class = "glyphicon glyphicon-eye-open"></span></label>
+		                              		<label for="roleSup" class="col-sm-4 control-label">Supervisor</label>
 		                              		<div class="col-sm-2">
 		                                		<input type="checkbox" name="supervisorRole" class="form-control" id="supervisorRole" ng-model="supervisorRole">
 		                              		</div>
 		                            	</div> 
 
+										<div class="form-group">
+		                              		<label for="admin" class="col-sm-4 control-label">Administrator</label>
+		                              		<div class="col-sm-2">
+		                                		<input type="checkbox"  name="adminRole" class="form-control" id="adminRole" ng-model="adminRole">
+		                              		</div>
+	                            		</div> 
 	                            		<div class="form-group">
-		                              		<label for="hrSup" class="col-sm-4 control-label">Human Resouces <span class = "glyphicon glyphicon-globe"></span></label>
+		                              		<label for="hrSup" class="col-sm-4 control-label">Human Resouces</label>
 		                              		<div class="col-sm-2">
 		                                		<input type="checkbox"  name="HRRole" class="form-control" id="HRRole" ng-model="HRRole">
 		                              		</div>
-	                            		</div> 
+	                            		</div>
+										
 						    		</div>
 
 	                       			<br>
@@ -193,11 +118,12 @@
 	                                    <!-- Button -->
 	                                    <div class="col-sm-12 controls">                                 
 	                                    <button id="loginButton" style="float:right;" class="btn btn-lg btn-primary "> 
-	                                    <span class=".glyphicon .glyphicon-log-in" ></span> Login</button>
+	                                    <span class="glyphicon glyphicon-user" ></span> Login</button>
 	                                    </div>
 	                           		</div>
 
-	                       	</form>     
+	                       	</form>
+							</div>
 	                    </div>                     
 	            </div>  <!--end panel-primary-->
 
@@ -207,6 +133,7 @@
 
 	    <!--script type="text/javascript" src="/js/angular.min.js"></script>
 	    <link href="css/bootstrap.min.css" rel="stylesheet"-->
+	    <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 	    <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>
 	    <script type="text/javascript" src="includes/js/jquery-1.8.2.min.js"></script>
 	    <script type="text/javascript" src="/js/mkActivePane.js"></script>	

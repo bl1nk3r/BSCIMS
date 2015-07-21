@@ -24,7 +24,7 @@ var mongojs = require("mongojs")
 //use the default port for Mongo server/client connections			
     ,port = "27017"					
 //init BSCIMS (database) and Objectives (collection)
-    ,db = mongojs("BSCIMS", ["Objectives","Division","Transaction","Document","Employees", "Scorecard"]);
+    ,db = mongojs("bscims", ["Objectives","Division","Transaction","Document","Employees", "Scorecard"]);
 
 //instantiate the server application 
 var bsc = express()
@@ -90,8 +90,11 @@ var bsc = express()
 					if (req.body.HRRole == 'on') {
 						formRoles.push('HR');
 					}
+					if (req.body.adminRole == 'on') {
+						formRoles.push('admin');
+					}
 
-					// capture role errors : when no role was choose or when a role where the user is not allowed was choosen
+					// capture role errors : when no role was chosen or when a role where the user is not allowed was choosen
 					if (formRoles.length == 0) {
 						res.render('login', {error: 'Choose atleast one role!'});
 					} else if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') == -1)) {
@@ -100,6 +103,8 @@ var bsc = express()
 	   					res.render('login', {error: 'You do not have access to sup role'});
 	   				} else	if ((formRoles.indexOf('HR')  !== -1) && (data.roles.indexOf('HR') == -1)) {
 	   					res.render('login', {error: 'You do not have access to HR role'});
+	   				} else	if ((formRoles.indexOf('admin')  !== -1) && (data.roles.indexOf('admin') == -1)) {
+	   					res.render('login', {error: 'You do not have access to admin role'});
 	   				} else {
 	   					// create an array of roles that the user has choosen
 	   					if ((formRoles.indexOf('employee') !== -1) && (data.roles.indexOf('employee') !== -1)) {
@@ -111,6 +116,9 @@ var bsc = express()
 		   				if ((formRoles.indexOf('HR') !== -1) && (data.roles.indexOf('HR') !== -1)) {
 		   					currRoles.push('HR');
 		   				}
+		   				if ((formRoles.indexOf('admin') !== -1) && (data.roles.indexOf('admin') !== -1)) {
+		   					currRoles.push('admin');
+		   				}
 		   				
 	   					req.session.loggdUser = {userName:data.userName,empName:data.empName,PFNum:data.PFNum,dbRoles:data.roles, currentRoles:currRoles};
 		   				res.redirect('/');
@@ -118,6 +126,10 @@ var bsc = express()
 	   			} else {
 	   				var msg = {error: 'Incorrect credentials, login again'};
 	   				res.render('login', msg);
+	   			}
+//COMMENT
+	   			for (var i = 0; i< currRoles.length; i++) {
+	   				console.log(currRoles[i]);
 	   			}
    			})
 		}
@@ -135,7 +147,7 @@ var bsc = express()
 		req.session.destroy();
 		//req.session.userId = '';
 		res.redirect('/login');
-		console.log("logout");
+		console.log("***********************************************************logged out*********************************************");
 	})
 
 
@@ -183,6 +195,38 @@ var bsc = express()
 				//console.log("say!");		
 			});
 	})
+
+//******************************
+	/* FOR SELF EVALUATION*/
+	//get all KPAs
+	.post("/getKPAs", function (req, res) {
+	   		console.log("Retrieving all aproved KPAs");
+			db.Objectives.find({status: "approved"}, function (err, data) {
+				if (err || !data) {
+					console.log("No Approved KPA's found");
+				} else { 
+					console.log(data);
+					res.send(data);
+				
+				}
+				//onsole.log(res);
+				//console.log("say!");		
+			});
+	})
+	//self evaluationn
+	.put('/completeSelfEval/:id', function (req, res) {
+		var id = req.params.id;
+		console.log(req.body);
+		db.Objectives.findAndModify({query:{_id: mongojs.ObjectId(id)},
+			update: {$set: {kpiComment: req.body.kpiComment, kpiAttachment: req.body.kpiAttachment, kpiRating: req.body.kpiRating}},
+			new: true}, function (err, data) {
+				res.send("Evaluationn completed for current KPI");
+			});
+		
+	})
+
+//********************************
+
 
 	.post("/getUnapprovedObjectives", function ( req, res) {
 	   		//console.log("Beginning of route");
@@ -533,6 +577,6 @@ var bsc = express()
 
 
 //Log on the console the 'init' of the server
-console.log("Server initialized on port 3002...");
+console.log("Server initialized on port 3003...");
 
 module.exports = bsc;

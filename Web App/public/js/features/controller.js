@@ -109,6 +109,8 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.isEmp = false,
 		$scope.HRRole = false,
 		$scope.isHR = false,
+		$scope.adminRole = false,
+		$scope.isAdmin = false,
 		$scope.loginError = "Enter Your ID!",
 		$scope.hasLoginError = false,
 		$scope.empRole.checked = true;
@@ -135,6 +137,9 @@ var bsc = angular.module('BSCIMS', []);
 				}
 				if (resp.currentRoles.indexOf('HR') !== -1) {
 					$scope.isHR = true;
+				}
+				if (resp.currentRoles.indexOf('admin') !== -1) {
+					$scope.isAdmin = true;
 				}
 
 				console.log($scope.isHR);
@@ -334,6 +339,10 @@ var bsc = angular.module('BSCIMS', []);
 
 	}])
 
+ /*************************************************************************************************************************************************************************************************
+ ********************************************************HUMAN RESOURCE CONTROLLER*****************************************************************************************************************
+ *************************************************************************************************************************************************************************************************/
+
  .controller('hrRolesController',['$scope','$http','manageEmployeeData', function($scope, $http, manageEmployeeData){
 		$scope.getDivisions = function () {
 			manageEmployeeData.getDivs()
@@ -385,6 +394,14 @@ var bsc = angular.module('BSCIMS', []);
 				console.log(resp);
 			});
 		}
+ }])
+
+ /*************************************************************************************************************************************************************************************************
+ ********************************************************ADMINISTRATOR  CONTROLLER*****************************************************************************************************************
+ *************************************************************************************************************************************************************************************************/
+
+ .controller('adminController',['$scope','$http','manageEmployeeData', function($scope, $http, manageEmployeeData){
+	
  }])
 
 
@@ -1590,6 +1607,107 @@ var bsc = angular.module('BSCIMS', []);
 			console.log("initScorecard is throwing errors!!!");
 		});
 	}
+
+
+
+	//function selfEvalCtrl($scope, $http) {   
+
+			$scope.increment = function(Obj) {
+				//console.log(Obj.rating);
+				Obj.rating += 1; 
+				console.log(Obj.rating);
+			};
+			$scope.decrement = function(Obj) {
+				Obj.rating -=1;
+			};
+
+			//to get all KPAs
+			$scope.getAllKPAs = function() {
+				//route to server to get data
+				//$http.get('/getKPAs')
+				//$scope.rating = 0;
+				approvedObjectives.getApproved().success(function(res){
+					console.log("I got the KPAs");
+					//console.log(res);
+
+					$scope.appFinObj = [];
+					$scope.appCustObj = [];
+					$scope.appIntObj = [];
+					$scope.appLearnObj = [];
+					$scope.kpi = [];
+
+					res.forEach(function(kpi){
+			       		$scope.kpi.push(kpi);
+			        	if (kpi.perspective == "finance") {
+			          		$scope.appFinObj.push(kpi);
+			        	} else if (kpi.perspective == "customer") {
+							$scope.appCustObj.push(kpi);
+						}
+						else if (kpi.perspective == "internal") {
+							$scope.appIntObj.push(kpi);
+						}
+						else if (kpi.perspective == "learn") {
+							$scope.appLearnObj.push(kpi);
+						}
+			      	});
+			      	console.log($scope.appFinObj);
+					/*
+					for (var i = 0; i<res.length; i++) {
+						$scope.kpi.push(res[i]);
+						if (res[i].perspective == "finance") {
+							$scope.appFinObj.push(res[i]);
+						}
+						else if (res[i].perspective == "customer") {
+							$scope.appCustObj.push(res[i]);
+						}
+						else if (res[i].perspective == "internal") {
+							$scope.appIntObj.push(res[i]);
+						}
+						else if (res[i].perspective == "learn") {
+							$scope.appLearnObj.push(res[i]);
+						}
+					}*/
+				});
+			};	
+			$scope.addSelfEvaluation = function(id){
+				console.log($scope.kpi.DSO);
+				/*
+				$http.put('/completeSelfEval/'+ $scope.kpi._id, $scope.kpiAttachment, $scope.kpiComment, $scope.kpiRating).success(function (response){
+					console.log(response);
+					
+				});*/
+
+			};
+			/*
+			//remove function 
+			$scope.remove = function (id){
+				console.log(id);
+				$http.delete('/contactList/' + id).success(function(response) {
+					refresh();
+				});
+			};//end of remove
+			 
+			$scope.edit = function(id) {
+				console.log(id);
+				$http.get('/contactList/' + id).success(function(response) {
+					$scope.contact = response;
+				});
+
+			};
+
+			$scope.update = function(id) {
+				console.log($scope.contact._id);
+				$http.put('/contactList/' + $scope.contact._id, $scope.contact).success(function(response){
+					refresh();
+				})
+			};
+		*/
+			
+
+		//}//end of self evaluation controller
+
+
+
 }])
 
 
@@ -1640,6 +1758,8 @@ var bsc = angular.module('BSCIMS', []);
 		$scope.learnEditLabel = true;
    		$scope.learnUnedittable = true;
    		$scope.learnEditLabelText = "Unlock Objective";
+   		//Leave table of employees visible (rather than toggling between 'show and hide') 
+   		$scope.empKPAs = true;
    		//Edit Finance Objective Button logic for toggling between states of "Edit" && "Lock"
    		$scope.editFinanceObjective = function() {
    			$scope.financeUnedittable = !$scope.financeUnedittable;
@@ -1714,10 +1834,10 @@ var bsc = angular.module('BSCIMS', []);
    		});
 
    		//toggle display of Employee information with KPAs
-   		$scope.empKPAs = false;
+   		/*$scope.empKPAs = false;
    			$scope.toggleEmpKPA = function() {
    				$scope.empKPAs = !$scope.empKPAs;
-   		}
+   		}*/
 
    		$scope.getEmps = function() {
    			//getSecEmployees.success(function (res) {
@@ -1843,4 +1963,10 @@ var bsc = angular.module('BSCIMS', []);
 				console.log("Buzzer sound!!!");
 			});
 		}
+
+
+
+		/* SELF EVAlUATION CONTROLLER*/
+
+
    }]);
