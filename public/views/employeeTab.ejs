@@ -1,0 +1,83 @@
+<div class="tab-pane fade in active" id="employeeTab">	 
+	<div class="panel panel-inverse">
+			<div class="panel-heading">
+				<h3 class="panel-title">Employee Quick Actions</h3>
+			</div>
+		<div class="container"> 
+		<div class="row-fluid">
+		<div class="col-sm-8">	
+	<div id="quickActionsBtnGroup" class="btn-group" role="group" ng-controller="submitObjController">
+		<a data-backdrop="static" data-keyboard="false" href="#createObjModal" role="button" class="btn btn-primary" data-toggle="modal"> 
+			<span class="glyphicon glyphicon-plus"></span>&nbsp;Create Objective (KPA)
+		</a> <!-- end Create an Objective button link -->
+		<!--CREATE OBJECTIVE MODAL-->
+		<a data-backdrop="static" data-keyboard="false" ng-click="retrieveObjectives()" href="#submitObjModal" role="button"class="btn btn-primary" data-toggle="modal"> 
+			<span class="glyphicon glyphicon-share"></span>&nbsp;Submit Objective(s) 
+		</a> <!-- end Submit Objectives button link-->
+		<!--SUBMIT OBJECTIVE MODAL-->
+		<a data-backdrop="static" data-keyboard="false" href="#scorecardModal" ng-click="retrieveApproved();ScorecardCreate()" role="button" class="btn btn-primary" data-toggle="modal">
+			<span class="glyphicon glyphicon-book"></span>&nbsp;View Scorecard 
+		</a> <!-- end Compile SC button link-->
+		<!--COMPILE SCORECARD MODAL-->
+		<!--SCORECARD MODAL-->
+		<a data-backdrop="static" data-keyboard="false" href="#evalModal" ng-click="getAllKPAs();" role="button" class="btn btn-primary" data-toggle="modal">
+			<span class="glyphicon glyphicon-filter"></span>&nbsp;Self Evaluation
+		</a> <!-- end Create an Objective button link -->
+		<br><br>
+		<div id="panelListGroupDiv" class="list-group" ng-controller="empPanelInfoCtrl">
+			<a href="#" class="list-group-item"> <span class="badge"> 0 </span><span class="glyphicon glyphicon-asterisk"> </span> Notifications </a>
+			<a href="#" class="list-group-item"> <span class="badge"> 3 </span><span class="glyphicon glyphicon-inbox"> </span> Emails </a>
+			<a href="#" class="list-group-item"> <span class="badge" ng-model="unapprovedVal"> {{unapprovedVal}} </span><span class="glyphicon glyphicon-thumbs-down"> </span> Unapproved </a>
+			<a href="#" class="list-group-item"> <span class="badge" ng-model="pendingVal"> {{pendingVal}} </span><span class="glyphicon glyphicon-repeat"> </span> Pending 
+			</a>
+			<a href="#" class="list-group-item"> <span class="badge"> 1 </span><span class="glyphicon glyphicon-ok-circle"> </span> Completed </a>
+			<a href="#" class="list-group-item"> <span class="badge" ng-model="approvedVal"> {{approvedVal}} </span><span class="glyphicon glyphicon-thumbs-up"> </span> Approved 
+			</a>
+		</div> <!-- end panelListGroupDiv-->
+	</div> <!--end btn-group-->
+		</div>
+		<div class="panel panel-primary col-sm-4">
+			<div class="panel-heading">			
+				<h4 class="panel-title"> <span class="glyphicon glyphicon-resize-small"> </span>Mini-Dash</h4>
+			</div>
+			<div class="panel-body">
+				<div class="btn-group ">
+					<button class="btn btn-info" href="#">Prev. Rating</button>
+					<button class="btn" href="#">Curr. Rating</button>
+					<button class="btn" href="#">Overrall Rating</button>
+				</div>
+				<hr>
+				<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert">X</button>
+					<p>No Data Found!</p>
+				</div>
+				
+			</div>
+			<div class="panel-footer">
+				<button class="btn  btn-small btn-danger" href="#"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear</button>
+				
+			</div>
+		</div>
+		</div>
+		<!--
+		<div class="row-fluid">
+		
+		<div class="panel panel-primary col-sm-5 col-sm-offset-2">
+			<div class="panel-heading">				
+				<h4 class="panel-title"> <span class="glyphicon glyphicon-resize-small"> </span>My Activity</h4>
+			</div>
+			<div class="panel-body">
+				<hr>
+				<div class="alert alert-info">
+					<button type="button" class="close" data-dismiss="alert">X</button>
+					<p>To display user's activity on system..</p>
+				</div>				
+			</div>
+			<div class="panel-footer">
+				<button class="btn  btn-small btn-primary" href="#"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Refresh</button>
+			</div>
+		</div>
+		</div>	-->
+	</div>
+	</div>
+</div> <!-- end of employee tab -->

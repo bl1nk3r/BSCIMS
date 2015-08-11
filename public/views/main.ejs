@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+	<head>  	
+		<link rel="SHORTCUT ICON" href="/images/favicon.ico"/>
+		<title>Sebentile | PMS</title>
+		<base href="/"> 
+		<meta name="description" content="">
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">	
+		<!-- Mobile viewport optimized -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">		
+		<!-- Bootstrap CSS -->
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/includes/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<!--AngularJS script -->
+		<!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.js"></script-->
+		<!-- Custom CSS -->
+		<link href="/includes/css/styles.css" rel="stylesheet">	
+		<link href="/includes/css/malhar-angular-dashboard.css" rel="stylesheet">	
+		
+		<!-- Include Modernizr in the head, before any other Javascript -->
+		<script src="/includes/js/modernizr-2.6.2.min.js"></script>
+		<link rel="stylesheet" href="/../bower_components/malhar-angular-dashboard/dist/angular-ui-dashboard.css">
+		<script src="/../bower_components/malhar-angular-dashboard/dist/angular-ui-dashboard.js"></script>
+	</head>
+	<body ng-app="BSCIMS" ng-controller="compileController"> 
+		<div class="container" width="900px" ng-controller="manageEmployees">
+			<div class="panel">
+				<img class="img img-responsive img-rounded" style="float:right;margin:0 0 0 0;position: relative;" src="images/head.gif" height="80px"  alt="">
+				<a class="navbar-brand" href="/">
+					<img class="img img-responsive img-rounded"  src="images/sebentile.png" width="170" height="120"  alt="Logo">
+				</a>
+				<div>					
+					<h2 class="text-left"><strong><p class="text-primary">Sebentile&#8482;</p></strong></h2>	
+					<span class="label label-info">Fast, simple, Efficient. </span>&nbsp;&nbsp; 
+					<span class="badge"> v 0.0.1</span>				 							
+				</div>
+				&nbsp; 
+			</div> <!--end panel-->		
+			<div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">	
+                    	<li class="active" ng-if="isEmp"> 
+                    		<a href="#homeTab" data-toggle="tab"> 
+                         		<span class = "glyphicon glyphicon-home"></span> 
+                         		Home
+                         	</a>
+                         </li>
+                       	<li>
+                       		<a href="#dashboardTab" data-toggle="tab"> 
+                       			<span class = "glyphicon glyphicon-resize-full"></span> 
+                       			Dashboard
+                       		</a>
+                       	</li>
+						<li>
+                       		<a href="#reportsTab" data-toggle="tab"> 
+                       			<span class = "glyphicon glyphicon-briefcase"></span> 
+                       			Reports
+                       		</a>
+                       	</li>
+						<ul class="nav navbar-nav pull-right" id="myAccount">		
+							<li class="dropdown">		
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<span class="glyphicon glyphicon-user" ng-model="loggedUserName"></span>&nbsp; {{loggedUserName}}<strong class="caret"></strong>
+								</a>		
+								<ul class="dropdown-menu">	
+									<li class="dropdown-header">User Options</li>
+									<li><a href="#changePasswd" data-toggle="modal"><span class="glyphicon glyphicon-lock"></span>Change Password</a></li>
+									<li class="divider"></li>	
+									<li class="dropdown-header">More</li>	
+									<li><a href="#" disabled><span class="glyphicon glyphicon-wrench" ></span> Preferences</a></li>	
+									<li><a href="3" ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Logout</a></li>		
+								</ul>
+								<div class="modal fade" id="changePasswd" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+									<div  class="modal-dialog" style="width:30%;">
+										<div  class="modal-content"> 
+											<div  class="modal-header">
+												<img class="img-responsive" style="float:left;"  src="images/sebentile.png" width="40" height="40"  alt="Logo">&nbsp;
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+												<h4 class="modal-title">Change Your Password</h4>
+											</div>
+											<div class="modal-body container-fluid">
+												<div class="alert alert-warning">Choose a password with a minumum of 6 characters ...</div>
+												<div class="panel">
+													<form>
+														<div class="form-group">
+															<label>Current Password</label>
+															<input type="password" class="form-control col-sm-6" id="curPassword" ng-model="curPassword" placeholder="Enter Current Password">
+														</div>
+														<div class="form-group">
+															<label>New Password</label>
+															<input type="password" class="form-control col-sm-6" id="newPassword" ng-model="newPassword" placeholder="Enter New Password">
+														</div>
+														<div class="form-group">
+															<label>Confirm Password</label>
+															<input type="password" class="form-control col-sm-6" id="newPassword" ng-model="newPassword" placeholder="Enter New Password Again">
+														</div>
+													</form>
+													<br>
+												</div>
+											</div>
+											<div id="" class="modal-footer">
+												<button class="btn btn-small btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;Confirm </button>
+												<button class="btn btn-small btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul> <!--end ul myAccount-->
+                    </ul>
+                </div> <!--end panel-heading-->
+                <div class="panel-body">
+                    <div class="tab-content">
+						<div class="tab-pane fade in active" id="homeTab">
+							<div class="panel with-nav-tabs panel-default">
+								<div class="panel-heading">
+									<ul class="nav nav-tabs">	
+										<li ng-if="isEmp"> 
+											<a href="#employeeTab" data-toggle="tab" > 
+												<span class = "glyphicon glyphicon-user"></span>&nbsp; 
+												Employee
+											</a>
+										</li>
+										<li ng-if="isSup">
+											<a href="#supervisorTab" data-toggle="tab" > 
+												<span class = "glyphicon glyphicon-eye-open"></span>&nbsp; 
+												Supervisor
+											</a>
+										</li>
+										<li ng-if="isAdmin"> 
+											<a href="#adminTab" data-toggle="tab" ng-click="getDivisions()" > 
+												<span class = "glyphicon glyphicon-wrench"></span>&nbsp; 
+												Administrator
+											</a>
+										</li>
+										<li ng-controller="hrRolesController" ng-if="isHR">
+											<a href="#HRTab" data-toggle="tab" ng-click="getDivisions()"> 
+												<span class = "glyphicon glyphicon-folder-open"></span> &nbsp;
+												Human Resources
+											</a>
+										</li>                     
+									</ul>
+								</div> <!--end panel-heading-->
+								<div class="panel-body">
+									<div class="tab-content">
+										<!-- Supervisor Tab content -->
+										<% include supervisorTab %>		
+										<!-- HR Tab content -->
+										<% include hrTab %>
+										<!-- Admin Tab content -->
+										<% include adminTab %> 
+										<!-- Employee Tab content-->
+										<% include employeeTab %>
+										<!-- Invoke all modals-->
+										<%include modals %>
+									</div> <!-- end tab content  -->
+								</div> <!--end panel-body-->
+							</div> <!--panel with-nav-tabs panel-default-->
+						</div><!--end home tab content-->
+						<div class="tab-pane fade in" id="dashboardTab">
+							<div class="tab-content" ng-controller="">
+								<div class="container">
+									<div class="panel" dashboard="dashboardOptions">
+										
+									</div>
+								</div>
+							</div>
+						</div>						
+						<div class="tab-pane fade in" id="reportsTab">
+							<div class="modal fade" id="sysAcessReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">System Access Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for system access report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>						
+							<div class="modal fade" id="sysUsageReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">System Usage Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for system usage report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="sysBackupReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">System Backup Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for system backup report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="perfByEmpReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">Perfomance By Employee Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for Perfomance by Employee report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="perfBySecReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">Perfomance by Section Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for Perfomance by section report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="perfByDepReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">Perfomance By Department Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for Peformance by department report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="perfByDivReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">Peformance By Division Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for Perfomance by division report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="coPerfByMoReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">Company Perfomance By Month Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for company performance by month report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal fade" id="coPerfByYrReport" tabindex="-1" role="dialog" aria-labelledby="panelLabel" aria-hidden="true" >
+								<div  class="modal-dialog">
+									<div  class="modal-content"> 
+										<div  class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+											<h4 class="modal-title">Company Perfomance By Year Report</h4>
+										</div>
+										<div class="modal-body container-fluid">
+											<div class="alert alert-info">Select relevent parameters for company peformance by year report</div>
+										</div>
+										<div id="" class="modal-footer">
+											<button class="btn btn-info"><span class="glyphicon glyphicon-print"></span>&nbsp;Print</button> &nbsp;
+											<button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;Close</button>
+										</div>
+									</div>
+								</div>
+							</div>							
+							<div class="panel">
+								<div class="btn-block">
+									<button class="btn btn-large" href="#sysAcessReport" data-toggle="modal">System Access</button>&nbsp;&nbsp;&nbsp;   
+									<button class="btn btn-large" href="#sysUsageReport" data-toggle="modal">System Usage </button>&nbsp;&nbsp;&nbsp;   
+									<button class="btn btn-large" href="#sysBackupReport" data-toggle="modal">System Backup</button>&nbsp;&nbsp;&nbsp;   
+								</div>
+								<hr>
+								<div class="btn-block">
+									<button class="btn btn-large" href="#perfByEmpReport" data-toggle="modal">Perfomance By Individual</button>&nbsp; &nbsp; &nbsp; 
+									<button class="btn btn-large" href="#perfBySecReport" data-toggle="modal">Perfomance By Section</button>&nbsp; &nbsp; &nbsp; 
+									<button class="btn btn-large" href="#perfByDepReport" data-toggle="modal">Perfomance By Department</button>&nbsp; &nbsp; &nbsp; 
+								</div>
+								<hr>
+								<div class="btn-block">
+									<button class="btn btn-large" href="#perfByDivReport" data-toggle="modal">Perfomance By Division</button>&nbsp; &nbsp; &nbsp; 
+									<button class="btn btn-large" href="#coPerfByMoReport" data-toggle="modal">Company Perfomance By Month</button>&nbsp; &nbsp; &nbsp; 
+									<button class="btn btn-large" href="#coPerfByYrReport" data-toggle="modal">Company Perfomance By Year</button>&nbsp; &nbsp; &nbsp;
+								</div>
+							</div>
+						</div>				
+					</div><!--end tab content-->
+				</div><!--end panel body-->
+			</div><!-- end panel-->
+		</div> <!--end container-->
+		<footer id="foot" style="position: fixed; bottom:0; left:0; height: 40px; width: 100%" >
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<h6>Copyright &copy; MEAN-PMS </h6>
+					</div> <!-- end col-sm-6-->
+				</div> <!-- end row -->
+			</div> <!-- end container-->
+		</footer> <!-- end footer-->
+		
+		<script> window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
+		<script type="text/javascript" src="/js/angular.min.js"></script>
+		<script type="text/javascript" src="/js/features/controller.js"></script>	
+		<!-- Bootstrap JS -->
+		<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/malhar-angular-dashboard.js"></script>
+		
+		<!--Adding ref of ngfile upload -->
+		<script type="text/javascript" src="/js/ng-file-upload-all.min.js"></script>
+		<script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="/bower_components/annyang/annyang.js"></script>		
+		<script type="text/javascript" src="/js/effects.js"></script>
+		<script type="text/javascript" src="/js/mkActivePane.js"></script>		
+		<script type="text/javascript" src="/js/objData.js"></script>
+		<script type="text/javascript" src="/js/selfevalbtn.js"></script>
+		
+		<script src="/includes/js/script.js"></script>
+	</body>
+</html>

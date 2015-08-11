@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">  
+	<head> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="SHORTCUT ICON" href="/images/favicon.ico"/>
+		<title>Sebentile | Login</title><meta name="description" content="">
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/includes/css/bootstrap-glyphicons.css" rel="stylesheet">
+	    <link href="includes/css/styles.css" rel="stylesheet">
+	    <!-- Include Modernizr in the head, before any other Javascript -->
+	</head>	
+	<body ng-app="BSCIMS">
+		<div class="container">  			
+			<div class="panel">
+				<a class="navbar-brand" href="/">
+					<img class="img-responsive img-rounded"  src="images/sebentile.png" width="170" height="110"  alt="Logo">
+				</a>
+				<div>
+					<h2 class="text-left"><strong><p class="text-primary">Sebentile&#8482;</p> </strong></h2><span class="label label-info">Fast, Simple, Efficient. </span>&nbsp;
+					<span class="badge badge-info"> v 0.0.1</span> 
+				</div>
+			</div> <!--end panel-->
+	        <div id="loginbox" style="margin-top:20px;" class="mainbox col-md-6 col-md-offset-6 col-sm-8 col-sm-offset-2"> 
+	            <div class="panel panel-primary" >
+	                    <div class="panel-heading">
+	                        <div class="panel-title">Sign In <span class = "glyphicon glyphicon-log-in"></span></div>                       
+	                    </div>     
+	                    <div style="padding-top:5px" class="panel-body" >
+	                        <div id="login-alert" class="alert alert-info">
+								<button type="button" class="close" data-dismiss="alert">X</button>
+								<strong> Tip:</strong> Use your Novell credentials to login this system.</div>
+							<div>
+	                        <form class="form-horizontal" role="form" name = "loginForm" action="/login" method="post">                                  
+	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.empName.$invalid && loginForm.empName.$dirty}">
+										
+	                                	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	                                	<input id="loginName" type="text" name="username" class="form-control" 
+	                                	placeholder="username" required ng-pattern="/^sec[0-9]/" ng-maxlength=7 ng-model="empName">
+
+	                                	<!-- ERRORS ASSOCIATED WITH USERNAME INPUT -->
+		                                <span class="help-block" ng-show="loginForm.empName.$error.required && loginForm.empName.$dirty">
+		                                  <small>Username cannot be empty</small>
+		                                </span>
+		                                <span class="help-block" ng-show="loginForm.empName.$error.pattern && loginForm.empName.$dirty">
+		                                  <small> Username : SEC+pf </small>
+		                                </span>
+		                                <span class="help-block" ng-show="loginForm.empName.$error.maxlength && loginForm.empName.$dirty">
+		                                  <small>Username can not be more than 7 characters</small>
+		                                </span> 
+
+	                            	</div> 
+
+	                            	<div style="margin-bottom: 15px" class="input-group" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$dirty}">
+	                               		<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	                                	<input id="loginPass" type="password" name="password" class="form-control" placeholder="password" 
+	                                	ng-model="password" required>
+
+	                                	<!-- ERRORS ASSOCIATED WITH PASSWORD INPUT -->
+		                                <span class="help-block" ng-show="loginForm.passkey.$error.required && loginForm.passkey.$dirty">
+		                                  <small>Password cannot be empty</small>
+		                                </span>
+	                            	</div> 
+
+	                        		<div id="wrapper" class="wrapper">
+	                        			<label class="text text-primary"><strong>Select your Access Level :</strong></label>
+	                           			<div class="form-group">
+	                            		  <label for="roleAdmin" class="col-sm-4 control-label">Employee</label>
+	                              			<div class="col-sm-2">
+	                                			<input type="checkbox" name="empRole" class="form-control" id="empRole" ng-model="empRole">
+	                              			</div>
+	                            		</div>
+
+		                            	<div class="form-group">
+		                              		<label for="roleSup" class="col-sm-4 control-label">Supervisor</label>
+		                              		<div class="col-sm-2">
+		                                		<input type="checkbox" name="supervisorRole" class="form-control" id="supervisorRole" ng-model="supervisorRole">
+		                              		</div>
+		                            	</div> 
+
+										<div class="form-group">
+		                              		<label for="admin" class="col-sm-4 control-label">Administrator</label>
+		                              		<div class="col-sm-2">
+		                                		<input type="checkbox"  name="adminRole" class="form-control" id="adminRole" ng-model="adminRole">
+		                              		</div>
+	                            		</div> 
+	                            		<div class="form-group">
+		                              		<label for="hrSup" class="col-sm-4 control-label">Human Resouces</label>
+		                              		<div class="col-sm-2">
+		                                		<input type="checkbox"  name="HRRole" class="form-control" id="HRRole" ng-model="HRRole">
+		                              		</div>
+	                            		</div>
+										
+						    		</div>
+
+	                       			<br>
+	                           		<div style="margin-top:10px" class="form-group">
+	                                    <!-- Button -->
+	                                    <div class="col-sm-12 controls">                                 
+	                                    <button id="loginButton" style="float:right;" class="btn btn-lg btn-primary "> 
+	                                    <span class="glyphicon glyphicon-user" ></span> Login</button>
+	                                    </div>
+	                           		</div>
+
+	                       	</form>
+							</div>
+	                    </div>                     	                    
+	            </div>  <!--end panel-primary-->
+
+	        </div> <!--end loginbox-->
+			<!-- end of my log page -->                                                  
+	    </div> 
+	    <script> window.jQuery || document.write('<script src="includes/js/jquery-1.8.2.min.js"><\/script>')</script>
+	    <script type="text/javascript" src="/js/angular.min.js"></script>
+	    <script type="text/javascript" src="/js/features/controller.js"></script>
+	    <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"> </script>	
+	    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="/bower_components/annyang/annyang.js"></script>	
+	    <!--
+	    <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>-->
+	    
+	    
+	    <script type="text/javascript" src="/js/mkActivePane.js"></script>	
+	 	<!-- First try for the online version of jQuery-->
+		<!--script src="http://code.jquery.com/jquery.js"></script-->		
+		<script src="includes/js/modernizr-2.6.2.min.js"></script>		
+		<!-- If no online access, fallback to our hardcoded version of jQuery -->	
+	</body>
+</html>
